@@ -27,4 +27,17 @@ in Kontakt treten können.
 
 ## Technologien
 
+Frontend:
+- Next.js (React + TypeScript)
+- FullCalendar
+- Tailwind CSS oder CSS Modules
+
+Backend:
+- Supabase
+
+Datenbank:
+- PostgreSQL (über Supabase)
+
+Deployment:
+- Vercel (Next.js
 ---------------------------------------------------------------------------------------------------------------------
