@@ -19,7 +19,7 @@ in Kontakt treten können.
 - Nutzerprofile
 - Schwarzes Brett
 - Mentor Suche nach Skills
-- Buchung von 30 Minuten Sessions
+- Buchung von 30 Minuten Sessions ueber Kalender
 - Verwaltung der Session Anfragen (annehmen/ablehnen)
 - Sternebewertungssystem
 
