@@ -39,5 +39,5 @@ Datenbank:
 - PostgreSQL (über Supabase)
 
 Deployment:
-- Vercel (Next.js
+- Vercel (Next.js)
 ---------------------------------------------------------------------------------------------------------------------
