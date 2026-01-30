@@ -21,26 +21,15 @@ in Kontakt treten können.
 - Mentor Suche nach Skills
 - Buchung von 30 Minuten Sessions ueber Kalender
 - Verwaltung der Session Anfragen (annehmen/ablehnen)
-- Sternebewertungssystem
 
---------------------------------------------------------------------------------------------------------------------
 
+-------------------------------------------------------------------------------------------------
 ## Technologien
 
-Frontend:
-- Next.js (React + TypeScript)
-- FullCalendar
-- Tailwind CSS oder CSS Modules
 
-Backend:
-- Supabase
 
-Datenbank:
-- PostgreSQL (über Supabase)
-
-Deployment:
-- Vercel (Next.js)
-
-- instalieren pnpm i -g pnpm
-pnpm i
----------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
+- installieren:
+- pnpm i -g pnpm
+- pnpm i
+--------------------------------------------------------------------------------------------------
