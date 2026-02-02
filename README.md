@@ -33,3 +33,8 @@ in Kontakt treten können.
 - npm i -g pnpm
 - pnpm i
 -------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
+## Troubleshooting
+
+-> In case of : "failed to start docker container: Error response from daemon: failed to set up container networking: driver failed programming external connectivity on endpoint supabase_db_SkillExchange" proceed with: pnpm supabase stop --project-id supabase-next.js
+
