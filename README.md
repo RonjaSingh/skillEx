@@ -35,6 +35,9 @@ in Kontakt treten können.
 ## start supabase:
 - supabase status
 - pnpm supabase start 
+
+## SQL-migration:
+- pnpm supabase db diff -f nameofmigration
 --------------------------------------------------------------------------------------------------
 ## Troubleshooting
 
