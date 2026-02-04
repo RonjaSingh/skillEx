@@ -1,1 +1,3 @@
-<h1>Meine Sitzung</h1>
+export default function Page() {
+  return <div>My Sessions</div>
+}

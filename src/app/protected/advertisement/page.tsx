@@ -1,1 +1,3 @@
-<h1>Meine Anzeigen</h1>
+export default function Page() {
+  return <div>Meine Anzeigen</div>
+}
