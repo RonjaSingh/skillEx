@@ -14,7 +14,7 @@ export default async function ProtectedPage() {
   return (
     <div className="flex h-svh w-full items-center justify-center gap-2">
       <p>
-        Hello <span>{data.claims.email}</span>
+        Startseite<span>{data.claims.email}</span>
       </p>
       <LogoutButton />
     </div>
