@@ -8,7 +8,7 @@ export default function ProfilePage() {
   const router = useRouter()
 
   const [name, setName] = useState('')
-  const [skills, setSkills] = useState('')
+  const [skills, setSkills] = useState<string[]>([])
   const [language, setLanguage] = useState('')
 
   const [isPopupOpen, setIsPopupOpen] = useState(false)

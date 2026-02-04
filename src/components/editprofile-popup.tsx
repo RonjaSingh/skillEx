@@ -5,8 +5,8 @@ import { useState } from "react"
 type EditProfilePopupProps = {
     name: string
     setName: (value: string) => void
-    skills: string
-    setSkills: (value: string) => void
+    skills: string[]
+    setSkills: (value: string[]) => void
     language: string
     setLanguage: (value: string) => void
     onClose: () => void
@@ -22,7 +22,8 @@ export default function EditProfilePopup({
     onClose,
 }: EditProfilePopupProps) {
     const [tempName, setTempName] = useState(name)
-    const [tempSkills, setTempSkills] = useState(skills)
+    const [tempSkills, setTempSkills] = useState<string[]>(skills)
+    const [newSkill, setNewSkill] = useState('')
     const [tempLanguage, setTempLanguage] = useState(language)
 
     const handleSave = () => {
@@ -32,6 +33,16 @@ export default function EditProfilePopup({
         alert('Profile saved (locally)')
         onClose()
     }
+
+    const handleAddSkill = () => {
+        const skill = newSkill.trim()
+        if (!skill) return
+        if (tempSkills.includes(skill)) return
+
+        setTempSkills([...tempSkills, skill])
+        setNewSkill('')
+    }
+
 
     return (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
@@ -49,11 +60,42 @@ export default function EditProfilePopup({
 
                 <label className="flex flex-col gap-1">
                     Skills:
-                    <input
-                        value={tempSkills}
-                        onChange={(e) => setTempSkills(e.target.value)}
-                        className="border px-2 py-1 rounded"
-                    />
+
+                    <div className="flex flex-wrap gap-2 mt-1">
+                        {tempSkills.map((skill) => (
+                            <span
+                                key={skill}
+                                className="bg-blue-200 px-2 py-1 rounded flex items-center gap-1"
+                            >
+                                {skill}
+                                <button
+                                    type="button"
+                                    onClick={() =>
+                                        setTempSkills(tempSkills.filter((s) => s !== skill))
+                                    }
+                                    className="text-red-600 font-bold"
+                                >
+                                    ×
+                                </button>
+                            </span>
+                        ))}
+                    </div>
+
+                    <div className="flex gap-2 mt-2">
+                        <input
+                            value={newSkill}
+                            onChange={(e) => setNewSkill(e.target.value)}
+                            className="border px-2 py-1 rounded flex-1"
+                            placeholder="Add a skill"
+                        />
+                        <button
+                            type="button"
+                            onClick={handleAddSkill}
+                            className="px-4 py-1 border rounded"
+                        >
+                            Add
+                        </button>
+                    </div>
                 </label>
 
                 <label className="flex flex-col gap-1">
