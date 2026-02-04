@@ -1,5 +1,7 @@
 'use client'
 
+import { useState } from "react"
+
 type EditProfilePopupProps = {
     name: string
     setName: (value: string) => void
@@ -19,7 +21,14 @@ export default function EditProfilePopup({
     setLanguage,
     onClose,
 }: EditProfilePopupProps) {
+    const [tempName, setTempName] = useState(name)
+    const [tempSkills, setTempSkills] = useState(skills)
+    const [tempLanguage, setTempLanguage] = useState(language)
+
     const handleSave = () => {
+        setName(tempName)
+        setSkills(tempSkills)
+        setLanguage(tempLanguage)
         alert('Profile saved (locally)')
         onClose()
     }
@@ -32,8 +41,8 @@ export default function EditProfilePopup({
                 <label className="flex flex-col gap-1">
                     Name:
                     <input
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        value={tempName}
+                        onChange={(e) => setTempName(e.target.value)}
                         className="border px-2 py-1 rounded"
                     />
                 </label>
@@ -41,8 +50,8 @@ export default function EditProfilePopup({
                 <label className="flex flex-col gap-1">
                     Skills:
                     <input
-                        value={skills}
-                        onChange={(e) => setSkills(e.target.value)}
+                        value={tempSkills}
+                        onChange={(e) => setTempSkills(e.target.value)}
                         className="border px-2 py-1 rounded"
                     />
                 </label>
@@ -50,8 +59,8 @@ export default function EditProfilePopup({
                 <label className="flex flex-col gap-1">
                     Language:
                     <input
-                        value={language}
-                        onChange={(e) => setLanguage(e.target.value)}
+                        value={tempLanguage}
+                        onChange={(e) => setTempLanguage(e.target.value)}
                         className="border px-2 py-1 rounded"
                     />
                 </label>
