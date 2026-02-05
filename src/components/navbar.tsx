@@ -9,7 +9,7 @@ export function Navbar() {
 
   return (
     <nav>
-      {/* Menü-Button */}
+      {/* MenueButton */}
       <button onClick={() => setOpen(!open)}>
         Menü
       </button>
