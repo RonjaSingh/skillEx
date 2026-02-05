@@ -1,37 +1,37 @@
 'use client'
 
-const testAds = [
+import { useState } from 'react'
+import EditAdvertisementPopup, { Ad } from '../../../components/editadvertisement-popup'
+
+const initialAds: Ad[] = [
   {
-    id: '1',
+    id: 1,
     title: 'React Nachhilfe',
     description: 'Ich biete Hilfe bei React & TypeScript',
     type: 'ANGEBOT',
   },
   {
-    id: '2',
+    id: 2,
     title: 'Deutsch lernen',
     description: 'Suche Deutschlehrer',
     type: 'GESUCH',
   },
-    {
-    id: '3',
-    title: 'Englisch lernen',
-    description: 'Suche Englischlehrer',
-    type: 'GESUCH',
-  },
 ]
 
-
-
 export default function AdvertisementPage() {
-  const angebote = testAds.filter((ad) => ad.type === 'ANGEBOT')
-  const gesuche = testAds.filter((ad) => ad.type === 'GESUCH')
+ 
+  const [ads, setAds] = useState<Ad[]>(initialAds)
+
+  const [editingAd, setEditingAd] = useState<Ad | null>(null)
+
+  const angebote = ads.filter((ad) => ad.type === 'ANGEBOT')
+  const gesuche = ads.filter((ad) => ad.type === 'GESUCH')
 
   return (
     <div className="max-w-3xl mx-auto mt-10 p-4 space-y-10">
       <h1 className="text-2xl font-bold">Meine Anzeigen</h1>
 
-      {/* ANGEBOTE */}
+      {/* Angebote */}
       <section>
         <h2 className="text-xl font-semibold mb-4">Angebote</h2>
 
@@ -40,17 +40,17 @@ export default function AdvertisementPage() {
         ) : (
           <div className="space-y-4">
             {angebote.map((ad) => (
-              <AnzeigeItem
+              <Anzeige
                 key={ad.id}
-                title={ad.title}
-                description={ad.description}
+                ad={ad}
+                onEdit={() => setEditingAd(ad)}
               />
             ))}
           </div>
         )}
       </section>
 
-      {/* GESUCHE */}
+      {/* Gesuche */}
       <section>
         <h2 className="text-xl font-semibold mb-4">Gesuche</h2>
 
@@ -59,39 +59,59 @@ export default function AdvertisementPage() {
         ) : (
           <div className="space-y-4">
             {gesuche.map((ad) => (
-              <AnzeigeItem
+              <Anzeige
                 key={ad.id}
-                title={ad.title}
-                description={ad.description}
+                ad={ad}
+                onEdit={() => setEditingAd(ad)}
               />
             ))}
           </div>
         )}
       </section>
+
+      {/* Edit popup */}
+      {editingAd && (
+        <EditAdvertisementPopup
+          ad={editingAd}
+          onClose={() => setEditingAd(null)}
+          onSave={(updatedAd) => {
+            setAds((prev) =>
+              prev.map((ad) =>
+                ad.id === updatedAd.id ? updatedAd : ad
+              )
+            )
+            setEditingAd(null)
+          }}
+        />
+      )}
     </div>
   )
 }
 
+/* Anzeige */
 
-
-function AnzeigeItem({
-  title,
-  description,
+function Anzeige({
+  ad,
+  onEdit,
 }: {
-  title: string
-  description: string
+  ad: Ad
+  onEdit: () => void
 }) {
   return (
     <div className="border rounded-lg p-4 flex justify-between items-start">
       <div>
-        <p className="font-semibold">{title}</p>
-        <p className="text-sm text-gray-600">{description}</p>
+        <p className="font-semibold">{ad.title}</p>
+        <p className="text-sm text-gray-600">{ad.description}</p>
       </div>
 
       <div className="flex gap-2">
-        <button className="px-3 py-1 border rounded text-sm hover:bg-gray-100">
+        <button
+          onClick={onEdit}
+          className="px-3 py-1 border rounded text-sm hover:bg-gray-100"
+        >
           Edit
         </button>
+
         <button className="px-3 py-1 border rounded text-sm text-red-600 hover:bg-red-50">
           Delete
         </button>
