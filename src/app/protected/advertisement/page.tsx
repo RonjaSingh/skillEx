@@ -1,7 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import EditAdvertisementPopup, { Ad } from '../../../components/editadvertisement-popup'
+import EditAdvertisementPopup, { Ad } from '@/components/editadvertisement-popup'
+import DeleteAdvertisementPopup from '@/components/deleteadvertisement-popup'
 
 const initialAds: Ad[] = [
   {
@@ -19,10 +20,10 @@ const initialAds: Ad[] = [
 ]
 
 export default function AdvertisementPage() {
- 
   const [ads, setAds] = useState<Ad[]>(initialAds)
 
   const [editingAd, setEditingAd] = useState<Ad | null>(null)
+  const [adToDelete, setAdToDelete] = useState<Ad | null>(null)
 
   const angebote = ads.filter((ad) => ad.type === 'ANGEBOT')
   const gesuche = ads.filter((ad) => ad.type === 'GESUCH')
@@ -44,6 +45,7 @@ export default function AdvertisementPage() {
                 key={ad.id}
                 ad={ad}
                 onEdit={() => setEditingAd(ad)}
+                onDelete={(ad) => setAdToDelete(ad)}
               />
             ))}
           </div>
@@ -63,6 +65,7 @@ export default function AdvertisementPage() {
                 key={ad.id}
                 ad={ad}
                 onEdit={() => setEditingAd(ad)}
+                onDelete={(ad) => setAdToDelete(ad)}
               />
             ))}
           </div>
@@ -84,6 +87,20 @@ export default function AdvertisementPage() {
           }}
         />
       )}
+
+      {/* delete popup */}
+      {adToDelete && (
+        <DeleteAdvertisementPopup
+          title={adToDelete.title}
+          onClose={() => setAdToDelete(null)}
+          onConfirm={() => {
+            setAds((prev) =>
+              prev.filter((ad) => ad.id !== adToDelete.id)
+            )
+            setAdToDelete(null)
+          }}
+        />
+      )}
     </div>
   )
 }
@@ -93,9 +110,11 @@ export default function AdvertisementPage() {
 function Anzeige({
   ad,
   onEdit,
+  onDelete,
 }: {
   ad: Ad
   onEdit: () => void
+  onDelete: (ad: Ad) => void
 }) {
   return (
     <div className="border rounded-lg p-4 flex justify-between items-start">
@@ -112,7 +131,10 @@ function Anzeige({
           Edit
         </button>
 
-        <button className="px-3 py-1 border rounded text-sm text-red-600 hover:bg-red-50">
+        <button
+          onClick={() => onDelete(ad)}
+          className="px-3 py-1 border rounded text-sm text-red-600 hover:bg-red-50"
+        >
           Delete
         </button>
       </div>
