@@ -46,3 +46,20 @@ export default function SessionsPage() {
     }))
 
    
+    setRequests(mapped.filter(s => s.status === 'open'))
+
+    setUpcoming(
+      mapped.filter(
+        s => s.status === 'accepted' && s.start_time > now
+      )
+    )
+
+    setPast(
+      mapped.filter(
+        s => s.status === 'accepted' && s.start_time < now
+      )
+    )
+  }
+
+
+}
