@@ -62,4 +62,23 @@ export default function SessionsPage() {
   }
 
 
+async function updateStatus(id: string, status: 'accepted' | 'rejected') {
+    await supabase
+      .from('session_request')
+      .update({ status })
+      .eq('session_request_id', id)
+
+    loadSessions()
+  }
+
+  async function cancelSession(id: string) {
+    await supabase
+      .from('session_request')
+      .update({ status: 'rejected' })
+      .eq('session_request_id', id)
+
+    loadSessions()
+  }
+
+
 }
