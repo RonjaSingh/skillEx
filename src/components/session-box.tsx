@@ -42,26 +42,29 @@ export default function SessionBox({
 
           <div >
             
-          {showAcceptReject && (
+            {showAcceptReject && (
               <>
-                <button>
+                <button
+                  onClick={() => onAccept?.(session.id)}>
                   Accept
                 </button>
 
-                <button>
+                <button
+                  onClick={() => onReject?.(session.id)}>
                   Reject
                 </button>
               </>
             )}
 
             {showCancel && (
-              <button>
+              <button
+                onClick={() => onCancel?.(session.id)}>
                 Cancel
               </button>
             )}
 
             {showRate && (
-              <button>
+              <button >
                 Rate
               </button>
             )}
