@@ -42,6 +42,30 @@ export default function SessionBox({
 
           <div >
             
+          {showAcceptReject && (
+              <>
+                <button>
+                  Accept
+                </button>
+
+                <button>
+                  Reject
+                </button>
+              </>
+            )}
+
+            {showCancel && (
+              <button>
+                Cancel
+              </button>
+            )}
+
+            {showRate && (
+              <button>
+                Rate
+              </button>
+            )}
+
           </div>
         </div>
       ))}
