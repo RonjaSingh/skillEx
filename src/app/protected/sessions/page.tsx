@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
+import SessionBox from '@/components/session-box'
+
 
 type SessionRow = {
   id: string
@@ -81,4 +83,12 @@ async function updateStatus(id: string, status: 'accepted' | 'rejected') {
   }
 
 
+  return (
+    <div className="max-w-5xl mx-auto p-6 space-y-8">
+
+      <h1 className="text-2xl font-bold">Sessions</h1>
+
+     
+    </div>
+  )
 }
