@@ -88,7 +88,26 @@ async function updateStatus(id: string, status: 'accepted' | 'rejected') {
 
       <h1 className="text-2xl font-bold">Sessions</h1>
 
-     
+      <SessionBox
+        title="Session Requests"
+        data={requests}
+        showAcceptReject
+        onAccept={(id) => updateStatus(id, 'accepted')}
+        onReject={(id) => updateStatus(id, 'rejected')}
+      />
+
+      <SessionBox
+        title="Upcoming Sessions"
+        data={upcoming}
+        showCancel
+        onCancel={cancelSession}
+      />
+
+      <SessionBox
+        title="Past Sessions"
+        data={past}
+        showRate
+      />
     </div>
   )
 }
