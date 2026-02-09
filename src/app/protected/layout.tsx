@@ -1,4 +1,5 @@
 import { Navbar } from '@/components/navbar'
+import { Header } from '@/components/header'
 
 export default function ProtectedLayout({
   children,
@@ -7,7 +8,11 @@ export default function ProtectedLayout({
 }) {
   return (
     <>
+      <Header
+        username=""
+        avatarUrl={null} />
       <Navbar />
+
       <main>{children}</main>
     </>
   )
