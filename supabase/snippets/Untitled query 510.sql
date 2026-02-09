@@ -1,4 +1,3 @@
-ALTER TABLE session_request
-ALTER COLUMN status TYPE session_status
-USING status::session_status;
-
+SELECT policyname, cmd, permissive
+FROM pg_policies
+WHERE tablename = 'session';
