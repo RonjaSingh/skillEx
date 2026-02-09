@@ -8,28 +8,47 @@ export function Navbar() {
   const [open, setOpen] = useState(false)
 
   return (
-    <nav>
-      {/* MenueButton */}
-      <button onClick={() => setOpen(!open)}>
-        Menü
-      </button>
+    <nav className="relative w-full mt-2">
+      {/* Menü Button */}
+      <div className="flex justify-center">
+        <button
+          onClick={() => setOpen(!open)}
+          className="px-6 py-2 border rounded-lg bg-white shadow-sm hover:bg-gray-100"
+        >
+          Menü
+        </button>
+      </div>
 
-      {/* Dropdown */}
+      {/* Dropdown*/}
       {open && (
-        <ul>
+        <ul className="absolute left-1/2 top-full -translate-x-1/2
+                       w-56 bg-white border rounded-lg shadow-lg
+                       flex flex-col items-center gap-1 py-2 z-50">
           <li>
-            <Link href="/protected">Startseite</Link>
+            <Link href="/protected" className="block px-4 py-2 hover:bg-gray-100 rounded">
+              Startseite
+            </Link>
           </li>
+
           <li>
-            <Link href="/protected/profile">Profil</Link>
+            <Link href="/protected/profile" className="block px-4 py-2 hover:bg-gray-100 rounded">
+              Profil
+            </Link>
           </li>
+
           <li>
-            <Link href="/protected/sessions">Meine Sessions</Link>
+            <Link href="/protected/sessions" className="block px-4 py-2 hover:bg-gray-100 rounded">
+              Meine Sessions
+            </Link>
           </li>
+
           <li>
-            <Link href="/protected/advertisement">Meine Anzeigen</Link>
+            <Link href="/protected/advertisement" className="block px-4 py-2 hover:bg-gray-100 rounded">
+              Meine Anzeigen
+            </Link>
           </li>
-          <li>
+
+          <li className="pt-2">
             <LogoutButton />
           </li>
         </ul>
