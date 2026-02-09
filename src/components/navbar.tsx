@@ -8,12 +8,12 @@ export function Navbar() {
   const [open, setOpen] = useState(false)
 
   return (
-    <nav className="relative w-full mt-2">
+    <nav className="relative w-full">
       {/* Menü Button */}
       <div className="flex justify-center">
         <button
           onClick={() => setOpen(!open)}
-          className="px-6 py-2 border rounded-lg bg-white shadow-sm hover:bg-gray-100"
+          className="w-full py-2 border bg-white hover:bg-gray-100"
         >
           Menü
         </button>

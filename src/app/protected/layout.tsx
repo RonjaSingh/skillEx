@@ -9,7 +9,7 @@ export default function ProtectedLayout({
   return (
     <>
       <Header
-        username=""
+        username="Username"
         avatarUrl={null} />
       <Navbar />
 
