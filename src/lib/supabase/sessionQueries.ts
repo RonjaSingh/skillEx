@@ -33,5 +33,13 @@ export async function getOutgoingRequests(userId: string) {
 export async function getCompletedSessions(userId: string) {
   return await supabase
     .from('session')
-    
+    .select(`
+      session_id,
+      start_time,
+      advertisement(title),
+      teacher:user!session_teacher_fkey(name),
+      student:user!session_student_fkey(name)
+    `)
+    .or(`teacher_user_id.eq.${userId},student_user_id.eq.${userId}`)
+    .eq('status', 'completed')
 }
