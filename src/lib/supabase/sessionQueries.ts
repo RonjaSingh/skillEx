@@ -5,6 +5,15 @@ const supabase = createClient()
 export async function getIncomingRequests(userId: string) {
   return await supabase
     .from('session_request')
+      .select(`
+      session_request_id,
+      status,
+      created_at,
+      advertisement(title),
+      request_from_user:user!session_request_request_from_user_id_fkey(name)
+    `)
+    .eq('request_to_user_id', userId)
+    .eq('status', 'pending')
    
 }
 
