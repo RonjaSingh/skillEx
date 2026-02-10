@@ -21,4 +21,16 @@ export default function SessionsPage() {
     loadData()
   }, [])
 
-  
+    async function loadData() {
+    const { data: userData } = await supabase.auth.getUser()
+    const userId = userData.user?.id
+    if (!userId) return
+
+    const incomingRes = await getIncomingRequests(userId)
+    const outgoingRes = await getOutgoingRequests(userId)
+    const completedRes = await getCompletedSessions(userId)
+
+    setIncoming(incomingRes.data || [])
+    setOutgoing(outgoingRes.data || [])
+    setCompleted(completedRes.data || [])
+  }
