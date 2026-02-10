@@ -3,30 +3,19 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import EditProfilePopup from '@/components/editprofile-popup'
+import useProfileInit from '@/hooks/use-profile-init' // <-- unser Hook
 
 export default function ProfilePage() {
   const router = useRouter()
-
-  const [name, setName] = useState('')
-  const [skills, setSkills] = useState<string[]>([])
-  const [language, setLanguage] = useState('')
-
-  const [profileImage, setProfileImage] = useState<string | null>(null)
-
+  const { name, setName, skills, setSkills, language, setLanguage, profileImage, setProfileImage } = useProfileInit()
 
   const [isPopupOpen, setIsPopupOpen] = useState(false)
 
-
   return (
     <div className="max-w-xl mx-auto mt-10 p-4 space-y-6">
-
       <div className="flex items-center justify-between">
-
         <div className="flex items-center gap-4">
-          <h1 className="text-2xl font-bold">
-            {name || 'Username'}
-          </h1>
-
+          <h1 className="text-2xl font-bold">{name || 'Username'}</h1>
           <div className="w-14 h-14 rounded-full bg-gray-200 overflow-hidden flex items-center justify-center">
             {profileImage ? (
               <img
@@ -40,7 +29,6 @@ export default function ProfilePage() {
           </div>
         </div>
 
-        {/* Rechts: Edit Button */}
         <button
           className="px-4 py-2 border rounded hover:bg-gray-100 transition"
           onClick={() => setIsPopupOpen(true)}
@@ -49,23 +37,19 @@ export default function ProfilePage() {
         </button>
       </div>
 
-
       <div className="space-y-2">
         <p>
-          <strong>Skills:</strong>{skills}
+          <strong>Skills:</strong> {skills}
         </p>
 
         <p>
-          <strong>Language:</strong>{language}
+          <strong>Language:</strong> {language}
         </p>
-
 
         <div className="flex justify-between items-center mt-2">
           <p>
             <strong>Attended Sessions:</strong>
           </p>
-
-          {/* session uebersicht button */}
           <button
             onClick={() => router.push('/protected/sessions')}
             className="px-4 py-2 border rounded hover:bg-gray-100 transition"
@@ -73,6 +57,7 @@ export default function ProfilePage() {
             My Sessions
           </button>
         </div>
+
         {isPopupOpen && (
           <EditProfilePopup
             name={name}
