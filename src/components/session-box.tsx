@@ -16,7 +16,7 @@ type Props = {
   onCancel?: (id: string) => void
 }
 
-export default function SessionBox({
+export default function SessionBoxes({
   title,
   data,
   showAcceptReject,
