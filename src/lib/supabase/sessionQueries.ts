@@ -20,7 +20,14 @@ export async function getIncomingRequests(userId: string) {
 export async function getOutgoingRequests(userId: string) {
   return await supabase
     .from('session_request')
-    
+      .select(`
+      session_request_id,
+      status,
+      created_at,
+      advertisement(title),
+      request_to_user:user!session_request_request_to_user_id_fkey(name)
+    `)
+    .eq('request_from_user_id', userId)
 }
 
 export async function getCompletedSessions(userId: string) {
