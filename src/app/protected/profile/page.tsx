@@ -23,23 +23,16 @@ export default function ProfilePage() {
 
   const [isPopupOpen, setIsPopupOpen] = useState(false)
 
+  if (loading) {
+    return <p className="text-center mt-10">Loading...</p>
+  }
+
   return (
     <div className="max-w-xl mx-auto mt-10 p-4 space-y-6">
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <h1 className="text-2xl font-bold">{name || 'Username'}</h1>
-          <div className="w-14 h-14 rounded-full bg-gray-200 overflow-hidden flex items-center justify-center">
-            {profileImage ? (
-              <img
-                src={profileImage}
-                alt="Profile image"
-                className="w-full h-full object-cover"
-              />
-            ) : (
-              <span className="text-xs text-gray-500">No Image</span>
-            )}
-          </div>
-        </div>
+        <h1 className="text-2xl font-bold">
+          {name || 'Username'}
+        </h1>
 
         <button
           className="px-4 py-2 border rounded hover:bg-gray-100 transition"
@@ -51,17 +44,16 @@ export default function ProfilePage() {
 
       <div className="space-y-2">
         <p>
-          <strong>Skills:</strong> {skills}
+          <strong>Skills:</strong> {skills.join(', ')}
         </p>
 
         <p>
           <strong>Language:</strong> {language}
         </p>
 
-        <div className="flex justify-between items-center mt-2">
-          <p>
-            <strong>Attended Sessions:</strong>
-          </p>
+        <div className="flex justify-between items-center mt-4">
+          <strong>Attended Sessions:</strong>
+
           <button
             onClick={() => router.push('/protected/sessions')}
             className="px-4 py-2 border rounded hover:bg-gray-100 transition"
@@ -78,8 +70,6 @@ export default function ProfilePage() {
             setSkills={setSkills}
             language={language}
             setLanguage={setLanguage}
-            profileImage={profileImage}
-            setProfileImage={setProfileImage}
             onClose={() => setIsPopupOpen(false)}
           />
         )}
@@ -87,5 +77,3 @@ export default function ProfilePage() {
     </div>
   )
 }
-
-

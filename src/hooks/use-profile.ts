@@ -4,62 +4,50 @@ import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
 
 export default function useProfile() {
-  const [name, setName] = useState('')
-  const [skills, setSkills] = useState<string[]>([])
-  const [language, setLanguage] = useState('')
-  const [loading, setLoading] = useState(true)
+    const [name, setName] = useState('')
+    const [skills, setSkills] = useState<string[]>([])
+    const [language, setLanguage] = useState('')
+    const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    const loadProfile = async () => {
-      const supabase = createClient()
+    useEffect(() => {
+        const loadProfile = async () => {
+            const supabase = createClient()
 
-      const { data: authData } = await supabase.auth.getUser()
-      const user = authData.user
-      if (!user) return
 
-      const { data } = await supabase
-        .from('user')
-        .select(`
-          name,
-          user_skills (
-            skills ( name )
-          ),
-          user_language (
-            language ( name )
-          )
-        `)
-        .eq('id', user.id)
-        .single()
+            const { data } = await supabase.auth.getUser()
+            const user = data.user
 
-      if (!data) return
+            if (!user) {
+                setLoading(false)
+                return
+            }
 
-      const profile = data as any
+            const { data: profile } = await supabase
+                .from('user')
+                .select('*')
+                .eq('id', user.id)
+                .single()
 
-      setName(profile.name ?? '')
+            if (profile) {
+                setName(profile.name ?? '')
+                setSkills(profile.skills ?? [])
+                setLanguage(profile.language ?? '')
+            }
 
-      const loadedSkills =
-        profile.user_skills?.map((s: any) => s.skills?.name) ?? []
+            setLoading(false)
+        }
 
-      setSkills(loadedSkills)
+        loadProfile()
+    }, [])
 
-      const loadedLanguage =
-        profile.user_language?.[0]?.language?.name ?? ''
+    return {
+        name,
+        setName,
+        skills,
+        setSkills,
+        language,
+        setLanguage,
 
-      setLanguage(loadedLanguage)
-
-      setLoading(false)
+        loading
     }
-
-    loadProfile()
-  }, [])
-
-  return {
-    name,
-    setName,
-    skills,
-    setSkills,
-    language,
-    setLanguage,
-    loading
-  }
 }
