@@ -1,113 +1,94 @@
+
 'use client'
-
 import { useEffect, useState } from 'react'
+import SessionBox from '@/components/sessionbox'
+import SessionRow from '@/components/sessionrow'
 import { createClient } from '@/lib/supabase/client'
-import SessionBox from '@/components/session-box'
+import {
+  getIncomingRequests,
+  getOutgoingRequests,
+  getCompletedSessions
+} from '@/lib/supabase/sessionQueries'
 
-
-type SessionRow = {
-  id: string
-  start_time: string
-  title: string
-  name: string
-  message?: string
-}
+const supabase = createClient()
 
 export default function SessionsPage() {
-  const supabase = createClient()
-
-  const [requests, setRequests] = useState<SessionRow[]>([])
-  const [upcoming, setUpcoming] = useState<SessionRow[]>([])
-  const [past, setPast] = useState<SessionRow[]>([])
+  const [incoming, setIncoming] = useState<any[]>([])
+  const [outgoing, setOutgoing] = useState<any[]>([])
+  const [completed, setCompleted] = useState<any[]>([])
 
   useEffect(() => {
-    loadSessions()
+    loadData()
   }, [])
 
-    async function loadSessions() {
-    const now = new Date().toISOString()
+    async function loadData() {
+    const { data: userData } = await supabase.auth.getUser()
+    const userId = userData.user?.id
+    if (!userId) return
 
-    const { data } = await supabase
-      .from('session_request')
-      .select(`
-        session_request_id,
-        status,
-        availability(start_time),
-        advertisement(title),
-        user!session_request_request_from_user_id_fkey(name)
-      `)
+    const incomingRes = await getIncomingRequests(userId)
+    const outgoingRes = await getOutgoingRequests(userId)
+    const completedRes = await getCompletedSessions(userId)
 
-    if (!data) return
-
-    const mapped = data.map((s: any) => ({
-      id: s.session_request_id,
-      start_time: s.availability?.start_time,
-      title: s.advertisement?.title,
-      name: s.user?.name,
-      status: s.status
-    }))
-
-   
-    setRequests(mapped.filter(s => s.status === 'open'))
-
-    setUpcoming(
-      mapped.filter(
-        s => s.status === 'accepted' && s.start_time > now
-      )
-    )
-
-    setPast(
-      mapped.filter(
-        s => s.status === 'accepted' && s.start_time < now
-      )
-    )
+    setIncoming(incomingRes.data || [])
+    setOutgoing(outgoingRes.data || [])
+    setCompleted(completedRes.data || [])
   }
 
+   return (
+    <div className="max-w-4xl mx-auto mt-6 space-y-6">
 
-async function updateStatus(id: string, status: 'accepted' | 'rejected') {
-    await supabase
-      .from('session_request')
-      .update({ status })
-      .eq('session_request_id', id)
+      <SessionBox title="Session Requests">
+        {incoming.map((s) => (
+          <SessionRow
+            key={s.session_request_id}
+            date={new Date(s.created_at).toLocaleString()}
+            topic={s.advertisement?.title}
+            name={s.request_from_user?.name}
+            actions={
+              <>
+                <button className="px-2 py-1 border rounded bg-green-100">Accept</button>
+                <button className="px-2 py-1 border rounded bg-red-100">Reject</button>
+              </>
+            }
+          />
+        ))}
+      </SessionBox>
 
-    loadSessions()
-  }
+      <SessionBox title="Upcoming Sessions">
+        {outgoing.map((s) => (
+          <SessionRow
+            key={s.session_request_id}
+            date={new Date(s.created_at).toLocaleString()}
+            topic={s.advertisement?.title}
+            name={s.request_to_user?.name}
+            actions={
+              <button className="px-2 py-1 border rounded bg-red-100">Cancel</button>
+            }
+          />
+        ))}
+      </SessionBox>
 
-  async function cancelSession(id: string) {
-    await supabase
-      .from('session_request')
-      .update({ status: 'rejected' })
-      .eq('session_request_id', id)
+      <SessionBox title="Completed Sessions">
+        {completed.map((s) => (
+          <SessionRow
+            key={s.session_id}
+            date={new Date(s.start_time).toLocaleString()}
+            topic={s.advertisement?.title}
+            name={
+              s.teacher?.id === s.currentUserId
+                ? s.student?.name
+                : s.teacher?.name
+            }
+            actions={
+              <button className="px-2 py-1 border rounded bg-yellow-100">
+                Rate ⭐
+              </button>
+            }
+          />
+        ))}
+      </SessionBox>
 
-    loadSessions()
-  }
-
-
-  return (
-    <div className="max-w-5xl mx-auto p-6 space-y-8">
-
-      <h1 className="text-2xl font-bold">Sessions</h1>
-
-      <SessionBox
-        title="Session Requests"
-        data={requests}
-        showAcceptReject
-        onAccept={(id) => updateStatus(id, 'accepted')}
-        onReject={(id) => updateStatus(id, 'rejected')}
-      />
-
-      <SessionBox
-        title="Upcoming Sessions"
-        data={upcoming}
-        showCancel
-        onCancel={cancelSession}
-      />
-
-      <SessionBox
-        title="Past Sessions"
-        data={past}
-        showRate
-      />
     </div>
   )
 }
