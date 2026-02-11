@@ -3,11 +3,23 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import EditProfilePopup from '@/components/editprofile-popup'
-import useProfileInit from '@/hooks/use-profile-init' // <-- unser Hook
+import useProfileInit from '@/hooks/use-profile-init'
+import useProfile from '@/hooks/use-profile'
 
 export default function ProfilePage() {
   const router = useRouter()
-  const { name, setName, skills, setSkills, language, setLanguage, profileImage, setProfileImage } = useProfileInit()
+
+  useProfileInit()
+
+  const {
+    name,
+    setName,
+    skills,
+    setSkills,
+    language,
+    setLanguage,
+    loading
+  } = useProfile()
 
   const [isPopupOpen, setIsPopupOpen] = useState(false)
 
@@ -75,3 +87,5 @@ export default function ProfilePage() {
     </div>
   )
 }
+
+
