@@ -1,65 +1,99 @@
 'use client';
 
-import { use, useState } from "react";
+import { useState, useEffect } from "react";
 import { createClient } from "@/lib/supabase/client";
-
-
+import { useRouter } from "next/navigation";
 
 export default function SkillSearch() {
-    const supabase = createClient();
-    const [search, setSearch] = useState("");
-    const [results, setResults] = useState<any[]>([]);
+  const supabase = createClient();
+  const router = useRouter();
 
-    const handleSearch = async () => {
-        if (!search) return;
+  const [search, setSearch] = useState("");
+  const [results, setResults] = useState<any[]>([]);
+  const [allSkills, setAllSkills] = useState<any[]>([]);
 
-        const { data, error } = await supabase
-            .from("profiles_with_skills")
-            .select("*")
-            .ilike("skill", `%${search}%`);
-
-        if (error) {
-            console.error(error);
-            return;
-        }
-
-        setResults(data);
+  // Alle Skills laden
+  useEffect(() => {
+    const loadSkills = async () => {
+      const { data } = await supabase
+        .from("skills")
+        .select("*");
+      setAllSkills(data || []);
     };
+    loadSkills();
+  }, []);
 
-    return (
-  <div className="w-full max-w-xl mx-auto mt-2 space-y-4 text-center">
+  // Suche starten
+  const handleSearch = async () => {
+    if (!search) return;
 
-    {/* Suchbereich */}
-    <div className="flex justify-center gap-2">
-      <input
-        className="w-full max-w-md border px-4 py-2 rounded bg-white focus:outline-none focus:ring-2 focus:ring-gray-300"
-        type="text"
-        placeholder="Skill eingeben..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
+    const skill = allSkills.find((s) => s.name.toLowerCase() === search.toLowerCase());
+    if (!skill) {
+      setResults([]);
+      return;
+    }
 
-      <button
-        onClick={handleSearch}
-        className="px-6 py-2 border rounded bg-white hover:bg-gray-100 font-medium shadow-sm"
-      >
-        Suchen
-      </button>
-    </div>
+    const { data } = await supabase
+      .from("user_skills")
+      .select(`
+        user_id,
+        skills(name),
+        user: user_skills_user_id_fkey (
+          id,
+          name
+        ),
+        user_language (
+          language(name)
+        )
+      `)
+      .eq("skill_id", skill.skill_id);
 
-    {/* Ergebnisse */}
-    <div className="space-y-3">
-      {results.map((user) => (
-        <div
-          key={user.id}
-          className="border rounded p-3 bg-white shadow-sm"
+    if (data) {
+      const mapped = data.map((item: any) => ({
+        user_id: item.user.id,
+        name: item.user.name,
+        skill: skill.name,
+        languages: item.user_language?.map((l: any) => l.language.name).join(", ") || "—"
+      }));
+      setResults(mapped);
+    }
+  };
+
+  return (
+    <div className="w-full max-w-xl mx-auto mt-2">
+
+      {/* Suchleiste Container */}
+      <div className="flex gap-2 p-2 border rounded-lg shadow-md bg-white">
+        <input
+          type="text"
+          className="flex-1 border px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400"
+          placeholder="Skill eingeben..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <button
+          onClick={handleSearch}
+          className="px-4 py-2 rounded-lg bg-pink-500 text-white font-semibold hover:bg-pink-600"
         >
-          <h3 className="font-semibold">{user.username}</h3>
-          <p className="text-gray-600 text-sm">{user.skill}</p>
-        </div>
-      ))}
-    </div>
+          Suchen
+        </button>
+      </div>
 
-  </div>
-    );
+      {/* Ergebnisse */}
+      <div className="space-y-3 mt-4">
+        {results.map((user) => (
+          <div
+            key={user.user_id}
+            onClick={() => router.push(`/protected/profile/${user.user_id}`)}
+            className="border p-4 rounded-lg hover:bg-gray-50 cursor-pointer shadow-sm flex flex-col gap-1"
+          >
+            <h3 className="font-semibold text-lg">{user.name}</h3>
+            <p className="text-sm text-gray-600">Sprache(n): {user.languages}</p>
+            <p className="text-sm text-gray-600">Skill: {user.skill}</p>
+          </div>
+        ))}
+      </div>
+
+    </div>
+  );
 }
