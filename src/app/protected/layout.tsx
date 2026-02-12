@@ -1,6 +1,8 @@
 import { Navbar } from '@/components/navbar'
 import { Header } from '@/components/header'
 
+import SkillSearch from "@/components/skillsearch";
+
 export default function ProtectedLayout({
   children,
 }: {
@@ -13,6 +15,9 @@ export default function ProtectedLayout({
         avatarUrl={null} />
       <Navbar />
 
+      <div>
+        <SkillSearch />
+      </div>
       <main>{children}</main>
     </>
   )
