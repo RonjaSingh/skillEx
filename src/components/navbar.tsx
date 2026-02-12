@@ -3,12 +3,30 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { LogoutButton } from '@/components/logout-button'
+import { useRef, useEffect } from 'react'
+
 
 export function Navbar() {
   const [open, setOpen] = useState(false)
 
+  const navRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (navRef.current && !navRef.current.contains(event.target as Node)) {
+        setOpen(false)
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [])
+
   return (
-    <nav className="relative w-full">
+    <nav className="relative w-full" ref={navRef}>
       {/* Menü Button */}
       <div className="flex justify-center">
         <button
