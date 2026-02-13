@@ -32,39 +32,80 @@ export default function SessionRow({
     setEditing(false)
   }
   
-  
-  
-  
-    return (
+   return (
+    <div className="border rounded p-2 text-sm space-y-2">
 
-
-    <div className="grid grid-cols-5 items-center border p-2 rounded text-sm">
-      <div>{date}</div>
-      <div>{topic}</div>
-      <div>{name}</div>
-
+      {/* ROW */}
+      <div className="grid grid-cols-5 items-center">
+        <div>{date}</div>
+        <div>{topic}</div>
+        <div>{name}</div>
 
         <div
           className="text-gray-600 truncate cursor-pointer"
           onClick={() => setExpanded(!expanded)}
         >
-         {description || '-'}
-      </div>
+          {description || '-'}
+        </div>
 
-      <div className="flex gap-2 justify-end">
-        {editable && !editing &&(
-          <button
-            onClick={() => {
+        <div className="flex gap-2 justify-end">
+          {editable && !editing && (
+            <button
+              onClick={() => {
                 setExpanded(true)
                 setEditing(true)
-            }}
-            className="px-2 py-1 border rounded bg-blue-100"
-          >
-            Edit
-          </button>
-        )}
-        {actions}
+              }}
+              className="px-2 py-1 border rounded bg-blue-100"
+            >
+              Edit
+            </button>
+          )}
+          {actions}
+        </div>
       </div>
+
+      
+      {expanded && (
+        <div className="bg-gray-50 border rounded p-3 space-y-2">
+
+          {!editing ? (
+            <p className="text-gray-700 whitespace-pre-wrap">
+              {description || 'No description'}
+            </p>
+          ) : (
+            <>
+              <textarea
+                className="w-full border rounded p-2 text-sm"
+                rows={4}
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+              />
+
+              <div className="flex gap-2">
+                <button
+                  onClick={handleSave}
+                  className="px-3 py-1 border rounded bg-green-100"
+                >
+                  Save
+                </button>
+
+                <button
+                  onClick={() => {
+                    setEditing(false)
+                    setText(description || '')
+                  }}
+                  className="px-3 py-1 border rounded bg-gray-100"
+                >
+                  Cancel
+                </button>
+              </div>
+            </>
+          )}
+        </div>
+      )}
     </div>
   )
 }
+  
+  
+    
