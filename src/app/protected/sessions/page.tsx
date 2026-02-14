@@ -50,6 +50,16 @@ export default function SessionsPage() {
     loadData()
   }
 
+  async function updateDescription(id: string, newDescription: string) {
+    await supabase
+    .from('session_request')
+    .update({ description: newDescription })
+    .eq('session_request_id', id)
+
+    loadData()
+}
+
+
    return (
     <div className="max-w-4xl mx-auto mt-6 space-y-6">
 
@@ -101,31 +111,36 @@ export default function SessionsPage() {
         ))}
       </SessionBox>
 
-      <SessionBox title="My requested Sessions">
+      <SessionBox title="Myrequested Sessions">
         {outgoing.map((s) => (
-          <SessionRow
-            key={s.session_request_id}
-            date={new Date(s.created_at).toLocaleString()}
-            topic={s.advertisement?.title}
-            name={s.request_to_user?.name}
-            actions={
-              <div className="flex gap-2 items-center">
-                <span className="text-sm px-2 py-1 border rounded bg-gray-100">
-                  {s.status}
-                </span>
+    <SessionRow
+      key={s.session_request_id}
+      date={new Date(s.created_at).toLocaleString()}
+      topic={s.advertisement?.title}
+      name={s.request_to_user?.name}
+      description={s.description}
+      editable={s.status === 'pending'}
+      onSave={(text) => updateDescription(s.session_request_id, text)}
+      actions={
+        <div className="flex gap-2 items-center">
+          <span className="text-sm px-2 py-1 border rounded bg-gray-100">
+            {s.status}
+          </span>
 
-                {s.status === 'pending' && (
-                  <button
-                    onClick={() => updateRequestStatus(s.session_request_id, 'cancelled')}
-                    className="px-2 py-1 border rounded bg-red-100"
-                  >
-                    Cancel
-                  </button>
-                )}
-              </div>
-            }
-          />
-        ))}
+          {s.status === 'pending' && (
+            <button
+              onClick={() =>
+                updateRequestStatus(s.session_request_id, 'cancelled')
+              }
+              className="px-2 py-1 border rounded bg-red-100"
+            >
+              Cancel
+            </button>
+          )}
+        </div>
+      }
+    />
+  ))}
       </SessionBox>
 
       <SessionBox title="Completed Sessions">
@@ -143,7 +158,7 @@ export default function SessionsPage() {
               name={otherUserName}
               actions={
                 <button className="px-2 py-1 border rounded bg-yellow-100">
-                  Rate Session ⭐
+                  Rate Session 
                 </button>
               }
             />
