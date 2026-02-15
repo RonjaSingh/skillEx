@@ -8,7 +8,8 @@ import {
   getIncomingRequests,
   getOutgoingRequests,
   getCompletedSessions,
-  getAcceptedRequests
+  getAcceptedRequests,
+  getActiveSessions
 } from '@/lib/supabase/sessionQueries'
 
 const supabase = createClient()
@@ -19,6 +20,8 @@ export default function SessionsPage() {
   const [completed, setCompleted] = useState<any[]>([])
   const [accepted, setAccepted] = useState<any[]>([])
   const [userId, setUserId] = useState<string | null>(null)
+  const [active, setActive] = useState<any[]>([])
+
 
   useEffect(() => {
     loadData()
@@ -34,11 +37,14 @@ export default function SessionsPage() {
     const outgoingRes = await getOutgoingRequests(userId)
     const completedRes = await getCompletedSessions(userId)
     const acceptedRes = await getAcceptedRequests(userId)
+    const activeRes = await getActiveSessions(userId)
 
     setIncoming(incomingRes.data || [])
     setOutgoing(outgoingRes.data || [])
     setCompleted(completedRes.data || [])
     setAccepted(acceptedRes.data || [])
+    setActive(activeRes.data || [])
+    
   }
 
   async function updateRequestStatus(id: string, status: 'accepted' | 'rejected' | 'cancelled') {
@@ -111,7 +117,7 @@ export default function SessionsPage() {
         ))}
       </SessionBox>
 
-      <SessionBox title="Myrequested Sessions">
+      <SessionBox title="My requested Sessions">
         {outgoing.map((s) => (
     <SessionRow
       key={s.session_request_id}
@@ -142,6 +148,31 @@ export default function SessionsPage() {
     />
   ))}
       </SessionBox>
+
+<SessionBox title="Active Sessions">
+  {active.map((s) => {
+    const otherUser =
+      s.teacher_user_id === userId
+        ? s.student?.name
+        : s.teacher?.name
+
+    return (
+      <SessionRow
+        key={s.session_id}
+        date={new Date(s.start_time).toLocaleString()}
+        topic={s.advertisement?.title}
+        name={otherUser}
+        actions={
+          <span className="px-2 py-1 bg-green-100 rounded">
+            Live
+          </span>
+        }
+      />
+    )
+  })}
+</SessionBox>
+
+    
 
       <SessionBox title="Completed Sessions">
         {completed.map((s) => {
