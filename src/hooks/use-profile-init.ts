@@ -23,9 +23,7 @@ export default function useProfileInit() {
         await supabase.from('user').insert({
           id: user.id,
           email: user.email,
-          name: '',
-          skills: [],
-          language: ''
+          name: ''
         })
       }
     }
