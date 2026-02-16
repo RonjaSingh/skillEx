@@ -15,7 +15,6 @@ export default function SkillSearch() {
   const [hasSearched, setHasSearched] = useState(false);
 
 
-
   // Alle Skills laden
   useEffect(() => {
     const loadSkills = async () => {
@@ -27,59 +26,74 @@ export default function SkillSearch() {
     loadSkills();
   }, []);
 
+
   // Suche starten
   const handleSearch = async () => {
-
-
     if (!search.trim()) return;
 
     setHasSearched(true);
 
-    if (!search.trim()) return;
+
+    /* passende User ids finden */
+    const { data: matches, error: matchError } = await supabase
+      .from("user_skills")
+      .select("user_id, skills!inner(name)")
+      .ilike("skills.name", `%${search}%`);
+
+    if (matchError) {
+      console.error(matchError);
+      return;
+    }
+
+    if (!matches || matches.length === 0) {
+      setResults([]);
+      return;
+    }
+
+
+    /* Alle Daten dieser User laden */
+    const userIds = [...new Set(matches.map((m: any) => m.user_id))];
 
     const { data, error } = await supabase
-      .from("user_skills")
+      .from("user")
       .select(`
-  user_id,
-  skills:skills!user_skills_skill_id_fkey ( name ),
-  user: user_skills_user_id_fkey (
-    id,
-    name,
-    user_language (
-      language:language_id ( name )
-    )
-  )
-`)
-
-      .ilike("skills.name", `%${search}%`);
+      id,
+      name,
+      user_language (
+        language:language_id ( name )
+      ),
+      user_skills (
+        skills ( name )
+      )
+    `)
+      .in("id", userIds);
 
     if (error) {
       console.error(error);
       return;
     }
 
-    console.log(JSON.stringify(data, null, 2));
 
+    /*für UI formatieren */
+    const formatted = data.map((user: any) => ({
+      user_id: user.id,
+      name: user.name,
+      languages:
+        user.user_language
+          ?.map((l: any) => l.language.name)
+          .join(", ") || "—",
+      skills:
+        user.user_skills
+          ?.filter((s: any) => s.skills)
+          .map((s: any) => s.skills.name) || []
+    }));
 
-
-    if (data) {
-      const mapped = data.map((item: any) => ({
-        user_id: item.user.id,
-        name: item.user.name,
-        skill: item.skills.name,
-        languages:
-          item.user.user_language
-            ?.map((l: any) => l.language.name)
-            .join(", ") || "—"
-
-      }));
-
-      setResults(mapped);
-    }
+    setResults(formatted);
   };
 
   return (
     <div className="w-full max-w-xl mx-auto mt-2">
+
 
       {/* Suchleiste Container */}
       <div className="flex gap-2 p-2 border rounded-lg shadow-md bg-white">
@@ -98,6 +112,7 @@ export default function SkillSearch() {
         </button>
       </div>
 
+
       {/* Ergebnisse */}
       <div className="space-y-3 mt-4">
 
@@ -110,7 +125,7 @@ export default function SkillSearch() {
           >
             <h3 className="font-semibold text-lg">{user.name}</h3>
             <p className="text-sm text-gray-600">Sprache(n): {user.languages}</p>
-            <p className="text-sm text-gray-600">Skill: {user.skill}</p>
+            <p className="text-sm text-gray-600"> Skills: {user.skills.join(", ")}</p>
           </div>
         ))}
 
