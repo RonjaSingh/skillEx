@@ -12,6 +12,10 @@ export default function SkillSearch() {
   const [results, setResults] = useState<any[]>([]);
   const [allSkills, setAllSkills] = useState<any[]>([]);
 
+  const [hasSearched, setHasSearched] = useState(false);
+
+
+
   // Alle Skills laden
   useEffect(() => {
     const loadSkills = async () => {
@@ -24,12 +28,18 @@ export default function SkillSearch() {
   }, []);
 
   // Suche starten
-const handleSearch = async () => {
-  if (!search.trim()) return;
+  const handleSearch = async () => {
 
-  const { data, error } = await supabase
-    .from("user_skills")
-.select(`
+
+    if (!search.trim()) return;
+
+    setHasSearched(true);
+
+    if (!search.trim()) return;
+
+    const { data, error } = await supabase
+      .from("user_skills")
+      .select(`
   user_id,
   skills:skills!user_skills_skill_id_fkey ( name ),
   user: user_skills_user_id_fkey (
@@ -41,32 +51,32 @@ const handleSearch = async () => {
   )
 `)
 
-    .ilike("skills.name", `%${search}%`);
+      .ilike("skills.name", `%${search}%`);
 
-  if (error) {
-    console.error(error);
-    return;
-  }
+    if (error) {
+      console.error(error);
+      return;
+    }
 
-console.log(JSON.stringify(data, null, 2));
+    console.log(JSON.stringify(data, null, 2));
 
 
 
-  if (data) {
-    const mapped = data.map((item: any) => ({
-      user_id: item.user.id,
-      name: item.user.name,
-      skill: item.skills.name,
-     languages:
-  item.user.user_language
-    ?.map((l: any) => l.language.name)
-    .join(", ") || "—"
+    if (data) {
+      const mapped = data.map((item: any) => ({
+        user_id: item.user.id,
+        name: item.user.name,
+        skill: item.skills.name,
+        languages:
+          item.user.user_language
+            ?.map((l: any) => l.language.name)
+            .join(", ") || "—"
 
-    }));
+      }));
 
-    setResults(mapped);
-  }
-};
+      setResults(mapped);
+    }
+  };
 
   return (
     <div className="w-full max-w-xl mx-auto mt-2">
@@ -90,6 +100,8 @@ console.log(JSON.stringify(data, null, 2));
 
       {/* Ergebnisse */}
       <div className="space-y-3 mt-4">
+
+        {/* Treffer */}
         {results.map((user) => (
           <div
             key={user.user_id}
@@ -101,8 +113,15 @@ console.log(JSON.stringify(data, null, 2));
             <p className="text-sm text-gray-600">Skill: {user.skill}</p>
           </div>
         ))}
-      </div>
 
+        {/*Keine Ergebnisse */}
+        {hasSearched && results.length === 0 && (
+          <p className="text-center text-gray-500 mt-6">
+            Keine Ergebnisse gefunden
+          </p>
+        )}
+
+      </div>
     </div>
   );
 }
