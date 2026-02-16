@@ -48,13 +48,20 @@ const handleSearch = async () => {
     return;
   }
 
+console.log(JSON.stringify(data, null, 2));
+
+
+
   if (data) {
     const mapped = data.map((item: any) => ({
       user_id: item.user.id,
       name: item.user.name,
       skill: item.skills.name,
-      languages:
-        item.user_language?.map((l: any) => l.language.name).join(", ") || "—"
+     languages:
+  item.user.user_language
+    ?.map((l: any) => l.language.name)
+    .join(", ") || "—"
+
     }));
 
     setResults(mapped);
