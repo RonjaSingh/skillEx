@@ -24,40 +24,42 @@ export default function SkillSearch() {
   }, []);
 
   // Suche starten
-  const handleSearch = async () => {
-    if (!search) return;
+const handleSearch = async () => {
+  if (!search.trim()) return;
 
-    const skill = allSkills.find((s) => s.name.toLowerCase() === search.toLowerCase());
-    if (!skill) {
-      setResults([]);
-      return;
-    }
+  const { data, error } = await supabase
+    .from("user_skills")
+.select(`
+  user_id,
+  skills:skills!user_skills_skill_id_fkey ( name ),
+  user: user_skills_user_id_fkey (
+    id,
+    name,
+    user_language (
+      language:language_id ( name )
+    )
+  )
+`)
 
-    const { data } = await supabase
-      .from("user_skills")
-      .select(`
-        user_id,
-        skills(name),
-        user: user_skills_user_id_fkey (
-          id,
-          name
-        ),
-        user_language (
-          language(name)
-        )
-      `)
-      .eq("skill_id", skill.skill_id);
+    .ilike("skills.name", `%${search}%`);
 
-    if (data) {
-      const mapped = data.map((item: any) => ({
-        user_id: item.user.id,
-        name: item.user.name,
-        skill: skill.name,
-        languages: item.user_language?.map((l: any) => l.language.name).join(", ") || "—"
-      }));
-      setResults(mapped);
-    }
-  };
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  if (data) {
+    const mapped = data.map((item: any) => ({
+      user_id: item.user.id,
+      name: item.user.name,
+      skill: item.skills.name,
+      languages:
+        item.user_language?.map((l: any) => l.language.name).join(", ") || "—"
+    }));
+
+    setResults(mapped);
+  }
+};
 
   return (
     <div className="w-full max-w-xl mx-auto mt-2">
