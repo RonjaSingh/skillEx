@@ -91,6 +91,15 @@ export default function SkillSearch() {
     setResults(formatted);
   };
 
+  // erster Buchstabe immer gross(Helferfunktion)
+  const capitalize = (str: string) => {
+    if (!str) return "";
+    return str
+      .split(" ")
+      .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(" ");
+  };
+
   return (
     <div className="w-full max-w-xl mx-auto mt-2">
 
@@ -120,12 +129,23 @@ export default function SkillSearch() {
         {results.map((user) => (
           <div
             key={user.user_id}
-            onClick={() => router.push(`/protected/profile/${user.user_id}`)}
-            className="border p-4 rounded-lg hover:bg-gray-50 cursor-pointer shadow-sm flex flex-col gap-1"
+            className="border p-4 rounded-lg hover:bg-gray-50 shadow-sm flex items-center justify-between cursor-default"
           >
-            <h3 className="font-semibold text-lg">{user.name}</h3>
-            <p className="text-sm text-gray-600">Sprache(n): {user.languages}</p>
-            <p className="text-sm text-gray-600"> Skills: {user.skills.join(", ")}</p>
+            <h3
+              onClick={() => router.push(`/protected/profile/${user.user_id}`)}
+              className="font-semibold cursor-pointer hover:text-pink-500 w-1/4">{user.name}</h3>
+            <p className="text-sm text-gray-600 w-1/4"><strong>Sprache(n): </strong><br />{capitalize(user.languages)}</p>
+            <p className="text-sm text-gray-600 w-1/4"> <strong>Skills: </strong><br />{capitalize(user.skills.join(", "))}</p>
+
+            {/* Button rechts */}
+            <button
+              onClick={() => {
+                /*  router.push(`/calendar/${user.user_id}`) */
+              }}
+              className="bg-pink-500 text-white w-40 px-2 py-2 rounded-lg hover:bg-pink-600 transition"
+            >
+              Book a session
+            </button>
           </div>
         ))}
 
