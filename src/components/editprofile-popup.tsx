@@ -67,12 +67,11 @@ export default function EditProfilePopup({ name, setName, skills, setSkills, lan
         <h2 className="text-xl font-bold">Edit Profile</h2>
 
         <label className="flex flex-col gap-1">
-          Name:
+          <strong>Name:</strong>
           <input value={tempName} onChange={(e) => setTempName(e.target.value)} className="border px-2 py-1 rounded" />
         </label>
 
         <label className="flex flex-col gap-2">
-          Profile Picture:
           <div className="flex items-center gap-4 mt-1">
             {tempImage && (
               <img
@@ -95,7 +94,7 @@ export default function EditProfilePopup({ name, setName, skills, setSkills, lan
 
 
         <label className="flex flex-col gap-2">
-          Skills:
+        <strong>Skills:</strong>
           <div className="flex flex-wrap gap-2 mt-1">
             {tempSkills.map((s) => (
               <span key={s} className="bg-blue-200 px-2 py-1 rounded flex items-center gap-1">
@@ -111,7 +110,7 @@ export default function EditProfilePopup({ name, setName, skills, setSkills, lan
         </label>
 
         <label className="flex flex-col gap-2">
-          Languages:
+        <strong>Languages:</strong>
           <div className="flex flex-wrap gap-2 mt-1">
             {tempLanguages.map((l) => (
               <span key={l} className="bg-green-200 px-2 py-1 rounded flex items-center gap-1">
