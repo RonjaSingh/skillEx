@@ -117,21 +117,21 @@ export default function SkillSearch() {
   };
 
   return (
-    <div className="w-full max-w-xl mx-auto mt-2">
+    <div className="w-full mt-0 px-0">
 
 
       {/* Suchleiste Container */}
-      <div className="flex gap-2 p-2 border rounded-lg shadow-md bg-white">
+      <div className="flex justify-center gap-4 p-2 border rounded-lg shadow-md bg-white">
         <input
           type="text"
-          className="flex-1 border px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400"
+          className=" w-100 border px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400"
           placeholder="Skill eingeben..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
         <button
           onClick={handleSearch}
-          className="px-4 py-2 rounded-lg bg-pink-500 text-white font-semibold hover:bg-pink-600"
+          className="flex-shrink-0 px-4 py-2 rounded-lg bg-pink-500 text-white font-semibold hover:bg-pink-600"
         >
           Suchen
         </button>
