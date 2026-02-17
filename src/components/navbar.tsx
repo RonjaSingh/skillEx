@@ -50,19 +50,19 @@ export function Navbar() {
 
           <li>
             <Link href="/protected/profile" className="block px-4 py-2 hover:bg-gray-100 rounded">
-              Profil
+              My Profile
             </Link>
           </li>
 
           <li>
             <Link href="/protected/sessions" className="block px-4 py-2 hover:bg-gray-100 rounded">
-              Meine Sessions
+              My Sessions
             </Link>
           </li>
 
           <li>
             <Link href="/protected/advertisement" className="block px-4 py-2 hover:bg-gray-100 rounded">
-              Meine Anzeigen
+              My Posts
             </Link>
           </li>
 
