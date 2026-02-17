@@ -17,7 +17,7 @@ type Props = {
   onClose: () => void
 }
 
-export default function EditProfilePopup({ name, setName, skills, setSkills, languages, setLanguages,profileImage, setProfileImage, onSave, onClose }: Props) {
+export default function EditProfilePopup({ name, setName, skills, setSkills, languages, setLanguages, profileImage, setProfileImage, onSave, onClose }: Props) {
   const [tempName, setTempName] = useState(name)
   const [tempSkills, setTempSkills] = useState<string[]>(skills)
   const [tempLanguages, setTempLanguages] = useState<string[]>(languages)
@@ -71,17 +71,26 @@ export default function EditProfilePopup({ name, setName, skills, setSkills, lan
           <input value={tempName} onChange={(e) => setTempName(e.target.value)} className="border px-2 py-1 rounded" />
         </label>
 
-        <label className="flex flex-col gap-2 items-center">
+        <label className="flex flex-col gap-2">
           Profile Picture:
+          <div className="flex items-center gap-4 mt-1">
+            {tempImage && (
+              <img
+                src={tempImage}
+                className="w-24 h-24 rounded-full object-cover border"
+              />
+            )}
+            <label className="px-3 py-1 border rounded cursor-pointer hover:bg-gray-100">
+              Upload Image
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+                className="hidden"
+              />
+            </label>
 
-          {tempImage && (
-            <img
-              src={tempImage}
-              className="w-24 h-24 rounded-full object-cover border"
-            />
-          )}
-
-          <input type="file" accept="image/*" onChange={handleImageUpload} />
+          </div>
         </label>
 
 
