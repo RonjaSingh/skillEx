@@ -31,9 +31,9 @@ export function Navbar() {
       <div className="flex justify-center">
         <button
           onClick={() => setOpen(!open)}
-          className="w-full py-2 border bg-white hover:bg-gray-100"
+          className="w-full py-3 border bg-white hover:bg-gray-100"
         >
-          Menü
+       <strong>Menü</strong>
         </button>
       </div>
 
