@@ -9,16 +9,22 @@ type Props = {
   setSkills: (val: string[]) => void
   languages: string[]
   setLanguages: (val: string[]) => void
-  onSave: (name: string, skills: string[], languages: string[]) => Promise<void>
+
+  profileImage: string | null
+  setProfileImage: (val: string | null) => void
+
+  onSave: (name: string, skills: string[], languages: string[], profileImage: string | null) => Promise<void>
   onClose: () => void
 }
 
-export default function EditProfilePopup({ name, setName, skills, setSkills, languages, setLanguages, onSave, onClose }: Props) {
+export default function EditProfilePopup({ name, setName, skills, setSkills, languages, setLanguages,profileImage, setProfileImage, onSave, onClose }: Props) {
   const [tempName, setTempName] = useState(name)
   const [tempSkills, setTempSkills] = useState<string[]>(skills)
   const [tempLanguages, setTempLanguages] = useState<string[]>(languages)
   const [newSkill, setNewSkill] = useState('')
   const [newLang, setNewLang] = useState('')
+  const [tempImage, setTempImage] = useState<string | null>(profileImage)
+
 
   const handleAddSkill = () => {
     const s = newSkill.trim()
@@ -34,11 +40,24 @@ export default function EditProfilePopup({ name, setName, skills, setSkills, lan
     setNewLang('')
   }
 
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    const reader = new FileReader()
+    reader.onloadend = () => {
+      setTempImage(reader.result as string)
+    }
+    reader.readAsDataURL(file)
+  }
+
+
   const handleSave = async () => {
-    await onSave(tempName, tempSkills, tempLanguages)
+    await onSave(tempName, tempSkills, tempLanguages, tempImage)
     setName(tempName)
     setSkills(tempSkills)
     setLanguages(tempLanguages)
+    setProfileImage(tempImage)
     onClose()
   }
 
@@ -51,6 +70,20 @@ export default function EditProfilePopup({ name, setName, skills, setSkills, lan
           Name:
           <input value={tempName} onChange={(e) => setTempName(e.target.value)} className="border px-2 py-1 rounded" />
         </label>
+
+        <label className="flex flex-col gap-2 items-center">
+          Profile Picture:
+
+          {tempImage && (
+            <img
+              src={tempImage}
+              className="w-24 h-24 rounded-full object-cover border"
+            />
+          )}
+
+          <input type="file" accept="image/*" onChange={handleImageUpload} />
+        </label>
+
 
         <label className="flex flex-col gap-2">
           Skills:

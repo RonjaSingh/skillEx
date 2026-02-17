@@ -8,6 +8,8 @@ export default function useProfile() {
   const [skills, setSkills] = useState<string[]>([])
   const [languages, setLanguages] = useState<string[]>([])
   const [loading, setLoading] = useState(true)
+  const [profileImage, setProfileImage] = useState<string | null>(null)
+
 
   useEffect(() => {
     const loadProfile = async () => {
@@ -29,6 +31,10 @@ export default function useProfile() {
         .single()
 
       setName(profile?.name || '')
+
+      // Profilbild laden
+      setProfileImage(profile?.profile_image || null)
+
 
       // Skills laden
       const { data: skillData } = await supabase
@@ -53,88 +59,92 @@ export default function useProfile() {
   }, [])
 
 
-  const saveProfile = async (newName: string, newSkills: string[], newLanguages: string[]) => {
+  const saveProfile = async (newName: string, newSkills: string[], newLanguages: string[], newProfileImage: string | null) => {
     const supabase = createClient()
     const { data: authData } = await supabase.auth.getUser()
     const user = authData.user
     if (!user) return
 
-    // Name speichern
+    // Name speichern + profileimage
     await supabase
       .from('user')
-      .update({ name: newName })
+      .update({ name: newName, profile_image: newProfileImage })
       .eq('id', user.id)
 
     // Skills speichern
-// Alte Skills löschen
-await supabase.from('user_skills').delete().eq('user_id', user.id)
+    // Alte Skills löschen
+    await supabase.from('user_skills').delete().eq('user_id', user.id)
 
-// Neue Skills einfügen
-for (const skillName of newSkills) {
-  if (!skillName) continue // leeren Wert überspringen
+    // Neue Skills einfügen
+    for (const skillName of newSkills) {
+      if (!skillName) continue // leeren Wert überspringen
 
-  // Prüfen, ob Skill existiert
-  let { data: skill } = await supabase
-    .from('skills')
-    .select('*')
-    .eq('name', skillName)
-    .maybeSingle()
+      // Prüfen, ob Skill existiert
+      let { data: skill } = await supabase
+        .from('skills')
+        .select('*')
+        .eq('name', skillName)
+        .maybeSingle()
 
-  // Skill ggf. erstellen
-  if (!skill) {
-    const { data: newSkill } = await supabase
-      .from('skills')
-      .insert({ name: skillName })
-      .select('*')
-      .single()
-    skill = newSkill
-  }
+      // Skill ggf. erstellen
+      if (!skill) {
+        const { data: newSkill } = await supabase
+          .from('skills')
+          .insert({ name: skillName })
+          .select('*')
+          .single()
+        skill = newSkill
+      }
 
-  // Nur einfügen, wenn skill wirklich existiert
-  if (skill?.skill_id) {
-    await supabase.from('user_skills').insert({
-      user_id: user.id,
-      skill_id: skill.skill_id
-    })
-  }
-}
+      // Nur einfügen, wenn skill wirklich existiert
+      if (skill?.skill_id) {
+        await supabase.from('user_skills').insert({
+          user_id: user.id,
+          skill_id: skill.skill_id
+        })
+      }
+    }
 
-// Alte Languages löschen
-await supabase.from('user_language').delete().eq('user_id', user.id)
+    // Alte Languages löschen
+    await supabase.from('user_language').delete().eq('user_id', user.id)
 
-// Neue Languages einfügen
-for (const langName of newLanguages) {
-  if (!langName) continue
+    // Neue Languages einfügen
+    for (const langName of newLanguages) {
+      if (!langName) continue
 
-  let { data: lang } = await supabase
-    .from('language')
-    .select('*')
-    .eq('name', langName)
-    .maybeSingle()
+      let { data: lang } = await supabase
+        .from('language')
+        .select('*')
+        .eq('name', langName)
+        .maybeSingle()
 
-  if (!lang) {
-    const { data: newLang } = await supabase
-      .from('language')
-      .insert({ name: langName })
-      .select('*')
-      .single()
-    lang = newLang
-  }
+      if (!lang) {
+        const { data: newLang } = await supabase
+          .from('language')
+          .insert({ name: langName })
+          .select('*')
+          .single()
+        lang = newLang
+      }
 
-  if (lang?.id) {
-    await supabase.from('user_language').insert({
-      user_id: user.id,
-      language_id: lang.id
-    })
-  }
-}
+      if (lang?.id) {
+        await supabase.from('user_language').insert({
+          user_id: user.id,
+          language_id: lang.id
+        })
+      }
+    }
 
 
     // State aktualisieren
     setName(newName)
     setSkills(newSkills)
     setLanguages(newLanguages)
+    setProfileImage(newProfileImage)
   }
 
-  return { name, setName, skills, setSkills, languages, setLanguages, loading, saveProfile }
+  return {
+    name, setName, skills, setSkills, languages, setLanguages, profileImage,
+    setProfileImage, loading, saveProfile
+  }
 }
