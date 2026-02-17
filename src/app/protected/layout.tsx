@@ -3,6 +3,7 @@
 import { Navbar } from '@/components/navbar'
 import { Header } from '@/components/header'
 import { getCurrentUsername } from "@/lib/get-current-username";
+import { getCurrentImage } from '@/lib/get-current-image';
 
 import SkillSearch from "@/components/skillsearch";
 
@@ -13,12 +14,13 @@ export default async function ProtectedLayout({
 }) {
 
   const profile = await getCurrentUsername();
+  const avatarUrl = await getCurrentImage();
 
   return (
     <>
       <Header
         username={profile?.name ?? "Username"}
-        avatarUrl={null} />
+         avatarUrl={avatarUrl} />
       <Navbar />
 
       <div>
