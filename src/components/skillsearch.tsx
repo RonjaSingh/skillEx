@@ -74,19 +74,35 @@ export default function SkillSearch() {
     }
 
 
-    /*für UI formatieren */
-    const formatted = data.map((user: any) => ({
-      user_id: user.id,
-      name: user.name,
-      languages:
-        user.user_language
-          ?.map((l: any) => l.language.name)
-          .join(", ") || "—",
-      skills:
+    /* für UI formatieren */
+    const formatted = data.map((user: any) => {
+      const skillList =
         user.user_skills
           ?.filter((s: any) => s.skills)
-          .map((s: any) => s.skills.name) || []
-    }));
+          .map((s: any) => s.skills.name) || [];
+
+      // Gesuchten Skill als erstes anzeigen
+      const sortedSkills = skillList.sort((a: string, b: string) => {
+        const searchLower = search.toLowerCase();
+
+        const aMatch = a.toLowerCase().includes(searchLower);
+        const bMatch = b.toLowerCase().includes(searchLower);
+
+        if (aMatch && !bMatch) return -1;
+        if (!aMatch && bMatch) return 1;
+        return 0;
+      });
+
+      return {
+        user_id: user.id,
+        name: user.name,
+        languages:
+          user.user_language
+            ?.map((l: any) => l.language.name)
+            .join(", ") || "—",
+        skills: sortedSkills
+      };
+    });
 
     setResults(formatted);
   };
