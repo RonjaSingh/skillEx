@@ -19,7 +19,8 @@ export default async function ProtectedLayout({
   const avatarUrl = await getCurrentImage();
 
   return (
-    <>
+   <div className="min-h-screen flex flex-col">
+
       <Header
         username={profile?.name ?? "Username"}
          avatarUrl={avatarUrl} />
@@ -28,9 +29,10 @@ export default async function ProtectedLayout({
       <div>
         <SkillSearch />
       </div>
-      <main>{children}</main>
+
+      <main className="flex-1">{children}</main>
 
     <Footer />
-    </>
+    </div>
   )
 }
