@@ -35,15 +35,24 @@ export default function Board() {
 
                     {posts.length === 0 && (
                         <div className="flex items-center justify-center text-center text-white h-full">
-                            Noch keine Anzeigen angeheftet.
+                            No posts yet. Be the first to create a post!
                         </div>
                     )}
 
                     {posts.map((post, i) => (
                         <div
                             key={i}
-                            className="border rounded-lg p-4 bg-white shadow-sm w-[200px] h-[200px] flex flex-col"
+                            className="border rounded-lg p-4 bg-white shadow-sm w-[150px] h-[150px] flex flex-col"
                         >
+
+                            {/* Label */}
+                            <span
+                                className={`text-xs font-bold uppercase ${post.type === "gesuch" ? "text-blue-600" : "text-green-600"
+                                    }`}
+                            >
+                                {post.type === "gesuch" ? "Suche …" : "Biete …"}
+                            </span>
+
                             {/* Titel */}
                             <span
                                 className={`text-sm font-bold uppercase 
