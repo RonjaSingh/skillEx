@@ -20,8 +20,8 @@ export default function PostCard({ post, onReadMore }: Props) {
     const cutoff = 60;
 
     return (
-<div className="border rounded-lg p-3 bg-white aspect-square flex flex-col">
-
+<div className="border rounded-lg p-3 bg-white aspect-square flex flex-col relative">
+   <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-4 h-4 bg-red-600 rounded-full shadow-md border border-red-800"></div>
 
             {/* Label */}
             <span
