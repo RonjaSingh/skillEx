@@ -18,10 +18,11 @@ export default function ProfilePage() {
   if (loading) return <p>Loading...</p>
 
   return (
-    <div className="max-w-xl mx-auto mt-10 p-4 space-y-6">
+  <div className="max-w-xl mx-auto mt-10 space-y-20">
+
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <h1 className="text-2xl font-bold">{name || 'Username'}</h1>
+        <div className="flex items-center gap-10">
+          <h1 className="text-3xl font-bold">{name || 'Username'}</h1>
 
           {profileImage ? (
             <img
@@ -35,21 +36,22 @@ export default function ProfilePage() {
           )}
         </div>
 
-        <button className="px-4 py-2 border rounded hover:bg-gray-100" onClick={() => setIsPopupOpen(true)}>Edit Profile</button>
+        <button className="w-40 px-4 py-2 border rounded hover:bg-gray-100" onClick={() => setIsPopupOpen(true)}>Edit Profile</button>
       </div>
 
-      <p><strong>Skills:</strong> {skills.join(', ')}</p>
-      <p><strong>Languages:</strong> {languages.join(', ')}</p>
-      <div className="flex items-center justify-between mt-4">
-        <p><strong>Attended Sessions:</strong></p>
+      <p className="text-xl m-2 flex gap-3"><strong>Skills:</strong> {skills.join(', ')}</p>
+      <p className="text-xl m-2 mt-10 flex gap-3"><strong>Languages:</strong> {languages.join(', ')}</p>
+      <div className="flex items-center justify-between mt-2">
+        <p className="text-xl m-2 mt-10"><strong>Attended Sessions:</strong></p>
+
         <button
           onClick={() => router.push('/protected/sessions')}
-          className="px-4 py-2 border rounded hover:bg-gray-100"
+          className="w-40 px-4 py-2 border rounded hover:bg-gray-100"
         >
           My Sessions
         </button>
       </div>
-
+      <p className="text-xl underline m-2"><strong>My Calender</strong></p>
 
       {isPopupOpen && (
         <EditProfilePopup
