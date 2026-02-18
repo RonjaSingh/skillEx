@@ -11,10 +11,4 @@ export default async function ProtectedPage() {
     redirect('/auth/login')
   }
 
-  return (
-    <div>
-
-      <LogoutButton />
-    </div>
-  )
 }
