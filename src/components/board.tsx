@@ -9,11 +9,11 @@ type Post = {
 
 export default function Board() {
     const [posts, setPosts] = useState<Post[]>([]);
-    const [modalType, setModalType] = useState<"gesuch" | "angebot" | null>(null);
+    const [popupType, setPopupType] = useState<"gesuch" | "angebot" | null>(null);
 
     const addPost = (text: string, type: "gesuch" | "angebot") => {
         setPosts([{ text, type }, ...posts]);
-        setModalType(null);
+        setPopupType(null);
     };
 
     return (
@@ -46,19 +46,19 @@ export default function Board() {
                 </div>
 
                 {/* Buttons */}
-                <div className="flex justify-center gap-5 pt-2 mb-6 text-white font-bold text-xl">
+                <div className="flex justify-center gap-10 mb-6 text-white font-bold text-xl">
                     <button
-                        onClick={() => setModalType("gesuch")}
-                        className="w-45 h-20 bg-pink-500 rounded-lg hover:bg-pink-700"
+                        onClick={() => setPopupType("gesuch")}
+                        className=" w-[180px] h-16 bg-pink-500 rounded-lg hover:bg-pink-700"
                     >
-                        Gesuch
+                       Request
                     </button>
 
                     <button
-                        onClick={() => setModalType("angebot")}
-                        className="w-45 h-20 bg-pink-500 rounded-lg hover:bg-pink-700"
+                        onClick={() => setPopupType("angebot")}
+                        className="w-[180px] h-16 bg-pink-500 rounded-lg hover:bg-pink-700"
                     >
-                        Angebot
+                        Offer
                     </button>
                 </div>
 
