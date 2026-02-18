@@ -49,7 +49,7 @@ export default function BoardPopup({ type, onClose, onSubmit }: Props) {
                         onClick={onClose}
                         className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
                     >
-                        Abbrechen
+                        Cancel
                     </button>
 
                     <button
@@ -57,9 +57,9 @@ export default function BoardPopup({ type, onClose, onSubmit }: Props) {
                             if (!text.trim()) return;
                             onSubmit(title, text);
                         }}
-                        className="px-4 py-2 bg-pink-500 text-white rounded hover:bg-pink-700"
+                        className="px-8 py-2 bg-pink-500 text-white rounded hover:bg-pink-700"
                     >
-                        Anheften
+                        Pin
                     </button>
                 </div>
 

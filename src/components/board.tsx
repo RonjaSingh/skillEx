@@ -31,44 +31,45 @@ export default function Board() {
             <div className="space-y-3">
 
                 {/* Feld für Anzeigen */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 h-[450px] overflow-y-auto space-y-3 border-2 border-gray-300 rounded-lg p-4 bg-gray-800 text-white">
-
-                    {posts.length === 0 && (
-                        <div className="flex items-center justify-center text-center text-white h-full">
+                {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 h-[450px] overflow-y-auto space-y-3 border-2 border-gray-300 rounded-lg p-4 bg-gray-800 text-white"> */}
+                <div className="border-2 border-gray-300 rounded-lg p-4 bg-gray-800 h-[450px] overflow-y-auto">
+                    {posts.length === 0 ? (
+                        <div className="flex items-center justify-center h-full text-white text-center px-4">
                             No posts yet. Be the first to create a post!
                         </div>
-                    )}
+                    ) : (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                            {posts.map((post, i) => (
+                                <div
+                                    key={i}
+                                    className="border rounded-lg p-4 bg-white shadow-sm w-[120px] h-[120px] flex flex-col">
 
-                    {posts.map((post, i) => (
-                        <div
-                            key={i}
-                            className="border rounded-lg p-4 bg-white shadow-sm w-[150px] h-[150px] flex flex-col"
-                        >
+                                    {/* Label */}
+                                    <span
+                                        className={`text-sm font-bold
+                                             ${post.type === "gesuch" ? "text-black" : "text-black"
+                                            }`}
+                                    >
+                                        {post.type === "gesuch" ? "Suche …" : "Biete …"}
+                                    </span>
 
-                            {/* Label */}
-                            <span
-                                className={`text-xs font-bold uppercase ${post.type === "gesuch" ? "text-blue-600" : "text-green-600"
-                                    }`}
-                            >
-                                {post.type === "gesuch" ? "Suche …" : "Biete …"}
-                            </span>
+                                    {/* Titel */}
+                                    <span
+                                        className={`text-sm font-bold 
+                                    ${post.type === "gesuch" ? "text-black" : "text-black"
+                                            }`}
+                                    >
+                                        {post.title}
+                                    </span>
 
-                            {/* Titel */}
-                            <span
-                                className={`text-sm font-bold uppercase 
-                                    ${post.type === "gesuch" ? "text-blue-600" : "text-green-600"
-                                    }`}
-                            >
-                                {post.title}
-                            </span>
-
-                            {/* Text */}
-                            <p className="mt-2 text-sm flex-1 overflow-auto text-gray-700">
-                                {post.text}
-                            </p>
+                                    {/* Text */}
+                                    <p className="mt-2 text-sm font-cursive flex-1 overflow-auto text-black">
+                                        {post.text}
+                                    </p>
+                                </div>
+                            ))}
                         </div>
-                    ))}
-
+                    )}
                 </div>
 
                 {/* Buttons */}
