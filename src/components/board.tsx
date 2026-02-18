@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import BoardPopup from "./board-popup";
+import PostCard from "./postCard";
 
 
 type Post = {
@@ -15,9 +16,6 @@ export default function Board() {
     const [popupType, setPopupType] = useState<"gesuch" | "angebot" | null>(null);
 
     const addPost = (title: string, text: string, type: "gesuch" | "angebot") => {
-        const displayTitle =
-            type === "gesuch" ? `Suche … ${title}` : `Biete … ${title}`;
-
 
         setPosts([{ title, text, type }, ...posts]);
         setPopupType(null);
@@ -30,8 +28,7 @@ export default function Board() {
 
             <div className="space-y-3">
 
-                {/* Feld für Anzeigen */}
-                {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 h-[450px] overflow-y-auto space-y-3 border-2 border-gray-300 rounded-lg p-4 bg-gray-800 text-white"> */}
+                {/*board container */}
                 <div className="border-2 border-gray-300 rounded-lg p-4 bg-gray-800 h-[450px] overflow-y-auto">
                     {posts.length === 0 ? (
                         <div className="flex items-center justify-center h-full text-white text-center px-4">
@@ -40,38 +37,11 @@ export default function Board() {
                     ) : (
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                             {posts.map((post, i) => (
-                                <div
-                                    key={i}
-                                    className="border rounded-lg p-4 bg-white shadow-sm w-[120px] h-[120px] flex flex-col">
-
-                                    {/* Label */}
-                                    <span
-                                        className={`text-sm font-bold
-                                             ${post.type === "gesuch" ? "text-black" : "text-black"
-                                            }`}
-                                    >
-                                        {post.type === "gesuch" ? "Suche …" : "Biete …"}
-                                    </span>
-
-                                    {/* Titel */}
-                                    <span
-                                        className={`text-sm font-bold 
-                                    ${post.type === "gesuch" ? "text-black" : "text-black"
-                                            }`}
-                                    >
-                                        {post.title}
-                                    </span>
-
-                                    {/* Text */}
-                                    <p className="mt-2 text-sm font-cursive flex-1 overflow-auto text-black">
-                                        {post.text}
-                                    </p>
-                                </div>
+                                <PostCard key={i} post={post} />
                             ))}
                         </div>
                     )}
                 </div>
-
                 {/* Buttons */}
                 <div className="flex justify-center gap-10 mb-6 text-white font-bold text-xl">
                     <button
@@ -98,8 +68,6 @@ export default function Board() {
                     onSubmit={(title, text) => addPost(title, text, popupType)}
                 />
             )}
-
-
 
         </section>
     );
