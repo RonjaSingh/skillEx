@@ -1,8 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import BoardPopup from "./board-popup";
+
 
 type Post = {
+    title: string;
     text: string;
     type: "gesuch" | "angebot";
 };
@@ -11,8 +14,12 @@ export default function Board() {
     const [posts, setPosts] = useState<Post[]>([]);
     const [popupType, setPopupType] = useState<"gesuch" | "angebot" | null>(null);
 
-    const addPost = (text: string, type: "gesuch" | "angebot") => {
-        setPosts([{ text, type }, ...posts]);
+    const addPost = (title: string, text: string, type: "gesuch" | "angebot") => {
+        const displayTitle =
+            type === "gesuch" ? `Suche … ${title}` : `Biete … ${title}`;
+
+
+        setPosts([{ title, text, type }, ...posts]);
         setPopupType(null);
     };
 
@@ -24,7 +31,7 @@ export default function Board() {
             <div className="space-y-3">
 
                 {/* Feld für Anzeigen */}
-                <div className="h-[450px] overflow-y-auto space-y-3 border-2 border-gray-300 rounded-lg p-4 bg-gray-800 text-white">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 h-[450px] overflow-y-auto space-y-3 border-2 border-gray-300 rounded-lg p-4 bg-gray-800 text-white">
 
                     {posts.length === 0 && (
                         <div className="flex items-center justify-center text-center text-white h-full">
@@ -33,13 +40,23 @@ export default function Board() {
                     )}
 
                     {posts.map((post, i) => (
-                        <div key={i} className="border rounded-lg p-4 bg-white shadow-sm">
-                            <span className={`text-xs font-semibold uppercase ${post.type === "gesuch" ? "text-blue-600" : "text-green-600"
-                                }`}>
-                                {post.type}
+                        <div
+                            key={i}
+                            className="border rounded-lg p-4 bg-white shadow-sm w-[200px] h-[200px] flex flex-col"
+                        >
+                            {/* Titel */}
+                            <span
+                                className={`text-sm font-bold uppercase 
+                                    ${post.type === "gesuch" ? "text-blue-600" : "text-green-600"
+                                    }`}
+                            >
+                                {post.title}
                             </span>
 
-                            <p className="mt-2">{post.text}</p>
+                            {/* Text */}
+                            <p className="mt-2 text-sm flex-1 overflow-auto text-gray-700">
+                                {post.text}
+                            </p>
                         </div>
                     ))}
 
@@ -51,7 +68,7 @@ export default function Board() {
                         onClick={() => setPopupType("gesuch")}
                         className=" w-[180px] h-16 bg-pink-500 rounded-lg hover:bg-pink-700"
                     >
-                       Request
+                        Request
                     </button>
 
                     <button
@@ -64,6 +81,13 @@ export default function Board() {
 
             </div>
 
+            {popupType && (
+                <BoardPopup
+                    type={popupType}
+                    onClose={() => setPopupType(null)}
+                    onSubmit={(title, text) => addPost(title, text, popupType)}
+                />
+            )}
 
 
 
