@@ -38,13 +38,14 @@ export default function Board() {
             <div className="space-y-3">
 
                 {/*board container */}
-                <div className="border-2 border-gray-300 rounded-lg p-4 bg-gray-800 h-[450px] overflow-y-auto">
+                <div className="border-2 border-gray-300 rounded-lg p-4 bg-gray-800 h-[500px]">
                     {posts.length === 0 ? (
                         <div className="flex items-center justify-center h-full text-white text-center px-4">
                             No posts yet. Be the first to create a post!
                         </div>
                     ) : (
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                       <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-5 gap-5">
+
                             {posts.map((post, i) => (
                                 <PostCard
                                     key={i}

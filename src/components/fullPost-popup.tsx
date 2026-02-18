@@ -26,22 +26,29 @@ export default function PostFullPopup({ post, onClose }: Props) {
           ✕
         </button>
 
-        <h2 className="text-sm font-semibold uppercase text-black">
+        <h2 className="text-md font-semibold text-black">
           {post.type === 'gesuch' ? 'Suche …' : 'Biete …'}
         </h2>
 
-        <h2 className="text-xl font-semibold underline mt-2">{post.title}</h2>
+        <h2 className="text-md font-semibold underline mt-2">{post.title}</h2>
 
-        <p className="mt-4 text-gray-800 whitespace-pre-wrap break-words">{post.text}</p>
+        <p className="mt-4 text-md text-gray-800 whitespace-pre-wrap break-words">{post.text}</p>
 
         <div className="mt-4 text-gray-500 text-xs">
           Createt from <strong>{post.creator}</strong> am{' '}
           {new Date(post.timestamp).toLocaleString()}
         </div>
+  
+     <div className="flex justify-center gap-4 mt-5">
+  <button className="px-2 py-2 w-48 h-10 bg-gray-500 text-white rounded-lg hover:bg-gray-700">
+    Cancel
+  </button>
 
-        <button className="mt-4 px-4 py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-700">
-          Book a Session
-        </button>
+  <button className="px-2 py-2 w-48 h-10 bg-pink-500 text-white rounded-lg hover:bg-pink-700">
+    Book your Session
+  </button>
+</div>
+
       </div>
     </div>
   )

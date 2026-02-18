@@ -20,34 +20,37 @@ export default function PostCard({ post, onReadMore }: Props) {
     const cutoff = 60;
 
     return (
-        <div className="border rounded-lg p-3 bg-white w-[150px] h-[150px] flex flex-col">
+<div className="border rounded-lg p-3 bg-white aspect-square flex flex-col">
+
+
             {/* Label */}
             <span
-                className="text-xs font-bold uppercase text-black"
-    
+                className="text-sm font-bold text-black"
+
             >
-                {post.type === "gesuch" ? "Suche …" : "Biete …"}
+                {post.type === "gesuch" ? " Biete:" : "Suche:"}
             </span>
 
             {/* Titel */}
-            <span className="text-sm font-bold underline mt-1">{post.title}</span>
+           <span className="text-sm font-bold underline m-1 break-words">{post.title}</span>
+
 
             {/* Text */}
-            <p className="mt-1 text-sm text-gray-700 break-words h-[60px] overflow-hidden">
+            <p className="m-1 text-xs text-gray-700 break-words flex-1 overflow-hidden">
+
                 {post.text.length > cutoff
                     ? post.text.slice(0, cutoff) + "..."
                     : post.text}
             </p>
 
 
-            {post.text.length > cutoff && (
-                <button
-                    onClick={() => onReadMore(post)}
-                    className="text-blue-600 text-xs mt-1 hover:underline self-start"
-                >
-                    Read more…
-                </button>
-            )}
+            <button
+                onClick={() => onReadMore(post)}
+                className="text-blue-600 text-xs mt-2 hover:underline self-start"
+            >
+                Read more…
+            </button>
+
         </div>
 
     );
