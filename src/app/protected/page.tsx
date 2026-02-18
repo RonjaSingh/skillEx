@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation'
 
 import { LogoutButton } from '@/components/logout-button'
 import { createClient } from '@/lib/supabase/server'
+import Board from '@/components/board'
 
 export default async function ProtectedPage() {
   const supabase = await createClient()
@@ -10,5 +11,7 @@ export default async function ProtectedPage() {
   if (error || !data?.claims) {
     redirect('/auth/login')
   }
-
+return(
+  <Board />
+)
 }
