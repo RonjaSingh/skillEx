@@ -3,21 +3,30 @@
 import { useState } from "react";
 import BoardPopup from "./board-popup";
 import PostCard from "./postCard";
+import useProfile from "@/hooks/use-profile";
+import PostFullPopup from "./fullPost-popup";
 
 
 type Post = {
     title: string;
     text: string;
     type: "gesuch" | "angebot";
+    creator: string;
+    timestamp: string;
 };
 
 export default function Board() {
+    const { name } = useProfile()
     const [posts, setPosts] = useState<Post[]>([]);
+
+    const [selectedPost, setSelectedPost] = useState<Post | null>(null)
+
     const [popupType, setPopupType] = useState<"gesuch" | "angebot" | null>(null);
 
     const addPost = (title: string, text: string, type: "gesuch" | "angebot") => {
+        const timestamp = new Date().toISOString();
 
-        setPosts([{ title, text, type }, ...posts]);
+        setPosts([{ title, text, type, creator: name, timestamp }, ...posts]);
         setPopupType(null);
     };
 
@@ -37,8 +46,13 @@ export default function Board() {
                     ) : (
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                             {posts.map((post, i) => (
-                                <PostCard key={i} post={post} />
+                                <PostCard
+                                    key={i}
+                                    post={post}
+                                    onReadMore={(p) => setSelectedPost(p)}
+                                />
                             ))}
+
                         </div>
                     )}
                 </div>
@@ -68,6 +82,14 @@ export default function Board() {
                     onSubmit={(title, text) => addPost(title, text, popupType)}
                 />
             )}
+
+            {selectedPost && (
+                <PostFullPopup
+                    post={selectedPost}
+                    onClose={() => setSelectedPost(null)}
+                />
+            )}
+
 
         </section>
     );

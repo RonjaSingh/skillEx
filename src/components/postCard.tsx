@@ -2,48 +2,53 @@
 
 import { useState } from "react";
 
+type Props = {
+    post: Post
+    onReadMore: (post: Post) => void
+}
+
 type Post = {
-  title: string;
-  text: string;
-  type: "gesuch" | "angebot";
+    title: string;
+    text: string;
+    type: "gesuch" | "angebot";
+    creator: string;
+    timestamp: string;
 };
 
-export default function PostCard({ post }: { post: Post }) {
-  const [expanded, setExpanded] = useState(false);
-  const cutoff = 60; 
+export default function PostCard({ post, onReadMore }: Props) {
 
-  return (
-    <div className="border rounded-lg p-3 bg-white shadow-sm w-[150px] h-[150px] flex flex-col">
-      {/* Label */}
-      <span
-        className={`text-xs font-bold uppercase ${
-          post.type === "gesuch" ? "text-black" : "text-black"
-        }`}
-      >
-        {post.type === "gesuch" ? "Suche …" : "Biete …"}
-      </span>
+    const cutoff = 60;
 
-      {/* Titel */}
-      <span className="text-sm font-semibold mt-1">{post.title}</span>
+    return (
+        <div className="border rounded-lg p-3 bg-white w-[150px] h-[150px] flex flex-col">
+            {/* Label */}
+            <span
+                className="text-xs font-bold uppercase text-black"
+    
+            >
+                {post.type === "gesuch" ? "Suche …" : "Biete …"}
+            </span>
 
-      {/* Text */}
-      <p className="mt-1 text-sm flex-1 text-gray-700">
-        {expanded
-          ? post.text
-          : post.text.length > cutoff
-          ? post.text.slice(0, cutoff) + "..."
-          : post.text}
-      </p>
+            {/* Titel */}
+            <span className="text-sm font-bold underline mt-1">{post.title}</span>
 
-      {/* Read more */}
-      {post.text.length > cutoff && (
-        <button
-          onClick={() => setExpanded(!expanded)}
-          className="text-blue-600 text-xs mt-1 hover:underline self-start"
-        >
-          {expanded ? "Show less" : "Read more…"}
-        </button>
-      )}
-    </div>
-  );
+            {/* Text */}
+            <p className="mt-1 text-sm text-gray-700 break-words h-[60px] overflow-hidden">
+                {post.text.length > cutoff
+                    ? post.text.slice(0, cutoff) + "..."
+                    : post.text}
+            </p>
+
+
+            {post.text.length > cutoff && (
+                <button
+                    onClick={() => onReadMore(post)}
+                    className="text-blue-600 text-xs mt-1 hover:underline self-start"
+                >
+                    Read more…
+                </button>
+            )}
+        </div>
+
+    );
 }
