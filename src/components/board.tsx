@@ -38,7 +38,15 @@ export default function Board() {
             <div className="space-y-3">
 
                 {/*board container */}
-                <div className="border-2 border-gray-300 rounded-lg p-4 bg-gray-800 h-[500px]">
+             <div className="
+  border-4 border-green-900
+  rounded-lg
+  p-6
+  h-[500px]
+  bg-[#1E3A2F]
+  shadow-inner
+">
+
                     {posts.length === 0 ? (
                         <div className="flex items-center justify-center h-full text-white text-center px-4">
                             No posts yet. Be the first to create a post!
@@ -61,16 +69,16 @@ export default function Board() {
                 <div className="flex justify-center gap-10 mb-6 text-white font-bold text-xl">
                     <button
                         onClick={() => setPopupType("gesuch")}
-                        className=" w-[180px] h-16 bg-pink-500 rounded-lg hover:bg-pink-700"
+                        className=" w-[180px] h-16 bg-cyan-800 rounded-lg hover:bg-cyan-800"
                     >
-                        Request
+                      Offer
                     </button>
 
                     <button
                         onClick={() => setPopupType("angebot")}
-                        className="w-[180px] h-16 bg-pink-500 rounded-lg hover:bg-pink-700"
+                        className="w-[180px] h-16 bg-fuchsia-800 rounded-lg hover:bg-fuchsia-800"
                     >
-                        Offer
+                        Request
                     </button>
                 </div>
 

@@ -124,14 +124,14 @@ export default function SkillSearch() {
       <div className="flex justify-center gap-4 p-2 border rounded-lg shadow-md bg-white">
         <input
           type="text"
-          className=" w-100 border px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400"
+          className=" w-100 border px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-700"
           placeholder="Skill eingeben..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
         <button
           onClick={handleSearch}
-          className="flex-shrink-0 px-4 py-2 rounded-lg bg-pink-500 text-white font-semibold hover:bg-pink-600"
+          className="flex-shrink-0 px-4 py-2 rounded-lg bg-cyan-700 text-white font-semibold hover:bg-cyan-800"
         >
           Suchen
         </button>
