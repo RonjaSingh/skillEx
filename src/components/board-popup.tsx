@@ -56,22 +56,8 @@ export default function BoardPopup({ type, onClose, onSubmit }: Props) {
                         onClick={async () => {
                             if (!text.trim()) return;
 
-                            // 1. POST an API
-                            const res = await fetch("/api/advertisements", {
-                                method: "POST",
-                                headers: { "Content-Type": "application/json" },
-                                body: JSON.stringify({
-                                    title,
-                                    description: text,  // API erwartet description
-                                    typ: type,          // offer/request
-                                    user_id: "DEIN_USER_ID", // optional, falls du hast
-                                }),
-                            });
 
-                            const newPost = await res.json();
-
-                            // 2. Callback an Board, um lokal zu setzen
-                            onSubmit(newPost.title, newPost.description);
+                            onSubmit(title, text);
                         }}
                         className="px-8 py-2 bg-pink-700 text-white rounded hover:bg-pink-800"
                     >

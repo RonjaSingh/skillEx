@@ -12,6 +12,7 @@ export type Post = {
 
 export default function useBoard() {
   const [posts, setPosts] = useState<Post[]>([]);
+  const [isSaving, setIsSaving] = useState(false);
 
   // Posts laden
   useEffect(() => {
@@ -29,6 +30,11 @@ export default function useBoard() {
     description: string,
     type: "offer" | "request"
   ) => {
+
+    if (isSaving) return;
+
+    setIsSaving(true);
+
     try {
       const res = await fetch("/api/advertisements", {
         method: "POST",
@@ -47,10 +53,13 @@ export default function useBoard() {
       }
 
       const newPost = await res.json();
+
       setPosts((prev) => [newPost, ...prev]);
     } catch (err) {
       console.error("Post konnte nicht gespeichert werden:", err);
     }
+
+       setIsSaving(false);
   };
 
   return { posts, addPost };
