@@ -4,10 +4,10 @@ import React from 'react'
 
 type Post = {
   title: string
-  text: string
-  type: 'offer' | 'request'
-  creator: string
-  timestamp: string
+  description: string
+  typ: 'offer' | 'request'
+  user: { name: string } | null
+  created_at: string
 }
 
 type Props = {
@@ -27,16 +27,16 @@ export default function PostFullPopup({ post, onClose }: Props) {
         </button>
 
         <h2 className="text-md font-semibold text-black">
-          {post.type === 'request' ? 'Suche …' : 'Biete …'}
+          {post.typ === 'request' ? 'Suche …' : 'Biete …'}
         </h2>
 
         <h2 className="text-md font-semibold underline mt-2">{post.title}</h2>
 
-        <p className="mt-4 text-md text-gray-800 whitespace-pre-wrap break-words">{post.text}</p>
+        <p className="mt-4 text-md text-gray-800 whitespace-pre-wrap break-words">{post.description}</p>
 
         <div className="mt-4 text-gray-500 text-xs">
-          Createt from <strong>{post.creator}</strong> am{' '}
-          {new Date(post.timestamp).toLocaleString()}
+          Createt from <strong>{post.user?.name || "Unknown User"}</strong> am{' '}
+          {new Date(post.created_at).toLocaleString()}
         </div>
   
      <div className="flex justify-center gap-4 mt-5">

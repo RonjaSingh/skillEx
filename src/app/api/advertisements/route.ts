@@ -20,17 +20,6 @@ export async function GET() {
 
     if (error) return NextResponse.json(error, { status: 500 });
 
-    const posts = data.map((ad: any) => ({
-        advertisment_id: ad.advertisment_id,
-        user_id: ad.user_id,
-        title: ad.title,
-        description: ad.description,
-        typ: ad.typ, // bleibt offer / request
-        creator: ad.user?.name ?? "Unknown",
-        created_at: ad.created_at,
-        updatet_at: ad.updatet_at,
-    }));
-
     return NextResponse.json(data);
 }
 

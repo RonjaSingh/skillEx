@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useEffect } from "react";
 import BoardPopup from "./board-popup";
 import PostCard from "./postCard";
 import useProfile from "@/hooks/use-profile";
@@ -9,10 +10,10 @@ import PostFullPopup from "./fullPost-popup";
 
 type Post = {
     title: string;
-    text: string;
-    type: "offer" | "request";
-    creator: string;
-    timestamp: string;
+    description: string;
+    typ: "offer" | "request";
+    user: { name: string } | null;
+    created_at: string;
 };
 
 export default function Board() {
@@ -25,12 +26,33 @@ export default function Board() {
 
     const [popupType, setPopupType] = useState<"offer" | "request" | null>(null);
 
+
+
+    useEffect(() => {
+        async function fetchPosts() {
+            const res = await fetch("/api/advertisements");
+            const data = await res.json();
+            setPosts(data);
+        }
+        fetchPosts();
+    }, []);
+
+
     if (loading) return null
 
-    const addPost = (title: string, text: string, type: "offer" | "request") => {
-        const timestamp = new Date().toISOString();
+    const addPost = (title: string, description: string, type: "offer" | "request") => {
+        const created_at = new Date().toISOString();
+        setPosts([
+            {
+                title,
+                description,
+                typ: type,
+                user: { name }, 
+                created_at,
+            },
+            ...posts,
+        ]);
 
-        setPosts([{ title, text, type, creator: name, timestamp }, ...posts]);
         setPopupType(null);
     };
 
