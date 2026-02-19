@@ -1,32 +1,53 @@
 'use client'
 
 import { useState } from 'react'
+import { useEffect } from "react";
+
 import EditAdvertisementPopup, { Ad } from '@/components/editadvertisement-popup'
 import DeleteAdvertisementPopup from '@/components/deleteadvertisement-popup'
 
-const initialAds: Ad[] = [
-  {
-    id: 1,
-    title: 'React Nachhilfe',
-    description: 'Ich biete Hilfe bei React & TypeScript',
-    type: 'ANGEBOT',
-  },
-  {
-    id: 2,
-    title: 'Deutsch lernen',
-    description: 'Suche Deutschlehrer',
-    type: 'GESUCH',
-  },
-]
-
 export default function AdvertisementPage() {
-  const [ads, setAds] = useState<Ad[]>(initialAds)
+
+  const [ads, setAds] = useState<Ad[]>([])
+  const [loading, setLoading] = useState(true)
 
   const [editingAd, setEditingAd] = useState<Ad | null>(null)
   const [adToDelete, setAdToDelete] = useState<Ad | null>(null)
 
   const angebote = ads.filter((ad) => ad.type === 'ANGEBOT')
   const gesuche = ads.filter((ad) => ad.type === 'GESUCH')
+
+
+
+  useEffect(() => {
+    async function fetchAds() {
+      try {
+        const res = await fetch("/api/my-advertisements");
+        const data = await res.json();
+
+        const mapped = data.map((ad: any) => ({
+       id: ad.advertisment_id,
+          title: ad.title,
+          description: ad.description,
+          type: ad.typ === "offer" ? "ANGEBOT" : "GESUCH",
+        }));
+
+        setAds(mapped);
+      } catch (err) {
+        console.error("Fehler beim Laden:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchAds();
+  }, []);
+
+
+
+  if (loading) {
+    return <p className="text-center mt-10">Lade Anzeigen...</p>
+  }
 
   return (
     <div className="max-w-3xl mx-auto mt-10 p-4 space-y-10">
