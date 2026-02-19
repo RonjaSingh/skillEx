@@ -3,10 +3,10 @@
 import { useState } from 'react'
 
 export type Ad = {
-  id: number
+  id: string
   title: string
   description: string
-  type: 'ANGEBOT' | 'GESUCH'
+  type: 'offer' | 'request'
 }
 
 type Props = {
@@ -54,6 +54,7 @@ export default function EditAdvertisementPopup({
                 ...ad,
                 title,
                 description,
+                type: ad.type, 
               })
             }
             className="px-4 py-2 border rounded hover:bg-gray-100"

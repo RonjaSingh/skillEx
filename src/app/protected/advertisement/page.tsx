@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { useEffect } from "react";
-
 import EditAdvertisementPopup, { Ad } from '@/components/editadvertisement-popup'
 import DeleteAdvertisementPopup from '@/components/deleteadvertisement-popup'
 
@@ -10,13 +9,11 @@ export default function AdvertisementPage() {
 
   const [ads, setAds] = useState<Ad[]>([])
   const [loading, setLoading] = useState(true)
-
   const [editingAd, setEditingAd] = useState<Ad | null>(null)
   const [adToDelete, setAdToDelete] = useState<Ad | null>(null)
 
-  const angebote = ads.filter((ad) => ad.type === 'ANGEBOT')
-  const gesuche = ads.filter((ad) => ad.type === 'GESUCH')
-
+  const angebote = ads.filter((ad) => ad.type === 'offer')
+  const gesuche = ads.filter((ad) => ad.type === 'request')
 
 
   useEffect(() => {
@@ -26,10 +23,10 @@ export default function AdvertisementPage() {
         const data = await res.json();
 
         const mapped = data.map((ad: any) => ({
-       id: ad.advertisment_id,
+          id: ad.advertisment_id,
           title: ad.title,
           description: ad.description,
-          type: ad.typ === "offer" ? "ANGEBOT" : "GESUCH",
+          type: ad.typ,
         }));
 
         setAds(mapped);
