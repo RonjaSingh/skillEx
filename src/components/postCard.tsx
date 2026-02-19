@@ -1,19 +1,20 @@
 "use client";
 
 import { useState } from "react";
+import{ Post } from "@/hooks/use-board";
 
 type Props = {
     post: Post
     onReadMore: (post: Post) => void
 }
 
-type Post = {
-    title: string;
-    description: string;
-    typ: "offer" | "request";
-    user: { name: string } | null;
-    created_at: string;
-};
+// type Post = {
+//     title: string;
+//     description: string;
+//     typ: "offer" | "request";
+//     user: { name: string } | null;
+//     created_at: string;
+// };
 
 export default function PostCard({ post, onReadMore }: Props) {
 

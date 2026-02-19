@@ -1,25 +1,18 @@
 "use client";
 
+
 import { useState } from "react";
-import { useEffect } from "react";
 import BoardPopup from "./board-popup";
 import PostCard from "./postCard";
-import useProfile from "@/hooks/use-profile";
 import PostFullPopup from "./fullPost-popup";
+import useProfile from "@/hooks/use-profile";
+import useBoard, {Post} from "@/hooks/use-board";
 
-
-type Post = {
-    title: string;
-    description: string;
-    typ: "offer" | "request";
-    user: { name: string } | null;
-    created_at: string;
-};
 
 export default function Board() {
-    const { name, loading } = useProfile()
+    const { name, loading } = useProfile();
 
-    const [posts, setPosts] = useState<Post[]>([]);
+    const {posts, addPost} = useBoard(name);
 
 
     const [selectedPost, setSelectedPost] = useState<Post | null>(null)
@@ -28,33 +21,33 @@ export default function Board() {
 
 
 
-    useEffect(() => {
-        async function fetchPosts() {
-            const res = await fetch("/api/advertisements");
-            const data = await res.json();
-            setPosts(data);
-        }
-        fetchPosts();
-    }, []);
+    // useEffect(() => {
+    //     async function fetchPosts() {
+    //         const res = await fetch("/api/advertisements");
+    //         const data = await res.json();
+    //         setPosts(data);
+    //     }
+    //     fetchPosts();
+    // }, []);
 
 
     if (loading) return null
 
-    const addPost = (title: string, description: string, type: "offer" | "request") => {
-        const created_at = new Date().toISOString();
-        setPosts([
-            {
-                title,
-                description,
-                typ: type,
-                user: { name }, 
-                created_at,
-            },
-            ...posts,
-        ]);
+    // const addPost = (title: string, description: string, type: "offer" | "request") => {
+    //     const created_at = new Date().toISOString();
+    //     setPosts([
+    //         {
+    //             title,
+    //             description,
+    //             typ: type,
+    //             user: { name }, 
+    //             created_at,
+    //         },
+    //         ...posts,
+    //     ]);
 
-        setPopupType(null);
-    };
+    //     setPopupType(null);
+    // };
 
     return (
         <section className="max-w-4xl mx-auto">

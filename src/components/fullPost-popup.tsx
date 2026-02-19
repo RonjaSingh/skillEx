@@ -1,14 +1,15 @@
 'use client'
 
 import React from 'react'
+import { Post } from '@/hooks/use-board';
 
-type Post = {
-  title: string
-  description: string
-  typ: 'offer' | 'request'
-  user: { name: string } | null
-  created_at: string
-}
+// type Post = {
+//   title: string
+//   description: string
+//   typ: 'offer' | 'request'
+//   user: { name: string } | null
+//   created_at: string
+// }
 
 type Props = {
   post: Post
