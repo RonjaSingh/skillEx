@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
+import { User } from 'lucide-react'
 
 export default function useProfileInit() {
 
@@ -16,7 +17,7 @@ export default function useProfileInit() {
 
       const { data: profile } = await supabase
         .from('user')
-        .select('id')
+        .select('id, name')
         .eq('id', user.id)
         .maybeSingle()
 
@@ -24,7 +25,7 @@ export default function useProfileInit() {
         await supabase.from('user').insert({
           id: user.id,
           email: user.email,
-          name: ''
+          name: '',
         })
       }
     }

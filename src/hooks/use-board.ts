@@ -10,10 +10,10 @@ export type Post = {
   created_at: string;
 };
 
-export default function useBoard(userName: string | undefined) {
+export default function useBoard() {
   const [posts, setPosts] = useState<Post[]>([]);
 
-  // Laden von posts
+  // Posts laden
   useEffect(() => {
     async function fetchPosts() {
       const res = await fetch("/api/advertisements");
@@ -23,20 +23,31 @@ export default function useBoard(userName: string | undefined) {
     fetchPosts();
   }, []);
 
-  // Neue posts erstellen
-  const addPost = async (title: string, description: string, type: "offer" | "request") => {
-    const body = { title, description, typ: type, user_id: "" };
+  // Post erstellen
+  const addPost = async (
+    title: string,
+    description: string,
+    type: "offer" | "request"
+  ) => {
     try {
       const res = await fetch("/api/advertisements", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
+        body: JSON.stringify({
+          title,
+          description,
+          typ: type,
+        }),
       });
 
-      if (!res.ok) throw new Error("Fehler beim Speichern");
+      if (!res.ok) {
+        const text = await res.text();
+        console.error("Server error:", text);
+        throw new Error("Fehler beim Speichern");
+      }
 
       const newPost = await res.json();
-      setPosts([newPost, ...posts]);
+      setPosts((prev) => [newPost, ...prev]);
     } catch (err) {
       console.error("Post konnte nicht gespeichert werden:", err);
     }

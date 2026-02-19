@@ -1,6 +1,5 @@
 "use client";
 
-
 import { useState } from "react";
 import BoardPopup from "./board-popup";
 import PostCard from "./postCard";
@@ -12,42 +11,14 @@ import useBoard, {Post} from "@/hooks/use-board";
 export default function Board() {
     const { name, loading } = useProfile();
 
-    const {posts, addPost} = useBoard(name);
+    const {posts, addPost} = useBoard();
 
 
     const [selectedPost, setSelectedPost] = useState<Post | null>(null)
 
     const [popupType, setPopupType] = useState<"offer" | "request" | null>(null);
 
-
-
-    // useEffect(() => {
-    //     async function fetchPosts() {
-    //         const res = await fetch("/api/advertisements");
-    //         const data = await res.json();
-    //         setPosts(data);
-    //     }
-    //     fetchPosts();
-    // }, []);
-
-
     if (loading) return null
-
-    // const addPost = (title: string, description: string, type: "offer" | "request") => {
-    //     const created_at = new Date().toISOString();
-    //     setPosts([
-    //         {
-    //             title,
-    //             description,
-    //             typ: type,
-    //             user: { name }, 
-    //             created_at,
-    //         },
-    //         ...posts,
-    //     ]);
-
-    //     setPopupType(null);
-    // };
 
     return (
         <section className="max-w-4xl mx-auto">
