@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 type Props = {
-    type: "gesuch" | "angebot";
+    type: "offer" | "request";
     onClose: () => void;
     onSubmit: (title: string, text: string) => void;
 };
@@ -12,7 +12,7 @@ export default function BoardPopup({ type, onClose, onSubmit }: Props) {
     const [text, setText] = useState("");
     const [title, setTitle] = useState("");
 
-    const label = type === "gesuch" ? "Ich suche…" : "Ich biete…";
+    const label = type === "request" ? "Ich suche…" : "Ich biete…";
 
     return (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
@@ -20,7 +20,7 @@ export default function BoardPopup({ type, onClose, onSubmit }: Props) {
 
                 {/* Popup Titel */}
                 <h3 className="text-xl font-bold text-center">
-                    {type === "gesuch" ? "Gesuch erstellen" : "Angebot erstellen"}
+                    {type === "request" ? "Gesuch erstellen" : "Angebot erstellen"}
                 </h3>
                 {/* Label über Titel */}
                 <span className="text-sm font-semibold text-gray-500">{label}</span>
@@ -44,7 +44,7 @@ export default function BoardPopup({ type, onClose, onSubmit }: Props) {
                 />
 
                 {/* Buttons */}
-                <div className="flex gap-8 justify-center">
+                <div className="flex justify-center">
                     <button
                         onClick={onClose}
                         className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"

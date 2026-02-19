@@ -10,7 +10,7 @@ type Props = {
 type Post = {
     title: string;
     text: string;
-    type: "gesuch" | "angebot";
+    type: "offer" | "request";
     creator: string;
     timestamp: string;
 };
@@ -28,7 +28,7 @@ export default function PostCard({ post, onReadMore }: Props) {
                 className="text-sm font-bold text-black"
 
             >
-                {post.type === "gesuch" ? " Biete:" : "Suche:"}
+                {post.type === "offer" ? " Biete:" : "Suche:"}
             </span>
 
             {/* Titel */}

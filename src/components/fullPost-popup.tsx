@@ -5,7 +5,7 @@ import React from 'react'
 type Post = {
   title: string
   text: string
-  type: 'gesuch' | 'angebot'
+  type: 'offer' | 'request'
   creator: string
   timestamp: string
 }
@@ -27,7 +27,7 @@ export default function PostFullPopup({ post, onClose }: Props) {
         </button>
 
         <h2 className="text-md font-semibold text-black">
-          {post.type === 'gesuch' ? 'Suche …' : 'Biete …'}
+          {post.type === 'request' ? 'Suche …' : 'Biete …'}
         </h2>
 
         <h2 className="text-md font-semibold underline mt-2">{post.title}</h2>

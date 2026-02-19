@@ -10,20 +10,24 @@ import PostFullPopup from "./fullPost-popup";
 type Post = {
     title: string;
     text: string;
-    type: "gesuch" | "angebot";
+    type: "offer" | "request";
     creator: string;
     timestamp: string;
 };
 
 export default function Board() {
-    const { name } = useProfile()
+    const { name, loading } = useProfile()
+
     const [posts, setPosts] = useState<Post[]>([]);
+
 
     const [selectedPost, setSelectedPost] = useState<Post | null>(null)
 
-    const [popupType, setPopupType] = useState<"gesuch" | "angebot" | null>(null);
+    const [popupType, setPopupType] = useState<"offer" | "request" | null>(null);
 
-    const addPost = (title: string, text: string, type: "gesuch" | "angebot") => {
+    if (loading) return null
+
+    const addPost = (title: string, text: string, type: "offer" | "request") => {
         const timestamp = new Date().toISOString();
 
         setPosts([{ title, text, type, creator: name, timestamp }, ...posts]);
@@ -38,13 +42,7 @@ export default function Board() {
             <div className="space-y-3">
 
                 {/*board container */}
-             <div className="
-  border-4 border-green-900
-  rounded-lg
-  p-6
-  h-[500px]
-  bg-[#1E3A2F]
-  shadow-inner
+                <div className="border-4 border-green-900 rounded-lg p-6 h-[500px] bg-[#1E3A2F] shadow-inner
 ">
 
                     {posts.length === 0 ? (
@@ -52,7 +50,7 @@ export default function Board() {
                             No posts yet. Be the first to create a post!
                         </div>
                     ) : (
-                       <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-5 gap-5">
+                        <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-5 gap-5">
 
                             {posts.map((post, i) => (
                                 <PostCard
@@ -68,14 +66,14 @@ export default function Board() {
                 {/* Buttons */}
                 <div className="flex justify-center gap-10 mb-6 text-white font-bold text-xl">
                     <button
-                        onClick={() => setPopupType("gesuch")}
+                        onClick={() => setPopupType("offer")}
                         className=" w-[180px] h-16 bg-cyan-800 rounded-lg hover:bg-cyan-800"
                     >
-                      Offer
+                        Offer
                     </button>
 
                     <button
-                        onClick={() => setPopupType("angebot")}
+                        onClick={() => setPopupType("request")}
                         className="w-[180px] h-16 bg-fuchsia-800 rounded-lg hover:bg-fuchsia-800"
                     >
                         Request
