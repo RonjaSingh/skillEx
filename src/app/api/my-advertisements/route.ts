@@ -17,13 +17,14 @@ export async function GET() {
   const { data, error } = await supabase
     .from("advertisement")
     .select("*")
-    .eq("user_id", user.id)  
+    .eq("user_id", user.id)
     .order("created_at", { ascending: false });
 
   if (error) return NextResponse.json(error, { status: 500 });
 
   return NextResponse.json(data);
 }
+
 
 // Update advertisement
 export async function PATCH(req: Request) {
@@ -76,7 +77,7 @@ export async function DELETE(req: Request) {
     .from("advertisement")
     .delete()
     .eq("advertisment_id", id)
-    .eq("user_id", user.id); 
+    .eq("user_id", user.id);
 
   if (error) return NextResponse.json(error, { status: 500 });
 
