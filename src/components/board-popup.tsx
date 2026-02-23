@@ -44,10 +44,10 @@ export default function BoardPopup({ type, onClose, onSubmit }: Props) {
                 />
 
                 {/* Buttons */}
-                <div className="flex justify-center">
+                <div className="flex justify-center gap-4 ">
                     <button
                         onClick={onClose}
-                        className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+                        className="w-30 py-2 rounded-lg border bg-gray-300 hover:bg-gray-400 text-gray-800"
                     >
                         Cancel
                     </button>
@@ -60,7 +60,7 @@ export default function BoardPopup({ type, onClose, onSubmit }: Props) {
                             onSubmit(title, text);
                             onClose();
                         }}
-                        className="px-8 py-2 bg-pink-700 text-white rounded hover:bg-pink-800"
+                        className="w-30 py-2 rounded-lg border bg-pink-700 hover:bg-pink-800 text-white"
                     >
                         Pin
                     </button>
