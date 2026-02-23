@@ -117,7 +117,7 @@ export default function SkillSearch() {
   };
 
   return (
-    <div className="w-full mt-0 px-0">
+   <div className="w-full mt-0 px-0 relative">
 
 
       {/* Suchleiste Container */}
@@ -139,7 +139,8 @@ export default function SkillSearch() {
 
 
       {/* Ergebnisse */}
-      <div className="space-y-3 mt-4">
+     {hasSearched && (
+  <div className="absolute top-20 left-0 right-0 bg-white border rounded-lg shadow-lg z-50 max-h-[400px] overflow-y-auto p-3 space-y-3">
 
         {/* Treffer */}
         {results.map((user) => (
@@ -171,8 +172,7 @@ export default function SkillSearch() {
             Keine Ergebnisse gefunden
           </p>
         )}
-
-      </div>
-    </div>
-  );
-}
+  </div>
+     )}
+   </div> 
+)}
