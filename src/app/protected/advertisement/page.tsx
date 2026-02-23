@@ -95,13 +95,40 @@ export default function AdvertisementPage() {
         <EditAdvertisementPopup
           ad={editingAd}
           onClose={() => setEditingAd(null)}
-          onSave={(updatedAd) => {
-            setAds((prev) =>
-              prev.map((ad) =>
-                ad.id === updatedAd.id ? updatedAd : ad
-              )
-            )
-            setEditingAd(null)
+          onSave={async (updatedAd) => {
+            try {
+              const res = await fetch("/api/my-advertisements", {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  id: updatedAd.id,
+                  title: updatedAd.title,
+                  description: updatedAd.description,
+                }),
+              });
+
+              if (!res.ok) throw new Error("Update error");
+
+              const saved = await res.json();
+
+              setAds(prev =>
+                prev.map(ad =>
+                  ad.id === saved.advertisment_id
+                    ? {
+                      id: saved.advertisment_id,
+                      title: saved.title,
+                      description: saved.description,
+                      type: saved.typ,
+                    }
+                    : ad
+                )
+              );
+
+            } catch (err) {
+              console.error("Update error:", err);
+            } finally {
+              setEditingAd(null);
+            }
           }}
         />
       )}
