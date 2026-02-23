@@ -41,7 +41,9 @@ export default function PostFullPopup({ post, onClose }: Props) {
         </div>
   
      <div className="flex justify-center gap-4 mt-5">
-  <button className="px-2 py-2 w-48 h-10 bg-gray-500 text-white rounded-lg hover:bg-gray-700">
+  <button 
+  onClick={onClose}
+  className="px-2 py-2 w-48 h-10 bg-gray-500 text-white rounded-lg hover:bg-gray-700">
     Cancel
   </button>
 
