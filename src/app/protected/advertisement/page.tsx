@@ -111,11 +111,28 @@ export default function AdvertisementPage() {
         <DeleteAdvertisementPopup
           title={adToDelete.title}
           onClose={() => setAdToDelete(null)}
-          onConfirm={() => {
-            setAds((prev) =>
-              prev.filter((ad) => ad.id !== adToDelete.id)
-            )
-            setAdToDelete(null)
+          onConfirm={async () => {
+            if (!adToDelete) return;
+
+            try {
+              const res = await fetch("/api/my-advertisements", {
+                method: "DELETE",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ id: adToDelete.id }),
+              });
+
+              if (!res.ok) throw new Error("Delete error");
+
+
+              setAds(prev =>
+                prev.filter(ad => ad.id !== adToDelete.id)
+              );
+
+            } catch (err) {
+              console.error("Delete error:", err);
+            } finally {
+              setAdToDelete(null);
+            }
           }}
         />
       )}
