@@ -58,6 +58,7 @@ export default function BoardPopup({ type, onClose, onSubmit }: Props) {
 
 
                             onSubmit(title, text);
+                            onClose();
                         }}
                         className="px-8 py-2 bg-pink-700 text-white rounded hover:bg-pink-800"
                     >
