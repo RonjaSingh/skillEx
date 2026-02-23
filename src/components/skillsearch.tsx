@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 
@@ -15,6 +15,9 @@ export default function SkillSearch() {
   const [hasSearched, setHasSearched] = useState(false);
 
 
+const resultsRef = useRef<HTMLDivElement | null>(null);
+
+
   // Alle Skills laden
   useEffect(() => {
     const loadSkills = async () => {
@@ -26,6 +29,22 @@ export default function SkillSearch() {
     loadSkills();
   }, []);
 
+  useEffect(() => {
+  function handleClickOutside(event: MouseEvent) {
+    if (
+      resultsRef.current &&
+      !resultsRef.current.contains(event.target as Node)
+    ) {
+      setHasSearched(false);
+    }
+  }
+
+  document.addEventListener("mousedown", handleClickOutside);
+
+  return () => {
+    document.removeEventListener("mousedown", handleClickOutside);
+  };
+}, []);
 
   // Suche starten
   const handleSearch = async () => {
@@ -117,11 +136,12 @@ export default function SkillSearch() {
   };
 
   return (
-   <div className="w-full mt-0 px-0 relative">
+      
+    <div className="w-full mt-0 px-0 relative">
 
 
       {/* Suchleiste Container */}
-      <div className="flex justify-center gap-4 p-2 border rounded-lg shadow-md bg-white">
+      <div className="flex justify-center gap-4 p-2 mb-6 border rounded-lg shadow-md bg-white">
         <input
           type="text"
           className=" w-100 border px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-700"
@@ -139,40 +159,41 @@ export default function SkillSearch() {
 
 
       {/* Ergebnisse */}
-     {hasSearched && (
-  <div className="absolute top-20 left-0 right-0 bg-white border rounded-lg shadow-lg z-50 max-h-[400px] overflow-y-auto p-3 space-y-3">
+      {hasSearched && (
+        <div   ref={resultsRef} className="absolute top-20 left-0 right-0 bg-white border rounded-lg shadow-lg z-50 max-h-[400px] overflow-y-auto p-3 space-y-3">
 
-        {/* Treffer */}
-        {results.map((user) => (
-          <div
-            key={user.user_id}
-            className="border p-4 rounded-lg hover:bg-gray-50 shadow-sm flex items-center justify-between cursor-default"
-          >
-            <h3
-              onClick={() => router.push(`/protected/profile/${user.user_id}`)}
-              className="font-semibold cursor-pointer hover:text-pink-500 w-1/4">{user.name}</h3>
-            <p className="text-sm text-gray-600 w-1/4"><strong>Sprache(n): </strong><br />{capitalize(user.languages)}</p>
-            <p className="text-sm text-gray-600 w-1/4"> <strong>Skills: </strong><br />{capitalize(user.skills.join(", "))}</p>
-
-            {/* Button rechts */}
-            <button
-              onClick={() => {
-                /*  router.push(`/calendar/${user.user_id}`) */
-              }}
-              className="bg-pink-500 text-white w-40 px-2 py-2 rounded-lg hover:bg-pink-600 transition"
+          {/* Treffer */}
+          {results.map((user) => (
+            <div
+              key={user.user_id}
+              className="border p-4 rounded-lg hover:bg-gray-50 shadow-sm flex items-center justify-between cursor-default"
             >
-              Book a session
-            </button>
-          </div>
-        ))}
+              <h3
+                onClick={() => router.push(`/protected/profile/${user.user_id}`)}
+                className="font-semibold cursor-pointer hover:text-pink-500 w-1/4">{user.name}</h3>
+              <p className="text-sm text-gray-600 w-1/4"><strong>Sprache(n): </strong><br />{capitalize(user.languages)}</p>
+              <p className="text-sm text-gray-600 w-1/4"> <strong>Skills: </strong><br />{capitalize(user.skills.join(", "))}</p>
 
-        {/*Keine Ergebnisse */}
-        {hasSearched && results.length === 0 && (
-          <p className="text-center text-gray-500 mt-6">
-            Keine Ergebnisse gefunden
-          </p>
-        )}
-  </div>
-     )}
-   </div> 
-)}
+              {/* Button rechts */}
+              <button
+                onClick={() => {
+                  /*  router.push(`/calendar/${user.user_id}`) */
+                }}
+                className="bg-pink-500 text-white w-40 px-2 py-2 rounded-lg hover:bg-pink-600 transition"
+              >
+                Book a session
+              </button>
+            </div>
+          ))}
+
+          {/*Keine Ergebnisse */}
+          {hasSearched && results.length === 0 && (
+            <p className="text-center text-gray-500 mt-6">
+              Keine Ergebnisse gefunden
+            </p>
+          )}
+        </div>
+      )}
+    </div>
+  )
+}
