@@ -26,15 +26,12 @@ export function Navbar() {
   }, [])
 
   return (
-    <nav className="relative w-full" ref={navRef}>
+    <nav className="relative w-full bg-gradient-to-r from-brand-magenta to-brand-teal" ref={navRef}>
       {/* Menü Button */}
       <div className="flex justify-center">
         <button
           onClick={() => setOpen(!open)}
-          className="w-full py-3 bg-brand-teal text-white
-                     hover:bg-brand-teal/90
-                     transition-all duration-200
-                     font-semibold tracking-wide"
+          className="w-40 py-3 rounded-xlbg-brand-magenta hover:bg-brand-teal/80text-white placeholder:text-gray-400 focus:outline-none focus:border-brand-purple focus:ring-2 focus:ring-brand-purple/30 transition-all"
         >
        <strong>Menü</strong>
         </button>

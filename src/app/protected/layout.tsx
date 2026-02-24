@@ -19,7 +19,7 @@ export default async function ProtectedLayout({
   const avatarUrl = await getCurrentImage();
 
   return (
-   <div className="min-h-screen flex flex-col">
+   <div className="min-h-screen flex flex-col ">
 
       <Header
         username={profile?.name ?? "Username"}

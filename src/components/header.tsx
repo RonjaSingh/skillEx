@@ -35,7 +35,7 @@ export function Header({ username, avatarUrl }: HeaderProps) {
             <strong>{username}</strong>
           </span>
 
-          <div className="w-10 h-10 rounded-full overflow-hidden bg-white-30 flex items-center justify-center">
+          <div className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center">
             {avatarUrl ? (
               <Image
                 src={avatarUrl}
