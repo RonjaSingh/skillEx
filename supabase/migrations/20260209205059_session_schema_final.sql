@@ -236,10 +236,10 @@ CREATE OR REPLACE FUNCTION public.auto_complete_session()
  LANGUAGE plpgsql
 AS $function$
 BEGIN
-  -- Wenn Session noch nicht completed ist
+  
   IF NEW.status != 'completed' THEN
     
-    -- Wenn Endzeit erreicht
+   
     IF NEW.end_time <= now() THEN
       NEW.status := 'completed';
     END IF;
