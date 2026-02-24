@@ -141,9 +141,7 @@ export default function SkillSearch() {
 
 
       {/* Suchleiste Container */}
-      <div className="flex justify-center gap-4 p-4 mb-8 
-                bg-gradient-to-r from-brand-magenta to-brand-teal
-                shadow-lg">
+      <div className="flex justify-center gap-4 p-4 mb-8 bg-gradient-to-r from-brand-magenta to-brand-teal shadow-lg">
         <input
           type="text"
           className=" w-96 px-5 py-3 rounded-xl bg-white border-2 border-brand-teal text-brand-blueplaceholder:text-gray-400 focus:outline-none focus:border-brand-purple focus:ring-2 focus:ring-brand-purple/30 transition-all"
