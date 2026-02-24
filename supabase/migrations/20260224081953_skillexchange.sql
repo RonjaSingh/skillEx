@@ -32,7 +32,7 @@ alter table "public"."session" alter column status type "public"."session_status
 
 alter table "public"."session" alter column "status" set default 'accepted'::public.session_status;
 
-drop type "public"."session_status__old_version_to_be_dropped";
+-- drop type "public"."session_status__old_version_to_be_dropped";
 
 alter table "public"."advertisement" drop column "advertisment_id";
 
