@@ -45,6 +45,7 @@ export async function getOutgoingRequests(userId: string) {
       request_to_user:user!session_request_request_to_user_id_fkey(name)
     `)
     .eq('request_from_user_id', userId)
+    .eq('status', 'pending')
 }
 
 export async function getCompletedSessions(userId: string) {

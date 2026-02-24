@@ -15,7 +15,7 @@ export default function SkillSearch() {
   const [hasSearched, setHasSearched] = useState(false);
 
 
-const resultsRef = useRef<HTMLDivElement | null>(null);
+  const resultsRef = useRef<HTMLDivElement | null>(null);
 
 
   // Alle Skills laden
@@ -30,21 +30,21 @@ const resultsRef = useRef<HTMLDivElement | null>(null);
   }, []);
 
   useEffect(() => {
-  function handleClickOutside(event: MouseEvent) {
-    if (
-      resultsRef.current &&
-      !resultsRef.current.contains(event.target as Node)
-    ) {
-      setHasSearched(false);
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        resultsRef.current &&
+        !resultsRef.current.contains(event.target as Node)
+      ) {
+        setHasSearched(false);
+      }
     }
-  }
 
-  document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
 
-  return () => {
-    document.removeEventListener("mousedown", handleClickOutside);
-  };
-}, []);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   // Suche starten
   const handleSearch = async () => {
@@ -136,7 +136,7 @@ const resultsRef = useRef<HTMLDivElement | null>(null);
   };
 
   return (
-      
+
     <div className="w-full mt-0 px-0 relative">
 
 
@@ -160,7 +160,7 @@ const resultsRef = useRef<HTMLDivElement | null>(null);
 
       {/* Ergebnisse */}
       {hasSearched && (
-        <div   ref={resultsRef} className="absolute top-20 left-0 right-0 bg-white border rounded-lg shadow-lg z-50 max-h-[400px] overflow-y-auto p-3 space-y-3">
+        <div ref={resultsRef} className="absolute top-20 left-0 right-0 bg-white border rounded-lg shadow-lg z-50 max-h-[400px] overflow-y-auto p-3 space-y-3">
 
           {/* Treffer */}
           {results.map((user) => (
