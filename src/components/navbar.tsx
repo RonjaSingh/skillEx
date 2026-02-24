@@ -31,7 +31,10 @@ export function Navbar() {
       <div className="flex justify-center">
         <button
           onClick={() => setOpen(!open)}
-          className="w-full py-3 border bg-white hover:bg-gray-100"
+          className="w-full py-3 bg-brand-teal text-white
+                     hover:bg-brand-teal/90
+                     transition-all duration-200
+                     font-semibold tracking-wide"
         >
        <strong>Menü</strong>
         </button>
@@ -40,33 +43,34 @@ export function Navbar() {
       {/* Dropdown*/}
       {open && (
         <ul className="absolute left-1/2 top-full -translate-x-1/2
-                       w-56 bg-white border rounded-lg shadow-lg
-                       flex flex-col items-center gap-1 py-2 z-50">
+                       w-56  rounded-lg shadow-lg
+                       flex flex-col items-center gap-1 py-2 z-50
+                       bg-gradient-to-t from-brand-magenta to-brand-teal">
           <li>
-            <Link href="/protected" className="block px-4 py-2 hover:bg-gray-100 rounded">
+            <Link href="/protected" className="block px-4 py-2 rounded">
               Startseite
             </Link>
           </li>
 
           <li>
-            <Link href="/protected/profile" className="block px-4 py-2 hover:bg-gray-100 rounded">
+            <Link href="/protected/profile" className="block px-4 py-2 rounded">
               My Profile
             </Link>
           </li>
 
           <li>
-            <Link href="/protected/sessions" className="block px-4 py-2 hover:bg-gray-100 rounded">
+            <Link href="/protected/sessions" className="block px-4 py-2 rounded">
               My Sessions
             </Link>
           </li>
 
           <li>
-            <Link href="/protected/advertisement" className="block px-4 py-2 hover:bg-gray-100 rounded">
+            <Link href="/protected/advertisement" className="block px-4 py-2 rounded">
               My Posts
             </Link>
           </li>
 
-          <li className="pt-2">
+          <li className="pt-3 border-brand-purple m-2 flex justify-center">
             <LogoutButton />
           </li>
         </ul>
