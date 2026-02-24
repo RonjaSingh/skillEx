@@ -10,7 +10,7 @@ type HeaderProps = {
 
 export function Header({ username, avatarUrl }: HeaderProps) {
   return (
-    <header className="w-full border-b border-brand-purple/20 bg-gradient-to-r from-brand-magenta to-brand-teal">
+    <header className="w-full bg-gradient-to-r from-brand-magenta to-brand-teal">
       <div className="max-w-6xl mx-auto px-4 py-2 flex items-center justify-between">
 
         {/* Left: Logo */}
@@ -29,22 +29,23 @@ export function Header({ username, avatarUrl }: HeaderProps) {
         {/* Right: User */}
         <Link
           href="/protected/profile"
-         className="flex items-center gap-3 hover:bg-white/20 px-3 py-2 rounded-xl transition backdrop-blur-sm"
+          className="flex items-center gap-10 hover:bg-white/20 px-3 py-2 rounded-xl transition backdrop-blur-sm"
         >
-          <span className="text-md font-medium text-white">
+          <span className="text-xl font-medium text-black">
             <strong>{username}</strong>
           </span>
 
-          <div className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center">
+          <div className="w-16 h-16 rounded-full overflow-hidden flex items-center justify-center shadow-md border border-white/30">
             {avatarUrl ? (
               <Image
                 src={avatarUrl}
                 alt="Avatar"
-                width={36}
-                height={36}
+                width={64}
+                height={64}
+                className="object-cover w-full h-full"
               />
             ) : (
-              <span className="text-lg">👤</span>
+              <span className="text-2xl">👤</span>
             )}
           </div>
         </Link>

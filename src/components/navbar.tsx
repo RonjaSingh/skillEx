@@ -26,12 +26,12 @@ export function Navbar() {
   }, [])
 
   return (
-    <nav className="relative w-full bg-gradient-to-r from-brand-magenta to-brand-teal" ref={navRef}>
+    <nav className="relative w-full bg-gradient-to-r from-brand-magenta to-brand-teal " ref={navRef}>
       {/* Menü Button */}
       <div className="flex justify-center">
         <button
           onClick={() => setOpen(!open)}
-          className="w-40 py-3 rounded-xlbg-brand-magenta hover:bg-brand-teal/80text-white placeholder:text-gray-400 focus:outline-none focus:border-brand-purple focus:ring-2 focus:ring-brand-purple/30 transition-all"
+         className="w-40 py-3 mb-2 rounded-xl bg-white/25 backdrop-blur-md text-black font-semibold shadow-lg hover:bg-white/35 active:scale-[0.98] transition-all duration-200 ease-out border border-white/30"
         >
        <strong>Menü</strong>
         </button>
@@ -40,9 +40,9 @@ export function Navbar() {
       {/* Dropdown*/}
       {open && (
         <ul className="absolute left-1/2 top-full -translate-x-1/2
-                       w-56  rounded-lg shadow-lg
-                       flex flex-col items-center gap-1 py-2 z-50
-                       bg-gradient-to-t from-brand-magenta to-brand-teal">
+               w-56 rounded-xl shadow-xl
+               flex flex-col items-center gap-1 p-2 z-50
+               bg-white/25 backdrop-blur-md border border-white/30">
           <li>
             <Link href="/protected" className="block px-4 py-2 rounded">
               Startseite
