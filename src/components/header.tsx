@@ -13,7 +13,7 @@ type HeaderProps = {
 export function Header({ username, avatarUrl }: HeaderProps) {
   return (
     <header className="w-full h-24 bg-gradient-to-r from-brand-magenta to-brand-teal">
-      <div className="mx-auto px-12 pt-8
+      <div className="mx-auto px-12 pt-6
                 grid grid-cols-[auto_1fr_auto]
                 items-center gap-x-12">
 
@@ -25,7 +25,7 @@ export function Header({ username, avatarUrl }: HeaderProps) {
               alt="Logo"
               width={600}
               height={600}
-              className="h-20 w-72 object-cover cursor-pointer mt-2" />
+              className="h-22 w-68 object-cover cursor-pointer mt-2" />
           </Link>
 
         </div>
