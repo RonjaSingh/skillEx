@@ -25,7 +25,7 @@ export function Header({ username, avatarUrl }: HeaderProps) {
               alt="Logo"
               width={600}
               height={600}
-              className="h-22 w-68 object-cover cursor-pointer mt-2" />
+              className="h-22 w-68 object-cover rounded-full cursor-pointer mt-2" />
           </Link>
 
         </div>
@@ -39,17 +39,18 @@ export function Header({ username, avatarUrl }: HeaderProps) {
         <div className='flex justify-end'>
         <Link
           href="/protected/profile"
-          className="group relative flex items-center gap-6
-               px-14 py-3 rounded-2xl
-               bg-white/25
-               hover:bg-white/35
-               backdrop-blur-xl
-               border border-white/20
-               shadow-lg
-               transition-all duration-300 hover:shadow-md hover:-translate-y-0.5"
+          className="  group
+    flex items-center gap-3
+    px-4 py-2
+    rounded-full
+    bg-white/20
+    hover:bg-white/30
+    backdrop-blur-md
+    border border-white/20
+    transition-all duration-300"
         >
-          <span className="text-lg font-semibold text-gray-800 tracking-wide 
-           truncate ">
+          <span className="  text-md font-medium text-gray-800
+    max-w-[120px] truncate ">
             {username}
           </span>
 
@@ -58,12 +59,12 @@ export function Header({ username, avatarUrl }: HeaderProps) {
               <Image
                 src={avatarUrl}
                 alt="Avatar"
-                width={64}
-                height={64}
+                width={36}
+                height={36}
                 className="object-cover w-full h-full"
               />
             ) : (
-              <span className="text-2xl">👤</span>
+              <span className="flex items-center justify-center w-full h-full text-sm">👤</span>
             )}
           </div>
         </Link>
