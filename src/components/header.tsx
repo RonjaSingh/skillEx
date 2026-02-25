@@ -12,7 +12,7 @@ type HeaderProps = {
 
 export function Header({ username, avatarUrl }: HeaderProps) {
   return (
-    <header className="w-full bg-gradient-to-r from-brand-magenta to-brand-teal">
+    <header className="w-full h-24 bg-gradient-to-r from-brand-magenta to-brand-teal">
       <div className="mx-auto px-12 pt-8
                 grid grid-cols-[auto_1fr_auto]
                 items-center gap-x-12">

@@ -23,7 +23,7 @@ export default function Board() {
     return (
         <section className="max-w-4xl mx-auto">
 
-            <strong><h2 className="text-2xl font-bold text-center mb-4  ">Board</h2></strong>
+            <strong><h2 className="text-2xl font-bold text-center mb-2">Board</h2></strong>
 
             <div className="space-y-3">
 
