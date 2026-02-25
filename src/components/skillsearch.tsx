@@ -141,7 +141,7 @@ export default function SkillSearch() {
 
 
       {/* Suchleiste Container */}
-     <div className="flex justify-center gap-4 p-6 mb-10 backdrop-blur-md bg-white/20 rounded-2xl shadow-xl border border-white/30">
+     <div className="flex justify-center gap-4 p-6 mt-10 mb-10 backdrop-blur-md bg-white/20 rounded-2xl shadow-xl border border-white/30">
         <input
           type="text"
           className="w-96 px-5 py-3 rounded-xl bg-white text-gray-800 placeholder:text-gray-400 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brand-purple/40 focus:border-brand-purple transition-all shadow-sm"
@@ -151,7 +151,7 @@ export default function SkillSearch() {
         />
         <button
           onClick={handleSearch}
-          className="w-40 py-3 mb-2 rounded-xl bg-white/25 backdrop-blur-md text-black font-semibold shadow-lg hover:bg-white/35 active:scale-[0.98] transition-all duration-200 ease-out border border-white/30"
+          className="w-40 py-3 mb-2 rounded-xl bg-white/25 backdrop-blur-md text-gray-800 font-semibold text-lg shadow-lg hover:bg-white/35 active:scale-[0.98] transition-all duration-200 ease-out border border-white/30"
         >
         <strong>Search</strong>
         </button>

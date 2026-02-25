@@ -26,12 +26,12 @@ export function Navbar() {
   }, [])
 
   return (
-    <nav className="relative w-full bg-gradient-to-r from-brand-magenta to-brand-teal " ref={navRef}>
+    <nav className="relative" ref={navRef}>
       {/* Menü Button */}
-      <div className="flex justify-center">
+      <div>
         <button
           onClick={() => setOpen(!open)}
-         className="w-40 py-3 mb-2 rounded-xl bg-white/25 backdrop-blur-md text-black font-semibold shadow-lg hover:bg-white/35 active:scale-[0.98] transition-all duration-200 ease-out border border-white/30"
+         className="w-40 p-3 rounded-xl bg-white/25 backdrop-blur-md text-gray-800 font-semibold text-lg shadow-lg hover:bg-white/35 active:scale-[0.98] transition-all duration-200 ease-out border border-white/30"
         >
        <strong>Menü</strong>
         </button>

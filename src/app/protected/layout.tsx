@@ -24,7 +24,7 @@ export default async function ProtectedLayout({
       <Header
         username={profile?.name ?? "Username"}
          avatarUrl={avatarUrl} />
-      <Navbar />
+      {/* <Navbar /> */}
 
       <div>
         <SkillSearch />

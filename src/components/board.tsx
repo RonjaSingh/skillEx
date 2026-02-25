@@ -53,14 +53,16 @@ export default function Board() {
                 <div className="flex justify-center gap-10 m-8 text-white font-bold text-xl">
                     <button
                         onClick={() => setPopupType("offer")}
-                      className="w-[180px] h-16 rounded-xl font-semibold text-black shadow-md hover:shadow-lg active:scale-[0.98] transition-all duration-200 ease-out border border-black/10 bg-brand-teal hover:bg-brand-teal/90"
+                              className="w-40 py-3 mb-2 rounded-xl bg-white/25 backdrop-blur-md text-gray-900 font-semibold text-lg shadow-lg hover:bg-white/35 active:scale-[0.98] transition-all duration-200 ease-out border border-white/30"
+
                     >
                         Offer
                     </button>
 
                     <button
                         onClick={() => setPopupType("request")}
-                        className="w-[180px] h-16 rounded-xl font-semibold text-black shadow-md hover:shadow-lg active:scale-[0.98] transition-all duration-200 ease-out border border-black/10 bg-brand-magenta hover:bg-brand-magenta/90"
+                                className="w-40 py-3 mb-2 rounded-xl bg-white/25 backdrop-blur-md text-gray-900 font-semibold text-lg shadow-lg hover:bg-white/35 active:scale-[0.98] transition-all duration-200 ease-out border border-white/30"
+
 
                     >
                         Request
