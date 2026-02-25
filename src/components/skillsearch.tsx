@@ -153,7 +153,7 @@ export default function SkillSearch() {
           onClick={handleSearch}
           className="w-40 py-3 mb-2 rounded-xl bg-white/25 backdrop-blur-md text-gray-800 font-semibold text-lg shadow-lg hover:bg-white/35 active:scale-[0.98] transition-all duration-200 ease-out border border-white/30"
         >
-        <strong>Search</strong>
+        Search
         </button>
       </div>
 
