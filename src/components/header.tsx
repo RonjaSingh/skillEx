@@ -13,7 +13,7 @@ type HeaderProps = {
 export function Header({ username, avatarUrl }: HeaderProps) {
   return (
     <header className="w-full bg-gradient-to-r from-brand-magenta to-brand-teal">
-      <div className="max-w-6xl mx-auto px-6 pt-6
+      <div className="mx-auto px-12 pt-8
                 grid grid-cols-[auto_1fr_auto]
                 items-center gap-x-12">
 
@@ -31,7 +31,7 @@ export function Header({ username, avatarUrl }: HeaderProps) {
         </div>
 
 
-         <div className="flex justify-center">
+         <div className="flex justify-center self-end">
         <Navbar />
       </div>
 
@@ -39,14 +39,14 @@ export function Header({ username, avatarUrl }: HeaderProps) {
         <div className='flex justify-end'>
         <Link
           href="/protected/profile"
-          className="group relative flex items-center gap-4
-               px-6 py-3 rounded-2xl
-               bg-white/10
-               hover:bg-white/20
+          className="group relative flex items-center gap-6
+               px-14 py-3 rounded-2xl
+               bg-white/25
+               hover:bg-white/35
                backdrop-blur-xl
                border border-white/20
                shadow-lg
-               transition-all duration-300 hover:shadow-md hover:-translate-y-0.5   max-w-[220px] flex-shrink"
+               transition-all duration-300 hover:shadow-md hover:-translate-y-0.5"
         >
           <span className="text-lg font-semibold text-gray-800 tracking-wide 
            truncate ">

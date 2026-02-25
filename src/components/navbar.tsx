@@ -31,21 +31,7 @@ export function Navbar() {
       <div>
         <button
           onClick={() => setOpen(!open)}
-           className="
-    w-64
-    p-3
-    rounded-xl
-    bg-white/25 backdrop-blur-md
-    text-gray-800 font-semibold text-lg
-    shadow-lg
-    border border-white/30
-    hover:bg-white/35
-    hover:-translate-y-0.5
-    hover:shadow-xl
-    active:translate-y-0
-    active:shadow-md
-    transition-all duration-200 ease-out
-  "
+          className="w-64 p-3 rounded-xl bg-white/25 backdrop-blur-md text-gray-800 font-semibold text-lg shadow-lg border border-white/30 hover:bg-white/35 hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0 active:shadow-md transition-all duration-200 ease-out"
         >
           Menu
         </button>
@@ -54,27 +40,12 @@ export function Navbar() {
       {/* Dropdown*/}
       {open && (
         <ul
-          className={`absolute left-1/2 top-full -translate-x-1/2
-              w-64 rounded-2xl shadow-xl
-              flex flex-col gap-1 p-3 z-50
-              bg-white/25 backdrop-blur-xl
-              border border-t-0 border-white/30
-              transition-all duration-200
-              ${open ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'}`}
+          className={`absolute left-1/2 top-full -translate-x-1/2 w-64 rounded-2xl shadow-xl flex flex-col gap-1 p-3 z-50 bg-white/25 backdrop-blur-xl border border-t-0 border-white/30 transition-all duration-200 ${open ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'}`}
         >
           <li className="w-full">
             <Link
               href="/protected"
-              className="
-      block w-full text-center
-      p-3
-      rounded-xl
-      text-gray-800 font-semibold text-lg
-      shadow-lg
-      hover:bg-white/35
-      active:scale-[0.98]
-      transition-all duration-200 ease-out
-      border border-white/30"
+              className="block w-full text-center p-3 rounded-xl text-gray-800 font-semibold text-lg shadow-lg hover:bg-white/35 active:scale-[0.98] transition-all duration-200 ease-out border border-white/30"
             >
               Startseite
             </Link>
@@ -83,16 +54,7 @@ export function Navbar() {
           <li className="w-full">
             <Link
               href="/protected/profile"
-              className="
-      block w-full text-center
-      p-3
-      rounded-xl
-      text-gray-800 font-semibold text-lg
-      shadow-lg
-      hover:bg-white/35
-      active:scale-[0.98]
-      transition-all duration-200 ease-out
-      border border-white/30"
+             className="block w-full text-center p-3 rounded-xl text-gray-800 font-semibold text-lg shadow-lg hover:bg-white/35 active:scale-[0.98] transition-all duration-200 ease-out border border-white/30"
             >
               My Profile
             </Link>
@@ -101,16 +63,7 @@ export function Navbar() {
           <li className="w-full">
             <Link
               href="/protected/sessions"
-              className="
-      block w-full text-center
-      p-3
-      rounded-xl
-      text-gray-800 font-semibold text-lg
-      shadow-lg
-      hover:bg-white/35
-      active:scale-[0.98]
-      transition-all duration-200 ease-out
-      border border-white/30"
+          className="block w-full text-center p-3 rounded-xl text-gray-800 font-semibold text-lg shadow-lg hover:bg-white/35 active:scale-[0.98] transition-all duration-200 ease-out border border-white/30"
             >
               My Sessions
             </Link>
@@ -119,16 +72,7 @@ export function Navbar() {
           <li className="w-full">
             <Link
               href="/protected/advertisement"
-              className="
-      block w-full text-center
-      p-3
-      rounded-xl
-      text-gray-800 font-semibold text-lg
-      shadow-lg
-      hover:bg-white/35
-      active:scale-[0.98]
-      transition-all duration-200 ease-out
-      border border-white/30"
+     className="block w-full text-center p-3 rounded-xl text-gray-800 font-semibold text-lg shadow-lg hover:bg-white/35 active:scale-[0.98] transition-all duration-200 ease-out border border-white/30"
             >
               My Posts
             </Link>
