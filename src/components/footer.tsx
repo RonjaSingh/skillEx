@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="w-full bg-gradient-to-r from-brand-magenta to-brand-teal text-gray-800  shadow-[0_-8px_30px_rgba(0,0,0,0.25)]
+    <footer className="w-full mt-4 bg-gradient-to-r from-brand-magenta to-brand-teal text-gray-800  shadow-[0_-8px_30px_rgba(0,0,0,0.25)]
       border-t border-white/20">
       <div className="max-w-6xl mx-auto px-6 py-4
                       flex flex-col md:flex-row

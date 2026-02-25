@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import{ Post } from "@/hooks/use-board";
+import { Post } from "@/hooks/use-board";
 
 type Props = {
     post: Post
@@ -14,24 +14,26 @@ export default function PostCard({ post, onReadMore }: Props) {
 
     const cutoff = 60;
 
+
     return (
-        <div className="border rounded-lg p-3 bg-white aspect-square flex flex-col relative">
-            <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-4 h-4 bg-fuchsia-500 rounded-full shadow-md border border-fuchsia-800"></div>
+        <div className=" relative rounded-lg p-4 bg-white border border-gray-200 aspect-square flex flex-col shadow-[0_14px_22px_rgba(0,0,0,0.22)] before:absolute before:inset-0 before:rounded-lg before:ring-1 before:ring-black/5 before:pointer-events-none transition-shadow duration-300 cursor-pointer  ">
+
+            <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-4 h-4 bg-fuchsia-600 rounded-full shadow-[0_4px_6px_rgba(0,0,0,0.4)] border border-fuchsia-800"></div>
 
             {/* Label */}
             <span
-                className="text-sm font-bold text-black"
+                className="text-sm font-bold text-gray-800 underline mb-2"
 
             >
                 {post.typ === "offer" ? " Biete:" : "Suche:"}
             </span>
 
             {/* Titel */}
-            <span className="text-sm font-bold underline m-1 break-words">{post.title}</span>
+            <span className="text-sm text-gray-800 font-semibold  break-words mb-1">{post.title}</span>
 
 
             {/* Text */}
-            <p className="m-1 text-xs text-gray-700 break-words flex-1 overflow-hidden">
+            <p className=" text-sm text-gray-800 break-words flex-1 overflow-hidden">
                 {post.description.length > 60
                     ? post.description.slice(0, 60) + "..."
                     : post.description}
@@ -41,7 +43,7 @@ export default function PostCard({ post, onReadMore }: Props) {
 
             <button
                 onClick={() => onReadMore(post)}
-                className="text-blue-600 text-xs mt-2 hover:underline self-start"
+                className=" bg-gradient-to-r from-brand-magenta to-brand-teal bg-clip-text text-transparent  text-xs font-semibold mt-2 hover:underline self-start"
             >
                 Read more…
             </button>
