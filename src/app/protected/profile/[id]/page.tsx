@@ -40,7 +40,7 @@ export default async function ProfilePage({
   return (
     <div className="max-w-7xl  mx-auto mt-10 space-y-12 text-gray-800 font-semibold">
 
-      <h1 className="py-4 text-2xl text-center  bg-white/25 backdrop-blur rounded-full">
+      <h1 className="py-4 text-2xl text-center  bg-white/25 backdrop-blur shadow-md p-8 rounded-full">
         {user.name || "Username"}
       </h1>
      
@@ -52,11 +52,22 @@ export default async function ProfilePage({
 
   <div className="space-y-20">
 
-      <div className="bg-white bg-white/25 backdrop-blur rounded-2xl shadow-md p-8 hover:shadow-lg transition">
-        <h2 className="text-2xl font-semibold mb-4 text-center underline">Languages</h2>
-        <p className="text-lg text-gray-600 text-center">
+      <div className="bg-white bg-white/25 backdrop-blur rounded-2xl shadow-md p-6 hover:shadow-lg transition">
+        <h2 className="text-2xl font-semibold mb-3 text-center underline">Languages</h2>
+        <p className="text-lg text-gray-600 text-center line-clamp-3">
           {languages}
         </p>
+<div className="mt-3 text-right">
+        <button
+className="px-6 py-1 rounded-full 
+     backdrop-blur 
+    text-sm font-bold 
+    hover:bg-white/25 
+    transition cursor-pointer bg-gradient-to-r from-brand-magenta to-brand-teal bg-clip-text text-transparent"
+>
+  Read more…
+</button>
+</div>
       </div>
 
       <div className="bg-white bg-white/25 backdrop-blur rounded-2xl shadow-md p-8 hover:shadow-lg transition">
@@ -64,6 +75,7 @@ export default async function ProfilePage({
         <p className="text-lg text-gray-600 text-center">
           {skills}
         </p>
+      
       </div>
 
     </div>
@@ -74,7 +86,7 @@ export default async function ProfilePage({
         <h2 className="text-2xl font-semibold mb-6 underline">Book your Session</h2>
 
  
-        <button className="px-6 py-3 rounded-lg border border-white/25 hover:bg-white/25 transition">
+        <button className="px-6 py-3 rounded-lg border border-white/25 bg-white/19 hover:bg-white/40 transition">
           View Availability
         </button>
       </div>
