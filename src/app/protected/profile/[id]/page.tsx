@@ -38,25 +38,31 @@ export default async function ProfilePage({
     user.user_skills?.map((s: any) => s.skills.name).join(", ") || "—";
 
   return (
-    <div className="max-w-2xl mx-auto mt-4 space-y-20 text-gray-800 font-semibold">
+    <div className="max-w-2xl mx-auto mt-4 space-y-10 text-gray-800 font-semibold">
 
-      <h1 className="text-3xl text-center">
+      <h1 className="text-2xl text-center">
         {user.name || "Username"}
       </h1>
      
 
-      <div className="flex justify-center gap-36 text-xl">
-        <div className="text-center">
-          <strong>Languages:</strong>
-          <p>{languages}</p>
-        </div>
+ <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-3xl mx-auto">
+  
+  <div className="bg-white rounded-2xl shadow-md p-8 text-center hover:shadow-lg transition">
+    <h2 className="text-xl font-semibold mb-4 underline">Languages</h2>
+    <p className="text-lg text-gray-600">
+      {languages}
+    </p>
+  </div>
 
-        <div className="text-center">
-          <strong>Skills:</strong>
-          <p>{skills}</p>
-        </div>
-   </div>
-        <div className="text-center text-xl"><strong>Book your Session:</strong></div>
+  <div className="bg-white rounded-2xl shadow-md p-8 text-center hover:shadow-lg transition">
+    <h2 className="text-xl font-semibold mb-4 underline">Skills</h2>
+    <p className="text-lg text-gray-600">
+      {skills}
+    </p>
+  </div>
+
+</div>
+        <div className="text-center font-semibold text-xl">Book your Session:</div>
 
    
     </div>
