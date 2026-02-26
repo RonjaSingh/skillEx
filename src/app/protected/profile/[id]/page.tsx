@@ -38,33 +38,49 @@ export default async function ProfilePage({
     user.user_skills?.map((s: any) => s.skills.name).join(", ") || "—";
 
   return (
-    <div className="max-w-2xl mx-auto mt-4 space-y-10 text-gray-800 font-semibold">
+    <div className="max-w-7xl  mx-auto mt-10 space-y-12 text-gray-800 font-semibold">
 
-      <h1 className="text-2xl text-center">
+      <h1 className="py-4 text-2xl text-center  bg-white/25 backdrop-blur rounded-full">
         {user.name || "Username"}
       </h1>
      
 
- <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-3xl mx-auto">
+ <div className="grid grid-cols-1 md:grid-cols-2 gap-52 relative">
   
-  <div className="bg-white rounded-2xl shadow-md p-8 text-center hover:shadow-lg transition">
-    <h2 className="text-xl font-semibold mb-4 underline">Languages</h2>
-    <p className="text-lg text-gray-600">
-      {languages}
-    </p>
-  </div>
 
-  <div className="bg-white rounded-2xl shadow-md p-8 text-center hover:shadow-lg transition">
-    <h2 className="text-xl font-semibold mb-4 underline">Skills</h2>
-    <p className="text-lg text-gray-600">
-      {skills}
-    </p>
-  </div>
+  <div className="hidden md:block absolute left-1/2 top-0 -translate-x-1/2 h-full w-px bg-white/25" />
 
-</div>
-        <div className="text-center font-semibold text-xl">Book your Session:</div>
+  <div className="space-y-20">
 
-   
+      <div className="bg-white bg-white/25 backdrop-blur rounded-2xl shadow-md p-8 hover:shadow-lg transition">
+        <h2 className="text-2xl font-semibold mb-4 text-center underline">Languages</h2>
+        <p className="text-lg text-gray-600 text-center">
+          {languages}
+        </p>
+      </div>
+
+      <div className="bg-white bg-white/25 backdrop-blur rounded-2xl shadow-md p-8 hover:shadow-lg transition">
+        <h2 className="text-2xl font-semibold mb-4 text-center underline">Skills</h2>
+        <p className="text-lg text-gray-600 text-center">
+          {skills}
+        </p>
+      </div>
+
     </div>
+
+  
+    <div className="flex items-center justify-center">
+      <div className="bg-white bg-white/25 backdrop-blur rounded-2xl shadow-md p-12 hover:shadow-lg transition text-center w-full">
+        <h2 className="text-2xl font-semibold mb-6 underline">Book your Session</h2>
+
+ 
+        <button className="px-6 py-3 rounded-lg border border-white/25 hover:bg-white/25 transition">
+          View Availability
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
   );
 }
