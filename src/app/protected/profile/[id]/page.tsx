@@ -38,26 +38,27 @@ export default async function ProfilePage({
     user.user_skills?.map((s: any) => s.skills.name).join(", ") || "—";
 
   return (
-    <div className="max-w-3xl mx-auto mt-10 p-6 border rounded-xl shadow">
+    <div className="max-w-2xl mx-auto mt-4 space-y-20 text-gray-800 font-semibold">
 
-      <h1 className="text-2xl font-bold mb-6">
-        {user.name || "Unbekannt"}
+      <h1 className="text-3xl text-center">
+        {user.name || "Username"}
       </h1>
+     
 
-      <div className="space-y-4">
-        <div>
+      <div className="flex justify-center gap-36 text-xl">
+        <div className="text-center">
           <strong>Languages:</strong>
           <p>{languages}</p>
         </div>
 
-        <div>
+        <div className="text-center">
           <strong>Skills:</strong>
           <p>{skills}</p>
         </div>
+   </div>
+        <div className="text-center text-xl"><strong>Book your Session:</strong></div>
 
-        <div><strong>Book your Session:</strong></div>
-
-      </div>
+   
     </div>
   );
 }

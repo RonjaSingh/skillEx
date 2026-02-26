@@ -16,7 +16,7 @@ export default function PostCard({ post, onReadMore }: Props) {
 
 
     return (
-        <div className=" relative rounded-lg p-4 bg-white border border-gray-200 aspect-square flex flex-col shadow-[0_14px_22px_rgba(0,0,0,0.22)] before:absolute before:inset-0 before:rounded-lg before:ring-1 before:ring-black/5 before:pointer-events-none transition-shadow duration-300 cursor-pointer  ">
+        <div className=" relative rounded-lg p-4 bg-white border border-gray-200 aspect-square flex flex-col shadow-[0_14px_22px_rgba(0,0,0,0.22)] before:absolute before:inset-0 before:rounded-lg before:ring-1 before:ring-black/5 before:pointer-events-none transition-shadow duration-300 cursor-default">
 
             <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-4 h-4 bg-fuchsia-600 rounded-full shadow-[0_4px_6px_rgba(0,0,0,0.4)] border border-fuchsia-800"></div>
 
@@ -43,7 +43,7 @@ export default function PostCard({ post, onReadMore }: Props) {
 
             <button
                 onClick={() => onReadMore(post)}
-                className=" bg-gradient-to-r from-brand-magenta to-brand-teal bg-clip-text text-transparent  text-xs font-semibold mt-2 hover:underline self-start"
+                className=" bg-gradient-to-r from-brand-magenta to-brand-teal bg-clip-text text-transparent  text-xs font-semibold mt-2 hover:underline self-start cursor-pointer"
             >
                 Read more…
             </button>
