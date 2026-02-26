@@ -73,7 +73,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      
+    
+    
+      <footer className="impressum">
+        <button>Impressum</button>
+      </footer>
 
     </main>
   );
