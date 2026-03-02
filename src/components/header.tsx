@@ -13,9 +13,7 @@ type HeaderProps = {
 export function Header({ username, avatarUrl }: HeaderProps) {
   return (
     <header className="w-full h-24 bg-gradient-to-r from-brand-magenta to-brand-teal">
-      <div className="mx-auto px-12 pt-6
-                grid grid-cols-[auto_1fr_auto]
-                items-center gap-x-12">
+      <div className="mx-auto px-12 pt-6 grid grid-cols-[auto_1fr_auto] items-center gap-x-12">
 
         {/* Left: Logo */}
         <div className="flex justify-start overflow-hidden">
@@ -31,44 +29,35 @@ export function Header({ username, avatarUrl }: HeaderProps) {
         </div>
 
 
-         <div className="flex justify-center self-end">
-        <Navbar />
-      </div>
+        <div className="flex justify-center self-end">
+          <Navbar />
+        </div>
 
         {/* Right: User */}
         <div className='flex justify-end'>
-        <Link
-          href="/protected/profile"
-          className="  group
-    flex items-center gap-3
-    px-4 py-2
-    rounded-full
-    bg-white/20
-    hover:bg-white/30
-    backdrop-blur-md
-    border border-white/20
-    transition-all duration-300"
-        >
-          <span className="  text-md font-medium text-gray-800
-    max-w-[120px] truncate ">
-            {username}
-          </span>
+          <Link
+            href="/protected/profile"
+            className="  group flex items-center gap-3 px-4 py-2 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md border border-white/20 transition-all duration-300"
+          >
+            <span className="  text-md font-medium text-gray-800 max-w-[120px] truncate ">
+              {username}
+            </span>
 
-          <div className="w-16 h-16 flex-shrink-0 rounded-full overflow-hidden flex items-center justify-center shadow-md border border-white/30">
-            {avatarUrl ? (
-              <Image
-                src={avatarUrl}
-                alt="Avatar"
-                width={36}
-                height={36}
-                className="object-cover w-full h-full"
-              />
-            ) : (
-              <span className="flex items-center justify-center w-full h-full text-sm">👤</span>
-            )}
-          </div>
-        </Link>
-</div>
+            <div className="w-16 h-16 flex-shrink-0 rounded-full overflow-hidden flex items-center justify-center shadow-md border border-white/30">
+              {avatarUrl ? (
+                <Image
+                  src={avatarUrl}
+                  alt="Avatar"
+                  width={36}
+                  height={36}
+                  className="object-cover w-full h-full"
+                />
+              ) : (
+                <span className="flex items-center justify-center w-full h-full text-sm">👤</span>
+              )}
+            </div>
+          </Link>
+        </div>
       </div>
     </header>
   )

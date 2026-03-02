@@ -110,28 +110,11 @@ export default function ProtectedHome() {
         {error && <p style={{ color: "red" }}>{error}</p>}
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "30px" }}>
-        <div>
-          <h2>Angebote</h2>
-          {angebote.map((ad) => (
-            <div key={ad.advertisement_id} style={{ backgroundColor: "#64b5f6", padding: "15px", borderRadius: "8px", marginBottom: "10px" }}>
-              <strong>{ad.title}</strong>
-              <p>{ad.description}</p>
-              <small>von {ad.user?.name}</small>
-            </div>
-          ))}
-        </div>
-        <div>
-          <h2>Gesuche</h2>
-          {gesuche.map((ad) => (
-            <div key={ad.advertisement_id} style={{ backgroundColor: "#fff176", padding: "15px", borderRadius: "8px", marginBottom: "10px" }}>
-              <strong>{ad.title}</strong>
-              <p>{ad.description}</p>
-              <small>von {ad.user?.name}</small>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
+  const { data, error } = await supabase.auth.getClaims()
+  if (error || !data?.claims) {
+    redirect('/auth/login')
+  }
+return(
+  <Board />
+)
 }
