@@ -36,7 +36,7 @@ export type Database = {
     Tables: {
       advertisement: {
         Row: {
-          advertisement_id: string
+          advertisement_id  : string
           created_at: string
           description: string
           title: string

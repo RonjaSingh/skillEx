@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import EditProfilePopup from '@/components/editprofile-popup'
 import useProfile from '@/hooks/use-profile'
 import useProfileInit from '@/hooks/use-profile-init'
-
+import Calendar from './calendar'
 
 export default function ProfilePage() {
 
@@ -52,6 +52,7 @@ export default function ProfilePage() {
         </button>
       </div>
       <p className="text-xl underline m-2"><strong>My Calender</strong></p>
+      <Calendar />
 
       {isPopupOpen && (
         <EditProfilePopup
