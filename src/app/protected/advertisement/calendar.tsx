@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { supabase } from "@/lib/supabase/client";
+import { createClient } from "@/lib/supabase/client";
 
 interface Availability {
   availability_id: string;
@@ -10,6 +10,9 @@ interface Availability {
 }
 
 export default function CalendarPage() {
+
+   const supabase = createClient();
+   
   const [availabilities, setAvailabilities] = useState<Availability[]>([]);
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
