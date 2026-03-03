@@ -62,10 +62,16 @@ export default function CalendarPage() {
       return;
     }
 
-    if (new Date(startTime) >= new Date(endTime)) {
-      setError("Endzeit muss nach Startzeit liegen.");
-      return;
-    }
+     const start = new Date(startTime);
+     const end = new Date(endTime);
+
+    // 30 Minuten in Millisekunden
+    const THIRTY_MINUTES = 30 * 60 * 1000;
+
+    if (end.getTime() - start.getTime() !== THIRTY_MINUTES) {
+    setError("Die Endzeit muss genau 30 Minuten nach der Startzeit liegen.");
+    return;
+  }
 
     if (!userId) {
       setError("Du bist nicht eingeloggt.");
