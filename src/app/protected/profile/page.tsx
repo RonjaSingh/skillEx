@@ -39,7 +39,7 @@ export default function ProfilePage() {
         <button className="ml-auto w-64 p-3 rounded-xl bg-white/25 backdrop-blur-md text-gray-800 font-semibold text-lg shadow-lg border border-white/30 hover:bg-white/35 hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0 active:shadow-md transition-all duration-200 ease-out ml-auto" onClick={() => setIsPopupOpen(true)}>Edit Profile</button>
       </div>
 
-      <p className="text-xl m-2 gap-3"><strong>My Skills:</strong>{skills.join(', ')}</p>
+      <p className="text-xl m-2 gap-3"><strong>My Skills:</strong> {skills.join(', ')}</p>
       <p className="text-xl m-2 mt-10 flex gap-3"><strong>Languages I speak:</strong> {languages.join(', ')}</p>
       <div className="flex items-center justify-between mt-2">
         <p className="text-xl m-2 mt-10"><strong>Attended Sessions:</strong></p>
