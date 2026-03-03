@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { User } from "lucide-react";
+import ReadMoreCard from "@/components/readmore";
 
 type UserProfile = {
   id: string;
@@ -50,13 +51,13 @@ export default async function ProfilePage({
   }
 
   const languages =
-    user.user_language?.map((l) => l.language.name).join(", ") || "—";
+    user.user_language?.map((l) => l.language.name) ||[];
 
   const skills =
-    user.user_skills?.map((s) => s.skills.name).join(", ") || "—";
+    user.user_skills?.map((s) => s.skills.name)|| [];
 
   return (
-    <div className="max-w-7xl mx-auto mt-10 space-y-12 text-gray-800 font-semibold">
+    <div className="max-w-7xl mx-auto mt-4 space-y-12 text-gray-800 font-semibold">
 
       <div className="py-4 text-xl bg-white/25 backdrop-blur shadow-md p-8 rounded-full">
         <div className="flex items-center justify-center gap-12">
@@ -84,38 +85,18 @@ export default async function ProfilePage({
         <div className="space-y-20">
 
           <div className="bg-white bg-white/25 backdrop-blur rounded-2xl shadow-md p-6  transition">
-            <h2 className="text-xl font-semibold mb-4 text-center underline">Languages</h2>
+            {/* <h2 className="text-xl font-semibold mb-4 text-center underline">Languages</h2>
             <p className="text-lg text-gray-600 text-center line-clamp-3">
               {languages}
-            </p>
+            </p> */}
             <div className="mt-3 text-right">
-              <button
-                className="px-6 py-1 rounded-full 
-     backdrop-blur 
-    text-sm font-bold 
-    hover:bg-white/25 
-    transition cursor-pointer bg-gradient-to-r from-brand-magenta to-brand-teal bg-clip-text text-transparent"
-              >
-                Read more…
-              </button>
+              <ReadMoreCard title="My Skills" items={skills} />
             </div>
           </div>
 
           <div className="bg-white bg-white/25 backdrop-blur rounded-2xl shadow-md p-8 mb-4 transition">
-            <h2 className="text-xl font-semibold mb-4 text-center underline">Skills</h2>
-            <p className="text-lg text-gray-600 text-center">
-              {skills}
-            </p>
-            <div className="mt-3 text-right">
-              <button
-                className="px-6 py-1 rounded-full 
-     backdrop-blur 
-    text-sm font-bold 
-    hover:bg-white/25 
-    transition cursor-pointer bg-gradient-to-r from-brand-magenta to-brand-teal bg-clip-text text-transparent"
-              >
-                Read more…
-              </button>
+              <div className="mt-3 text-right">
+              <ReadMoreCard title="Languages" items={languages} />
             </div>
           </div>
 
