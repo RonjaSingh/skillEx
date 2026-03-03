@@ -75,7 +75,17 @@ className="px-6 py-1 rounded-full
         <p className="text-lg text-gray-600 text-center">
           {skills}
         </p>
-      
+      <div className="mt-3 text-right">
+        <button
+className="px-6 py-1 rounded-full 
+     backdrop-blur 
+    text-sm font-bold 
+    hover:bg-white/25 
+    transition cursor-pointer bg-gradient-to-r from-brand-magenta to-brand-teal bg-clip-text text-transparent"
+>
+  Read more…
+</button>
+</div>
       </div>
 
     </div>
