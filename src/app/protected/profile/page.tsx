@@ -62,13 +62,13 @@ export default function ProfilePage() {
           <div className="bg-white/25 backdrop-blur rounded-2xl shadow-md p-6">
             <h2 className="text-xl font-semibold mb-6 text-center underline">My Skills</h2>
 
-            <p className="text-lg text-gray-600 text-center mb-4">{skills.length > 0 ? skills.join(', ') : "-"}</p>
+            <p className="text-lg text-gray-700 text-center mb-4">{skills.length > 0 ? skills.join(', ') : "-"}</p>
           </div>
 
           <div className="bg-white/25 backdrop-blur rounded-2xl shadow-md p-6">
             <h2 className="text-xl font-semibold mb-4 text-center underline">Languages I Speak</h2>
 
-            <p className="text-lg mb-4 text-gray-600 text-center">{languages.length > 0 ? languages.join(', ') : "-"}</p>
+            <p className="text-lg mb-4 text-gray-700 text-center">{languages.length > 0 ? languages.join(', ') : "-"}</p>
           </div>
 
           <div className="bg-white/25 backdrop-blur rounded-2xl shadow-md p-6 mb-4">

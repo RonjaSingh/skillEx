@@ -20,7 +20,7 @@ export default function ReadMoreCard({
                 {title}
             </h2>
 
-            <div className="text-center text-gray-600 space-y-1 min-h-[92px]">
+            <div className="text-center text-gray-700 space-y-1 min-h-[92px]">
                 {previewItems.map((item, index) => (
                     <div key={index}>
                         {item}
