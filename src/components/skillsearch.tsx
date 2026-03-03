@@ -18,7 +18,7 @@ export default function SkillSearch() {
   const resultsRef = useRef<HTMLDivElement | null>(null);
 
 
-  // Alle Skills laden
+  // Alle skills laden
   useEffect(() => {
     const loadSkills = async () => {
       const { data } = await supabase
@@ -53,7 +53,7 @@ export default function SkillSearch() {
     setHasSearched(true);
 
 
-    /* passende User ids finden */
+    /* passende user ids finden */
     const { data: matches, error: matchError } = await supabase
       .from("user_skills")
       .select("user_id, skills!inner(name)")
@@ -100,7 +100,7 @@ export default function SkillSearch() {
           ?.filter((s: any) => s.skills)
           .map((s: any) => s.skills.name) || [];
 
-      // Gesuchten Skill als erstes anzeigen
+      // Gesuchten skill als erstes anzeigen
       const sortedSkills = skillList.sort((a: string, b: string) => {
         const searchLower = search.toLowerCase();
 
@@ -141,7 +141,13 @@ export default function SkillSearch() {
 
 
       {/* Suchleiste Container */}
-     <div className="flex justify-center gap-4 p-6 mt-10 mb-6 backdrop-blur-md bg-white/20 rounded-2xl shadow-xl border border-white/30">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSearch();
+        }}
+        className="flex justify-center gap-4 p-6 mt-10 mb-6 backdrop-blur-md bg-white/20 rounded-2xl shadow-xl border border-white/30"
+      >
         <input
           type="text"
           className="w-96 px-5 py-3 rounded-xl bg-white text-gray-800 placeholder:text-gray-400 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brand-purple/40 focus:border-brand-purple transition-all shadow-sm"
@@ -150,22 +156,27 @@ export default function SkillSearch() {
           onChange={(e) => setSearch(e.target.value)}
         />
         <button
-          onClick={handleSearch}
-          className="w-64 p-3 rounded-xl bg-white/25 backdrop-blur-md text-gray-800 font-semibold text-lg shadow-lg border border-white/30 hover:bg-white/35 hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0 active:shadow-md transition-all duration-200 ease-out">
-        Search
-        </button>
-      </div>
 
+          type="submit"
+          className="w-64 p-3 rounded-xl bg-white/25 backdrop-blur-md text-gray-800 font-semibold text-lg shadow-lg border border-white/30 hover:bg-white/35 hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0 active:shadow-md transition-all duration-200 ease-out">
+          Search
+        </button>
+
+      </form>
 
       {/* Ergebnisse */}
       {hasSearched && (
-        <div ref={resultsRef} className="absolute top-20 left-0 right-0 bg-white border rounded-lg shadow-lg z-50 max-h-[400px] overflow-y-auto p-3 space-y-3">
-
+        <div
+  ref={resultsRef}
+className="absolute top-24 left-0 right-0 
+           backdrop-blur-xl bg-white/20 rounded-2xl shadow-xl 
+           z-50 max-h-[400px] overflow-y-auto p-3 space-y-3"
+>
           {/* Treffer */}
           {results.map((user) => (
             <div
               key={user.user_id}
-              className="border p-4 rounded-lg hover:bg-gray-50 shadow-sm flex items-center justify-between cursor-default"
+              className=" p-4 rounded-lg shadow-md flex items-center justify-between cursor-default hover:bg-white/15 transition"
             >
               <h3
                 onClick={() => router.push(`/protected/profile/${user.user_id}`)}

@@ -85,10 +85,7 @@ export default async function ProfilePage({
         <div className="space-y-20">
 
           <div className="bg-white bg-white/25 backdrop-blur rounded-2xl shadow-md p-6  transition">
-            {/* <h2 className="text-xl font-semibold mb-4 text-center underline">Languages</h2>
-            <p className="text-lg text-gray-600 text-center line-clamp-3">
-              {languages}
-            </p> */}
+         
             <div className="mt-3 text-right">
               <ReadMoreCard title="My Skills" items={skills} />
             </div>
