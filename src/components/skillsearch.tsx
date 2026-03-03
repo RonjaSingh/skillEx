@@ -126,7 +126,8 @@ export default function SkillSearch() {
     setResults(formatted);
   };
 
-  // erster Buchstabe immer gross(Helferfunktion)
+  //Helferfunktionen:
+  // erster Buchstabe immer gross
   const capitalize = (str: string) => {
     if (!str) return "";
     return str
@@ -134,6 +135,13 @@ export default function SkillSearch() {
       .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
       .join(" ");
   };
+
+  // Text kürzen, wenn zu lang
+const truncateText = (text: string, maxLength: number) => {
+  return text.length > maxLength
+    ? text.slice(0, maxLength) + "..."
+    : text;
+};
 
   return (
 
@@ -168,28 +176,29 @@ export default function SkillSearch() {
       {hasSearched && (
         <div
   ref={resultsRef}
-className="absolute top-24 left-0 right-0 
-           backdrop-blur-xl bg-white/20 rounded-2xl shadow-xl 
+className="absolute top-24 left-0 right-0 border border-white/30 border-t-0
+           backdrop-blur-xl bg-white/20 rounded-b-2xl shadow-xl 
            z-50 max-h-[400px] overflow-y-auto p-3 space-y-3"
 >
           {/* Treffer */}
           {results.map((user) => (
             <div
               key={user.user_id}
-              className=" p-4 rounded-lg shadow-md flex items-center justify-between cursor-default hover:bg-white/15 transition"
+              className=" p-4 rounded-lg shadow-md flex items-center justify-between cursor-default hover:bg-white/10 transition"
             >
               <h3
                 onClick={() => router.push(`/protected/profile/${user.user_id}`)}
-                className="font-semibold cursor-pointer hover:text-pink-500 w-1/4">{user.name}</h3>
-              <p className="text-sm text-gray-600 w-1/4"><strong>Sprache(n): </strong><br />{capitalize(user.languages)}</p>
-              <p className="text-sm text-gray-600 w-1/4"> <strong>Skills: </strong><br />{capitalize(user.skills.join(", "))}</p>
+                className="font-bold cursor-pointer hover:text-brand-purple/100 w-1/4">{user.name}</h3>
+                    <p className="text-sm font-bold text-gray-800 w-1/4"> <strong>Skills: </strong><br />{truncateText(capitalize(user.skills.join(", ")), 25)}</p>
+              <p className="text-sm font-bold text-gray-800 w-1/4"><strong>Sprache(n): </strong><br />{truncateText(capitalize(user.languages), 25)}</p>
+          
 
               {/* Button rechts */}
               <button
                 onClick={() => {
                   /*  router.push(`/calendar/${user.user_id}`) */
                 }}
-                className="bg-pink-500 text-white w-40 px-2 py-2 rounded-lg hover:bg-pink-600 transition"
+                className="bg-brand-blue/80 text-white w-40 px-2 py-2 rounded-lg shadow-md hover:shadow-lg transition hover:bg-brand-blue/80 transition"
               >
                 Book a session
               </button>
