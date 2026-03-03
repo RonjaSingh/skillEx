@@ -58,22 +58,23 @@ export default async function ProfilePage({
   return (
     <div className="max-w-7xl mx-auto mt-10 space-y-12 text-gray-800 font-semibold">
 
-      <h1 className="py-4 text-xl text-center  bg-white/25 backdrop-blur shadow-md p-8 rounded-full">
-        {user.name || "Username"}
-      </h1>
+      <div className="py-4 text-xl bg-white/25 backdrop-blur shadow-md p-8 rounded-full">
+        <div className="flex items-center justify-center gap-12">
+          <h1 className="text-2xl ">{user.name || "Username"}</h1>
 
-
-      {user.profile_image ? (
-        <img
-          src={user.profile_image}
-          alt="Profile Image"
-          className="w-20 h-20 rounded-full object-cover border"
-        />
-      ) : (
-        <div className="w-20 h-20 rounded-full bg-gray-300 flex items-center justify-center text-xl">
-          👤
+          {user.profile_image ? (
+            <img
+              src={user.profile_image}
+              alt="Profile Image"
+              className="w-20 h-20 rounded-full object-cover border"
+            />
+          ) : (
+            <div className="w-20 h-20 rounded-full bg-gray-300 flex items-center justify-center text-xl">
+              👤
+            </div>
+          )}
         </div>
-      )}
+      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-52 relative">
 
