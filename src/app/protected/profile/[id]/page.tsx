@@ -83,7 +83,7 @@ export default async function ProfilePage({
 
         <div className="space-y-20">
 
-          <div className="bg-white bg-white/25 backdrop-blur rounded-2xl shadow-md p-6 hover:shadow-lg transition">
+          <div className="bg-white bg-white/25 backdrop-blur rounded-2xl shadow-md p-6  transition">
             <h2 className="text-xl font-semibold mb-4 text-center underline">Languages</h2>
             <p className="text-lg text-gray-600 text-center line-clamp-3">
               {languages}
@@ -101,7 +101,7 @@ export default async function ProfilePage({
             </div>
           </div>
 
-          <div className="bg-white bg-white/25 backdrop-blur rounded-2xl shadow-md p-8 mb-4 hover:shadow-lg transition">
+          <div className="bg-white bg-white/25 backdrop-blur rounded-2xl shadow-md p-8 mb-4 transition">
             <h2 className="text-xl font-semibold mb-4 text-center underline">Skills</h2>
             <p className="text-lg text-gray-600 text-center">
               {skills}
