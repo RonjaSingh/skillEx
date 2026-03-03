@@ -21,20 +21,19 @@ export default function ProfilePage() {
     <div className="max-w-7xl mx-auto mt-4 space-y-8 text-gray-800 font-semibold">
 
 
+      <div className="py-2 text-center bg-white/25 backdrop-blur shadow-md p-8 rounded-full">
 
-      <div className="py-2 text-center  bg-white/25 backdrop-blur shadow-md p-8 rounded-full">
-
-        <div className="flex items-center justify-center gap-8">
-          <h1 className="text-xl font-semibold">
+        <div className="flex items-center justify-center gap-12">
+          <h1 className="text-2xl font-semibold">
             {name || "Username"}
           </h1>
           {profileImage ? (
             <img
               src={profileImage}
-              className="w-24 h-24 rounded-full object-cover border"
+              className="w-20 h-20 rounded-full object-cover border"
             />
           ) : (
-            <div className="w-24 h-24 rounded-full bg-gray-300 flex items-center justify-center">
+            <div className="w-20 h-20 rounded-full bg-gray-300 flex items-center justify-center">
               👤
             </div>
           )}
