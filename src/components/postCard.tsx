@@ -25,7 +25,7 @@ export default function PostCard({ post, onReadMore }: Props) {
                 className="text-sm font-bold text-gray-800 underline mb-2"
 
             >
-                {post.typ === "offer" ? " Biete:" : "Suche:"}
+                {post.typ === "offer" ? " Offer:" : "Request:"}
             </span>
 
             {/* Titel */}
