@@ -14,7 +14,7 @@ export default function DeleteAdvertisementPopup({
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
       <div className="bg-white p-6 rounded-lg w-full max-w-sm space-y-4">
-        <h2 className="text-lg text-center font-bold text-gray-800">Delete Your Posting</h2>
+        <h2 className="text-lg text-center font-bold text-gray-800 bg-brand-pink/25 border border-brand-pink/30 backdrop-blur-md rounded-2xl p-2">Delete Your Posting</h2>
 
         <p className="text-md text-gray-800 mb-6">
           Are you sure you want to delete <strong>{title}</strong>?
