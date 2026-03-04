@@ -47,7 +47,7 @@ export function Navbar() {
               href="/protected"
               className="block w-full text-center p-3 rounded-xl text-gray-800 font-semibold text-lg shadow-lg hover:bg-white/35 active:scale-[0.98] transition-all duration-200 ease-out border border-white/30"
             >
-              Startseite
+            Home
             </Link>
           </li>
 

@@ -14,11 +14,19 @@ export default function PostCard({ post, onReadMore }: Props) {
 
     const cutoff = 60;
 
+    const isRequest = post.typ === "request";
 
     return (
         <div className=" relative rounded-lg p-4 bg-white border border-gray-200 aspect-square flex flex-col shadow-[0_14px_22px_rgba(0,0,0,0.22)] before:absolute before:inset-0 before:rounded-lg before:ring-1 before:ring-black/5 before:pointer-events-none transition-shadow duration-300 cursor-default">
 
-            <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-4 h-4 bg-fuchsia-600 rounded-full shadow-[0_4px_6px_rgba(0,0,0,0.4)] border border-fuchsia-800"></div>
+            {/* Pin/Magnet */}
+            <div
+                className={`absolute -top-1 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full shadow-[0_4px_6px_rgba(0,0,0,0.4)]
+           ${isRequest
+                        ? "bg-brand-magenta border border-brand-magenta/80"
+                        : "bg-brand-teal border border-brand-teal/80"}`}>
+
+            </div>
 
             {/* Label */}
             <span
