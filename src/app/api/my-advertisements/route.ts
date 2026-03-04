@@ -47,7 +47,7 @@ export async function PATCH(req: Request) {
       description,
       updatet_at: new Date().toISOString(),
     })
-    .eq("advertisment_id", id)
+    .eq("advertisement_id", id)
     .eq("user_id", user.id)
     .select()
     .single();
@@ -76,7 +76,7 @@ export async function DELETE(req: Request) {
   const { error } = await supabase
     .from("advertisement")
     .delete()
-    .eq("advertisment_id", id)
+    .eq("advertisement_id", id)
     .eq("user_id", user.id);
 
   if (error) return NextResponse.json(error, { status: 500 });

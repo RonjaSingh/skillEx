@@ -26,7 +26,7 @@ export default function EditAdvertisementPopup({
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
       <div className="bg-white p-6 rounded-lg w-full max-w-md space-y-4">
-        <h2 className="text-lg font-bold">Anzeige bearbeiten</h2>
+       
 
         <input
           className="border p-2 w-full rounded"
