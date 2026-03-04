@@ -18,7 +18,7 @@ export default function ProfilePage() {
   if (loading) return <p>Loading...</p>
 
   return (
-    <div className="max-w-7xl mx-auto mt-4 space-y-8 text-gray-800 font-semibold">
+    <div className="max-w-7xl mx-auto mt-0 space-y-8 text-gray-800 font-semibold">
 
 
       <div className="py-2 text-center bg-white/25 backdrop-blur shadow-md p-8 rounded-full">

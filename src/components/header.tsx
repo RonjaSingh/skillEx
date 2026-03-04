@@ -12,11 +12,11 @@ type HeaderProps = {
 
 export function Header({ username, avatarUrl }: HeaderProps) {
   return (
-    <header className="w-full h-24 bg-gradient-to-r from-brand-magenta to-brand-teal">
+    <header className="w-full h-22 bg-gradient-to-r from-brand-magenta to-brand-teal">
       <div className="mx-auto px-12 pt-6 grid grid-cols-[auto_1fr_auto] items-center gap-x-12">
 
         {/* Left: Logo */}
-        <div className="flex justify-start overflow-hidden">
+        <div className=" flex justify-start overflow-hidden">
           <Link href="/protected">
             <Image
               src="/skillexchange2.0.png"
