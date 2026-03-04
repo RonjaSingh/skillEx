@@ -1,3 +1,5 @@
+
+
 export default function Footer() {
   return (
     <footer className="w-full mt-4 bg-gradient-to-r from-brand-magenta to-brand-teal text-gray-800  shadow-[0_-8px_30px_rgba(0,0,0,0.25)]
