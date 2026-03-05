@@ -65,7 +65,6 @@ export default function CalendarPage() {
      const start = new Date(startTime);
      const end = new Date(endTime);
 
-    // 30 Minuten in Millisekunden
     const THIRTY_MINUTES = 30 * 60 * 1000;
 
     if (end.getTime() - start.getTime() !== THIRTY_MINUTES) {
@@ -77,6 +76,17 @@ export default function CalendarPage() {
       setError("Du bist nicht eingeloggt.");
       return;
     }
+
+    const { data: existing } = await supabase
+  .from("availability")
+  .select("availability_id")
+  .eq("user_id", userId)
+  .eq("start_time", startTime);
+
+  if (existing && existing.length > 0) {
+  setError("Für diese Startzeit existiert bereits ein Slot.");
+  return;
+  }
 
     const { error } = await supabase.from("availability").insert({
       user_id: userId,
