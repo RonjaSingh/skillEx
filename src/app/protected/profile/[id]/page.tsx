@@ -59,7 +59,7 @@ export default async function ProfilePage({
   return (
     <div className="max-w-7xl mx-auto mt-4 space-y-12 text-gray-800 font-semibold">
 
-      <div className="py-2 text-xl bg-white/25 backdrop-blur shadow-md p-8 rounded-full">
+      <div className="py-2 text-xl bg-white/15 backdrop-blur shadow-md p-8 rounded-full">
         <div className="flex items-center justify-center gap-12">
           <h1 className="text-2xl ">{user.name || "Username"}</h1>
 
@@ -84,14 +84,14 @@ export default async function ProfilePage({
 
         <div className="space-y-20">
 
-          <div className="bg-white bg-white/25 backdrop-blur rounded-2xl shadow-md p-6  transition">
+          <div className="bg-white bg-white/15 backdrop-blur rounded-2xl shadow-md p-6  transition">
          
             <div className="mt-3 text-right">
-              <ReadMoreCard title="My Skills" items={skills} />
+              <ReadMoreCard title="Skills" items={skills} />
             </div>
           </div>
 
-          <div className="bg-white bg-white/25 backdrop-blur rounded-2xl shadow-md p-8 mb-4 transition">
+          <div className="bg-white bg-white/15 backdrop-blur rounded-2xl shadow-md p-8 mb-4 transition">
               <div className="mt-3 text-right">
               <ReadMoreCard title="Languages" items={languages} />
             </div>
@@ -101,11 +101,11 @@ export default async function ProfilePage({
 
 
         <div className="flex items-center justify-center">
-          <div className="bg-white bg-white/25 backdrop-blur rounded-2xl shadow-md p-12 hover:shadow-lg transition text-center w-full">
+          <div className="bg-white bg-white/15 backdrop-blur rounded-2xl shadow-md p-12 hover:shadow-lg transition text-center w-full">
             <h2 className="text-xl font-semibold mb-4 underline">Book your Session</h2>
 
 
-            <button className="px-6 py-3 rounded-lg border border-white/25 bg-white/19 hover:bg-white/40 transition">
+            <button className="px-6 py-3 rounded-lg bg-white/20 hover:bg-white/40 transition">
               View Availability
             </button>
           </div>
