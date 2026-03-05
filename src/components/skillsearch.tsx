@@ -137,11 +137,11 @@ export default function SkillSearch() {
   };
 
   // Text kürzen, wenn zu lang
-const truncateText = (text: string, maxLength: number) => {
-  return text.length > maxLength
-    ? text.slice(0, maxLength) + "..."
-    : text;
-};
+  const truncateText = (text: string, maxLength: number) => {
+    return text.length > maxLength
+      ? text.slice(0, maxLength) + "..."
+      : text;
+  };
 
   return (
 
@@ -175,11 +175,11 @@ const truncateText = (text: string, maxLength: number) => {
       {/* Ergebnisse */}
       {hasSearched && (
         <div
-  ref={resultsRef}
-className="absolute top-24 left-0 right-0 border border-white/30 border-t-0
+          ref={resultsRef}
+          className="absolute top-24 left-0 right-0 border border-white/30 border-t-0
            backdrop-blur-xl bg-white/20 rounded-b-2xl shadow-xl 
            z-50 max-h-[400px] overflow-y-auto p-3 space-y-3"
->
+        >
           {/* Treffer */}
           {results.map((user) => (
             <div
@@ -189,9 +189,9 @@ className="absolute top-24 left-0 right-0 border border-white/30 border-t-0
               <h3
                 onClick={() => router.push(`/protected/profile/${user.user_id}`)}
                 className="font-bold cursor-pointer hover:text-brand-purple/100 w-1/4">{user.name}</h3>
-                    <p className="text-sm font-bold text-gray-800 w-1/4"> <strong>Skills: </strong><br />{truncateText(capitalize(user.skills.join(", ")), 25)}</p>
-              <p className="text-sm font-bold text-gray-800 w-1/4"><strong>Sprache(n): </strong><br />{truncateText(capitalize(user.languages), 25)}</p>
-          
+              <p className="text-sm font-bold text-gray-800 w-1/4"> <strong>Skills: </strong><br />{truncateText(capitalize(user.skills.join(", ")), 25)}</p>
+              <p className="text-sm font-bold text-gray-800 w-1/4"><strong>Languages: </strong><br />{truncateText(capitalize(user.languages), 25)}</p>
+
 
               {/* Button rechts */}
               <button
