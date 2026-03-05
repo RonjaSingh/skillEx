@@ -48,10 +48,10 @@ export default function AdvertisementPage() {
 
   return (
     <div className="max-w-7xl mx-auto m-0 p-4 space-y-10">
-      <h1 className="text-xl text-center font-semibold text-gray-800 bg-white/25 backdrop-blur-md rounded-2xl p-2">My Board Postings</h1>
+      <h1 className="text-xl text-center font-semibold text-gray-800 bg-white/15 backdrop-blur-md rounded-2xl p-2">My Board Postings</h1>
 
       {/* Angebote */}
-      <section className="bg-white/25 backdrop-blur rounded-2xl shadow-md p-6">
+      <section className="bg-white/15 backdrop-blur rounded-2xl shadow-md p-6">
         <h2 className="text-lg text-center font-semibold text-gray-800 mb-4 backdrop-blur-md rounded-2xl p-2">My OFFERS</h2>
 
         {angebote.length === 0 ? (
@@ -71,7 +71,7 @@ export default function AdvertisementPage() {
       </section>
 
       {/* Gesuche */}
-      <section className="bg-white/25 backdrop-blur rounded-2xl shadow-md p-6">
+      <section className="bg-white/15 backdrop-blur rounded-2xl shadow-md p-6">
         <h2 className="text-lg text-center font-semibold text-gray-800 mb-4 backdrop-blur-md rounded-2xl p-2">MY REQUESTS</h2>
 
         {gesuche.length === 0 ? (
@@ -179,7 +179,7 @@ function Anzeige({
   onDelete: (ad: Ad) => void
 }) {
   return (
-    <div className="border border-white/10 rounded-lg p-4 flex justify-between items-start">
+    <div className="rounded-lg p-4 flex justify-between items-start shadow-sm">
       <div>
         <p className="font-semibold text-gray-800 mb-1">{ad.title}</p>
         <p className="text-md text-gray-800">{ad.description}</p>

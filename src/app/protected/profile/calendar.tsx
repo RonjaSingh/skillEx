@@ -3,65 +3,83 @@
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 
-interface Availability {
-  availability_id: string;
+const supabase = createClient();
+
+interface Session {
+  id: string;
+  title: string;
+  date: string;
   start_time: string;
   end_time: string;
+  creator_id: string;
+  status: "free" | "booked" | "confirmed";
+  google_meet_link: string | null;
 }
 
-export default function CalendarPage() {
+interface Request {
+  id: string;
+  session_id: string;
+  requester_id: string;
+  message: string;
+  requested_time: string;
+  status: "pending" | "accepted" | "declined";
+}
 
-   const supabase = createClient();
-   
-  const [availabilities, setAvailabilities] = useState<Availability[]>([]);
+export default function BookingCalendar() {
+  const [sessions, setSessions] = useState<Session[]>([]);
+  const [requests, setRequests] = useState<Request[]>([]);
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const [userId, setUserId] = useState<string | null>(null);
+
+  const [selectedDay, setSelectedDay] = useState<string | null>(null);
+  const [showModal, setShowModal] = useState(false);
+  const [modalSessions, setModalSessions] = useState<Session[]>([]);
+
+  const [title, setTitle] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
+  const [requestMessage, setRequestMessage] = useState("");
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(true);
-
-  // Aktuellen User laden
-  const [userId, setUserId] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchUser = async () => {
-      const { data: userData } = await supabase.auth.getUser();
-      setUserId(userData.user?.id ?? null);
+      const { data } = await supabase.auth.getUser();
+      setUserId(data.user?.id ?? null);
     };
     fetchUser();
+    loadSessions();
+    loadRequests();
+
+    // Live Update alle 5 Sekunden
+    const interval = setInterval(() => {
+      loadSessions();
+      loadRequests();
+    }, 5000);
+    return () => clearInterval(interval);
   }, []);
 
-  // Termine laden
-  useEffect(() => {
-    if (!userId) return;
+  const loadSessions = async () => {
+    const { data, error } = await supabase
+      .from("sessions")
+      .select("*")
+      .order("date", { ascending: true })
+      .order("start_time", { ascending: true });
+    if (!error && data) setSessions(data);
+  };
 
-    const loadAvailabilities = async () => {
-      setLoading(true);
-      const { data, error } = await supabase
-        .from("availability")
-        .select("*")
-        .eq("user_id", userId)
-        .order("start_time", { ascending: true });
+  const loadRequests = async () => {
+    const { data, error } = await supabase
+      .from("requests")
+      .select("*")
+      .order("status", { ascending: true });
+    if (!error && data) setRequests(data);
+  };
 
-      if (error) {
-        console.error(error.message);
-      } else {
-        setAvailabilities(data as Availability[]);
-      }
-      setLoading(false);
-    };
-
-    loadAvailabilities();
-  }, [userId]);
-
-  // Termin erstellen
-  const addAvailability = async () => {
-    setError("");
-
-    if (!startTime || !endTime) {
-      setError("Bitte Start- und Endzeit auswählen.");
+  const addSession = async () => {
+    if (!title || !startTime || !endTime || !selectedDay || !userId) {
+      setError("Bitte alles ausfüllen");
       return;
     }
-
      const start = new Date(startTime);
      const end = new Date(endTime);
 
@@ -72,6 +90,7 @@ export default function CalendarPage() {
     return;
   }
 
+    const googleMeetLink = `https://meet.google.com/${Math.random().toString(36).substring(2,10)}`;
     if (!userId) {
       setError("Du bist nicht eingeloggt.");
       return;
@@ -88,134 +107,203 @@ export default function CalendarPage() {
   return;
   }
 
-    const { error } = await supabase.from("availability").insert({
-      user_id: userId,
+    const { error } = await supabase.from("sessions").insert({
+      title,
+      date: selectedDay,
       start_time: startTime,
       end_time: endTime,
+      status: "free",
+      creator_id: userId,
+      google_meet_link: googleMeetLink,
     });
 
-    if (error) {
-      setError(error.message);
-    } else {
+    if (!error) {
+      setTitle("");
       setStartTime("");
       setEndTime("");
-      // sofort neu laden
-      setAvailabilities((prev) => [
-        ...prev,
-        { availability_id: crypto.randomUUID(), start_time: startTime, end_time: endTime },
-      ]);
+      setSelectedDay(null);
+      setShowModal(false);
+      loadSessions();
     }
   };
 
-  // Termin löschen
-  const deleteAvailability = async (id: string) => {
-    const { error } = await supabase.from("availability").delete().eq("availability_id", id);
-    if (error) {
-      console.error(error.message);
-    } else {
-      setAvailabilities((prev) => prev.filter((a) => a.availability_id !== id));
+  const sendRequest = async (session: Session) => {
+    if (!userId || !requestMessage) return;
+    const { error } = await supabase.from("requests").insert({
+      session_id: session.id,
+      requester_id: userId,
+      message: requestMessage,
+      requested_time: session.start_time,
+      status: "pending",
+    });
+    if (!error) {
+      setRequestMessage("");
+      loadRequests();
     }
+  };
+
+  const handleRequest = async (request: Request, accept: boolean) => {
+    await supabase.from("requests").update({ status: accept ? "accepted" : "declined" }).eq("id", request.id);
+    if (accept) {
+      await supabase.from("sessions").update({ status: "confirmed" }).eq("id", request.session_id);
+    }
+    loadSessions();
+    loadRequests();
+  };
+
+  const year = currentDate.getFullYear();
+  const month = currentDate.getMonth();
+  const days = new Date(year, month + 1, 0).getDate();
+  const daysArray = Array.from({ length: days }, (_, i) =>
+    new Date(year, month, i + 1).toISOString().split("T")[0]
+  );
+
+  const firstDay = new Date(year, month, 1);
+  let startDay = firstDay.getDay();
+  startDay = startDay === 0 ? 6 : startDay - 1;
+  const emptyDays = Array.from({ length: startDay });
+
+  const getStatusColor = (status: string) => {
+    if (status === "free") return "bg-green-400";
+    if (status === "booked") return "bg-yellow-400";
+    if (status === "confirmed") return "bg-red-300";
+  };
+
+  const openModal = (day: string) => {
+    setSelectedDay(day);
+    setModalSessions(sessions.filter(s => s.date === day));
+    setShowModal(true);
   };
 
   return (
-    <div style={containerStyle}>
-      <h1>Terminkalender</h1>
+    <div className="max-w-3xl mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4 text-center text-white">Session-Kalender</h1>
 
-      {/* Formular */}
-      <div style={formStyle}>
-        <input
-          type="datetime-local"
-          value={startTime}
-          onChange={(e) => setStartTime(e.target.value)}
-          style={inputStyle}
-        />
-        <input
-          type="datetime-local"
-          value={endTime}
-          onChange={(e) => setEndTime(e.target.value)}
-          style={inputStyle}
-        />
-        <button onClick={addAvailability} style={buttonStyle}>
-          Termin hinzufügen
-        </button>
-        {error && <p style={{ color: "red" }}>{error}</p>}
+      {/* Navigation */}
+      <div className="flex justify-between items-center mb-3 text-white">
+        <button
+          className="w-10 h-10 rounded-full bg-white/20 hover:bg-white/40 flex items-center justify-center transition"
+          onClick={() => setCurrentDate(new Date(year, month - 1, 1))}
+        >{"<"}</button>
+
+        <span className="font-semibold text-lg">{currentDate.toLocaleString("de-DE", { month: "long", year: "numeric" })}</span>
+
+        <button
+          className="w-10 h-10 rounded-full bg-white/20 hover:bg-white/40 flex items-center justify-center transition"
+          onClick={() => setCurrentDate(new Date(year, month + 1, 1))}
+        >{">"}</button>
       </div>
 
-      {/* Termine anzeigen */}
-      {loading ? (
-        <p>Lade Termine...</p>
-      ) : availabilities.length === 0 ? (
-        <p>Keine Termine vorhanden.</p>
-      ) : (
-        <div style={boardStyle}>
-          {availabilities.map((a) => (
-            <div key={a.availability_id} style={availabilityStyle}>
-              <strong>
-                {new Date(a.start_time).toLocaleString()} - {new Date(a.end_time).toLocaleString()}
-              </strong>
-              <button
-                onClick={() => deleteAvailability(a.availability_id)}
-                style={deleteButtonStyle}
+      {/* Kalender Grid */}
+      <div className="border rounded-lg p-3 bg-gradient-to-tr from-purple-600 via-blue-400 to-pink-400">
+        <div className="grid grid-cols-7 gap-1 mb-1 font-bold text-center text-white text-sm">
+          {["Mo","Di","Mi","Do","Fr","Sa","So"].map(d => <div key={d}>{d}</div>)}
+        </div>
+
+        <div className="grid grid-cols-7 gap-1 text-xs">
+          {emptyDays.map((_, i) => <div key={"empty-"+i}></div>)}
+
+          {daysArray.map(day => {
+            const daySessions = sessions.filter(s => s.date === day);
+            return (
+              <div
+                key={day}
+                className={`border rounded-lg flex flex-col min-h-[80px] max-h-[80px] shadow-sm hover:shadow-md transition cursor-pointer p-1
+                  ${day === new Date().toISOString().split("T")[0] ? "ring-2 ring-white/70" : "bg-white"}`}
+                onClick={() => openModal(day)}
               >
-                Löschen
-              </button>
-            </div>
-          ))}
+                <div className="font-semibold text-sm border-b mb-1">{new Date(day).getDate()}</div>
+                <div className="flex-1 flex flex-col gap-1 overflow-hidden">
+                  {daySessions.map(s => {
+                    const pendingCount = requests.filter(r => r.session_id === s.id && r.status === "pending").length;
+                    return (
+                      <div key={s.id} className="relative">
+                        {/* Live Badge */}
+                        {pendingCount > 0 && (
+                          <div className="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] px-1 rounded-full">
+                            {pendingCount}
+                          </div>
+                        )}
+
+                        <div
+                          className={`${getStatusColor(s.status)} rounded p-1 text-[10px] flex justify-between items-center`}
+                        >
+                          <span>{s.start_time}-{s.end_time} {s.title}</span>
+                          {s.google_meet_link && (
+                            <a href={s.google_meet_link} target="_blank" className="text-xs underline" title="Google Meet">🔗</a>
+                          )}
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+
+      {/* Modal */}
+      {showModal && selectedDay && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg w-96 p-4 relative max-h-[90vh] overflow-y-auto">
+            <button
+              className="absolute top-2 right-2 text-gray-500 hover:text-gray-800 text-lg font-bold"
+              onClick={()=>setShowModal(false)}
+            >✖</button>
+
+            <h3 className="text-lg font-semibold mb-2">Sessions für {new Date(selectedDay).toLocaleDateString()}</h3>
+
+            {modalSessions.map(s => (
+              <div key={s.id} className="border p-2 rounded mb-1 flex flex-col gap-1">
+                <div className="flex justify-between items-center">
+                  <span className="font-semibold">{s.start_time}-{s.end_time} {s.title}</span>
+                  {s.google_meet_link && (
+                    <a href={s.google_meet_link} target="_blank" className="text-xs underline" title="Google Meet">🔗</a>
+                  )}
+                </div>
+
+                {/* Requests für Besitzer */}
+                {userId === s.creator_id && requests.filter(r => r.session_id === s.id && r.status === "pending").map(r => (
+                  <div key={r.id} className="flex justify-between items-center bg-gray-100 p-1 rounded text-xs">
+                    <span>{r.message} ({r.requested_time})</span>
+                    <div className="flex gap-1">
+                      <button onClick={() => handleRequest(r, true)} className="bg-green-600 px-2 rounded hover:bg-green-500 transition text-[10px]">Akzeptieren</button>
+                      <button onClick={() => handleRequest(r, false)} className="bg-red-600 px-2 rounded hover:bg-red-500 transition text-[10px]">Ablehnen</button>
+                    </div>
+                  </div>
+                ))}
+
+                {/* Andere Nutzer können Request senden */}
+                {userId && userId !== s.creator_id && s.status === "free" && (
+                  <div className="flex gap-1 mt-1">
+                    <input
+                      type="text"
+                      placeholder="Nachricht / Zweck"
+                      value={requestMessage}
+                      onChange={e=>setRequestMessage(e.target.value)}
+                      className="flex-1 border p-1 text-xs rounded"
+                    />
+                    <button onClick={()=>sendRequest(s)} className="bg-blue-600 px-2 rounded hover:bg-blue-500 transition text-xs">Anfrage</button>
+                  </div>
+                )}
+              </div>
+            ))}
+
+            {/* Besitzer kann neuen Slot erstellen */}
+            {userId && modalSessions.length === 0 && (
+              <div className="mt-2">
+                <h4 className="font-semibold mb-1">Neue freie Zeit eintragen</h4>
+                {error && <p className="text-red-500 text-xs mb-1">{error}</p>}
+                <input placeholder="Titel" value={title} onChange={e=>setTitle(e.target.value)} className="w-full mb-1 p-1 border rounded text-sm"/>
+                <input type="time" value={startTime} onChange={e=>setStartTime(e.target.value)} className="w-full mb-1 p-1 border rounded text-sm"/>
+                <input type="time" value={endTime} onChange={e=>setEndTime(e.target.value)} className="w-full mb-1 p-1 border rounded text-sm"/>
+                <button onClick={addSession} className="bg-green-600 w-full py-1 rounded text-white hover:bg-green-500 transition mt-1">Slot erstellen</button>
+              </div>
+            )}
+          </div>
         </div>
       )}
     </div>
   );
 }
-
-/* Styles */
-const containerStyle = {
-  maxWidth: "800px",
-  margin: "0 auto",
-  padding: "40px",
-  textAlign: "center" as const,
-};
-
-const formStyle = {
-  display: "flex",
-  justifyContent: "center",
-  gap: "10px",
-  marginBottom: "30px",
-  flexWrap: "wrap" as const,
-};
-
-const inputStyle = {
-  padding: "8px",
-  fontSize: "16px",
-};
-
-const buttonStyle = {
-  padding: "10px",
-  fontSize: "16px",
-  backgroundColor: "#333",
-  color: "#fff",
-  border: "none",
-  cursor: "pointer",
-};
-
-const boardStyle = {
-  display: "flex",
-  flexDirection: "column" as const,
-  gap: "10px",
-};
-
-const availabilityStyle = {
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  backgroundColor: "#90caf9",
-  padding: "10px",
-  borderRadius: "6px",
-};
-
-const deleteButtonStyle = {
-  backgroundColor: "#e57373",
-  border: "none",
-  padding: "6px 10px",
-  cursor: "pointer",
-  color: "#fff",
-};

@@ -21,7 +21,7 @@ export default function ProfilePage() {
     <div className="max-w-7xl mx-auto mt-0 space-y-8 text-gray-800 font-semibold">
 
 
-      <div className="py-2 text-center bg-white/25 backdrop-blur shadow-md p-8 rounded-full">
+      <div className="py-2 text-center bg-white/15 backdrop-blur shadow-md p-8 rounded-full">
 
         <div className="flex items-center justify-center gap-12">
           <h1 className="text-2xl font-semibold">
@@ -46,7 +46,7 @@ export default function ProfilePage() {
       <div className="flex justify-center ">
         <button
           onClick={() => setIsPopupOpen(true)}
-          className="px-8 py-2 text-lg rounded-xl bg-white/30 backdrop-blur-md shadow border border-white/30 hover:bg-white/40 transition"
+          className="px-8 py-2 text-lg rounded-xl bg-white/30 backdrop-blur-md shadow hover:bg-white/40 transition"
         >
           Edit Profile
         </button>
@@ -58,19 +58,19 @@ export default function ProfilePage() {
 
         <div className="space-y-16">
 
-          <div className="bg-white/25 backdrop-blur rounded-2xl shadow-md p-6">
+          <div className="bg-white/15 backdrop-blur rounded-2xl shadow-md p-6">
             <h2 className="text-xl font-semibold mb-6 text-center underline">My Skills</h2>
 
             <p className="text-lg text-gray-700 text-center mb-4">{skills.length > 0 ? skills.join(', ') : "-"}</p>
           </div>
 
-          <div className="bg-white/25 backdrop-blur rounded-2xl shadow-md p-6">
+          <div className="bg-white/15 backdrop-blur rounded-2xl shadow-md p-6">
             <h2 className="text-xl font-semibold mb-4 text-center underline">Languages I Speak</h2>
 
             <p className="text-lg mb-4 text-gray-700 text-center">{languages.length > 0 ? languages.join(', ') : "-"}</p>
           </div>
 
-          <div className="bg-white/25 backdrop-blur rounded-2xl shadow-md p-6 mb-4">
+          <div className="bg-white/15 backdrop-blur rounded-2xl shadow-md p-6 mb-4">
             <h2 className="text-xl font-semibold mb-6 text-center underline">
               Attended Sessions
             </h2>
@@ -83,7 +83,7 @@ export default function ProfilePage() {
 
               <button
                 onClick={() => router.push('/protected/sessions')}
-                className="px-8 py-2 mb-4 text-lg rounded-xl bg-white/30 backdrop-blur-md shadow border border-white/30 hover:bg-white/40 transition"
+                className="px-8 py-2 mb-4 text-lg rounded-xl bg-white/10 backdrop-blur-md shadow hover:bg-white/40 transition"
               >
                 My Sessions
               </button>
@@ -93,10 +93,7 @@ export default function ProfilePage() {
 
 
         <div className="flex items-start justify-center">
-          <div className="bg-white/25 backdrop-blur rounded-2xl shadow-md p-8 w-full">
-            <h2 className="text-lg font-semibold mb-6 text-center underline">
-              My Calendar
-            </h2>
+          <div className="w-full">
             <Calendar />
 
           </div>

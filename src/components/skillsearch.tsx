@@ -154,7 +154,7 @@ export default function SkillSearch() {
           e.preventDefault();
           handleSearch();
         }}
-        className="flex justify-center gap-4 p-6 mt-10 mb-6 backdrop-blur-md bg-white/20 rounded-2xl shadow-xl border border-white/30"
+        className="flex justify-center gap-4 p-6 mt-10 mb-6 backdrop-blur-md bg-white/20 rounded-2xl shadow-xl "
       >
         <input
           type="text"
@@ -166,7 +166,7 @@ export default function SkillSearch() {
         <button
 
           type="submit"
-          className="w-64 p-3 rounded-xl bg-white/25 backdrop-blur-md text-gray-800 font-semibold text-lg shadow-lg border border-white/30 hover:bg-white/35 hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0 active:shadow-md transition-all duration-200 ease-out">
+          className="w-64 p-3 rounded-xl bg-white/25 backdrop-blur-md text-gray-800 font-semibold text-lg shadow-lg hover:bg-white/35 hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0 active:shadow-md transition-all duration-200 ease-out">
           Search
         </button>
 

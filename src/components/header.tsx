@@ -37,7 +37,7 @@ export function Header({ username, avatarUrl }: HeaderProps) {
         <div className='flex justify-end'>
           <Link
             href="/protected/profile"
-            className="group flex items-center gap-3 px-4 h-20 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md border border-white/20 transition-all duration-300"
+            className="group flex items-center gap-3 px-4 h-20 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md  transition-all duration-300"
           >
          <span className="hidden sm:flex text-md font-medium text-gray-800 max-w-[120px] truncate items-center">
               {username}
