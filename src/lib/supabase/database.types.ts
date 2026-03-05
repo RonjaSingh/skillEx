@@ -76,18 +76,21 @@ export type Database = {
         Row: {
           availability_id: string
           end_time: string
+          is_booked: boolean | null
           start_time: string
           user_id: string
         }
         Insert: {
           availability_id?: string
           end_time: string
+          is_booked?: boolean | null
           start_time: string
           user_id: string
         }
         Update: {
           availability_id?: string
           end_time?: string
+          is_booked?: boolean | null
           start_time?: string
           user_id?: string
         }
