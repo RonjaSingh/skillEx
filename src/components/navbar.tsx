@@ -31,7 +31,7 @@ export function Navbar() {
       <div>
         <button
           onClick={() => setOpen(!open)}
-          className="w-36 sm:w-28 md:w-52 lg:w-64 p-3 m-2 rounded-xl bg-white/25 backdrop-blur-md text-gray-800 font-semibold text-lg shadow-lg border border-white/30 hover:bg-white/35 hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0 active:shadow-md transition-all duration-200 ease-out"
+          className="w-36 sm:w-28 md:w-52 lg:w-64 p-3 m-2 rounded-xl bg-white/25 backdrop-blur-md text-gray-800 font-semibold text-lg shadow-lg hover:bg-white/35 hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0 active:shadow-md transition-all duration-200 ease-out"
         >
           Menu
         </button>
@@ -45,7 +45,7 @@ export function Navbar() {
           <li className="w-full">
             <Link
               href="/protected"
-              className="block w-full text-center p-3 rounded-xl text-gray-800 font-semibold text-lg shadow-lg hover:bg-white/35 active:scale-[0.98] transition-all duration-200 ease-out border border-white/30"
+              className="block w-full text-center p-3 rounded-xl text-gray-800 font-semibold text-lg shadow-lg hover:bg-white/35 active:scale-[0.98] transition-all duration-200 ease-out border border-white/10"
             >
             Home
             </Link>
@@ -54,7 +54,7 @@ export function Navbar() {
           <li className="w-full">
             <Link
               href="/protected/profile"
-             className="block w-full text-center p-3 rounded-xl text-gray-800 font-semibold text-lg shadow-lg hover:bg-white/35 active:scale-[0.98] transition-all duration-200 ease-out border border-white/30"
+             className="block w-full text-center p-3 rounded-xl text-gray-800 font-semibold text-lg shadow-lg hover:bg-white/35 active:scale-[0.98] transition-all duration-200 ease-out border border-white/10"
             >
               My Profile
             </Link>
@@ -63,7 +63,7 @@ export function Navbar() {
           <li className="w-full">
             <Link
               href="/protected/sessions"
-          className="block w-full text-center p-3 rounded-xl text-gray-800 font-semibold text-lg shadow-lg hover:bg-white/35 active:scale-[0.98] transition-all duration-200 ease-out border border-white/30"
+          className="block w-full text-center p-3 rounded-xl text-gray-800 font-semibold text-lg shadow-lg hover:bg-white/35 active:scale-[0.98] transition-all duration-200 ease-out border border-white/10"
             >
               My Sessions
             </Link>
@@ -72,7 +72,7 @@ export function Navbar() {
           <li className="w-full">
             <Link
               href="/protected/advertisement"
-     className="block w-full text-center p-3 rounded-xl text-gray-800 font-semibold text-lg shadow-lg hover:bg-white/35 active:scale-[0.98] transition-all duration-200 ease-out border border-white/30"
+     className="block w-full text-center p-3 rounded-xl text-gray-800 font-semibold text-lg shadow-lg hover:bg-white/35 active:scale-[0.98] transition-all duration-200 ease-out border border-white/10"
             >
               My Postings
             </Link>
