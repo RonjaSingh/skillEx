@@ -80,6 +80,16 @@ export default function BookingCalendar() {
       setError("Bitte alles ausfüllen");
       return;
     }
+     const start = new Date(startTime);
+     const end = new Date(endTime);
+
+    // 30 Minuten in Millisekunden
+    const THIRTY_MINUTES = 30 * 60 * 1000;
+
+    if (end.getTime() - start.getTime() !== THIRTY_MINUTES) {
+    setError("Die Endzeit muss genau 30 Minuten nach der Startzeit liegen.");
+    return;
+  }
 
     const googleMeetLink = `https://meet.google.com/${Math.random().toString(36).substring(2,10)}`;
 

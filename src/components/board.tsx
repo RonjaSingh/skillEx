@@ -28,23 +28,7 @@ export default function Board() {
             <div className="space-y-3">
 
                 {/*board container */}
-                <div className="
-  relative
-  rounded-3xl
-  p-4
-  min-h-[500px]
-
-  bg-gradient-to-br from-[#1E3A2F]/90 to-[#294235]/90
-  shadow-[0_20px_60px_rgba(0,0,0,0.35)]
-  border border-white/10
-  ring-1 ring-white/5
-  backdrop-blur-xl
-
-  overflow-y-auto
-  scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent
-
-
-">
+                <div className="relative rounded-3xl p-4 min-h-[500px] bg-gradient-to-br from-[#1E3A2F]/90 to-[#294235]/90 shadow-[0_20px_60px_rgba(0,0,0,0.35)] border border-white/10 ring-1 ring-white/5 backdrop-blur-xl overflow-y-auto scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent">
                     {posts.length === 0 ? (
                         <div className="flex items-center justify-center h-full text-white text-center px-4">
                             No posts yet. Be the first to create a post!

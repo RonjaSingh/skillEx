@@ -12,24 +12,24 @@ type HeaderProps = {
 
 export function Header({ username, avatarUrl }: HeaderProps) {
   return (
-    <header className="w-full h-24 bg-gradient-to-r from-brand-magenta to-brand-teal">
-      <div className="mx-auto px-12 pt-6 grid grid-cols-[auto_1fr_auto] items-center gap-x-12">
+    <header className="w-full h-22 bg-gradient-to-r from-brand-magenta to-brand-teal">
+      <div className="mx-auto px-12 pt-6 grid grid-cols-[auto_1fr_auto] items-center gap-x-6">
 
         {/* Left: Logo */}
-        <div className="flex justify-start overflow-hidden">
+        <div className=" flex justify-start">
           <Link href="/protected">
             <Image
               src="/skillexchange2.0.png"
               alt="Logo"
-              width={600}
-              height={600}
-              className="h-22 w-68 object-cover rounded-full cursor-pointer mt-2" />
+              width={248}
+              height={80}
+              className="h-20 w-[160px] sm:w-[200px] lg:w-[248px] object-cover rounded-full cursor-pointer" />
           </Link>
 
         </div>
 
 
-        <div className="flex justify-center self-end">
+        <div className="flex justify-center items-center min-w-0">
           <Navbar />
         </div>
 
@@ -37,9 +37,9 @@ export function Header({ username, avatarUrl }: HeaderProps) {
         <div className='flex justify-end'>
           <Link
             href="/protected/profile"
-            className="  group flex items-center gap-3 px-4 py-2 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md border border-white/20 transition-all duration-300"
+            className="group flex items-center gap-3 px-4 h-20 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md border border-white/20 transition-all duration-300"
           >
-            <span className="  text-md font-medium text-gray-800 max-w-[120px] truncate ">
+         <span className="hidden sm:flex text-md font-medium text-gray-800 max-w-[120px] truncate items-center">
               {username}
             </span>
 

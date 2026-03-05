@@ -23,7 +23,7 @@ export default function AdvertisementPage() {
         const data = await res.json();
 
         const mapped = data.map((ad: any) => ({
-          id: ad.advertisment_id,
+          id: ad.advertisement_id,
           title: ad.title,
           description: ad.description,
           type: ad.typ,
@@ -31,7 +31,7 @@ export default function AdvertisementPage() {
 
         setAds(mapped);
       } catch (err) {
-        console.error("Fehler beim Laden:", err);
+        console.error("Loading error:", err);
       } finally {
         setLoading(false);
       }
@@ -47,15 +47,15 @@ export default function AdvertisementPage() {
   }
 
   return (
-    <div className="max-w-3xl mx-auto mt-10 p-4 space-y-10">
-      <h1 className="text-2xl font-bold">Meine Anzeigen</h1>
+    <div className="max-w-7xl mx-auto m-0 p-4 space-y-10">
+      <h1 className="text-xl text-center font-semibold text-gray-800 bg-white/25 backdrop-blur-md rounded-2xl p-2">My Board Postings</h1>
 
       {/* Angebote */}
-      <section>
-        <h2 className="text-xl font-semibold mb-4">Angebote</h2>
+      <section className="bg-white/25 backdrop-blur rounded-2xl shadow-md p-6">
+        <h2 className="text-lg text-center font-semibold text-gray-800 mb-4 backdrop-blur-md rounded-2xl p-2">My OFFERS</h2>
 
         {angebote.length === 0 ? (
-          <p className="text-sm text-gray-500">Keine Angebote</p>
+          <p className="text-md text-gray-600">No offers available</p>
         ) : (
           <div className="space-y-4">
             {angebote.map((ad) => (
@@ -71,11 +71,11 @@ export default function AdvertisementPage() {
       </section>
 
       {/* Gesuche */}
-      <section>
-        <h2 className="text-xl font-semibold mb-4">Gesuche</h2>
+      <section className="bg-white/25 backdrop-blur rounded-2xl shadow-md p-6">
+        <h2 className="text-lg text-center font-semibold text-gray-800 mb-4 backdrop-blur-md rounded-2xl p-2">MY REQUESTS</h2>
 
         {gesuche.length === 0 ? (
-          <p className="text-sm text-gray-500">Keine Gesuche</p>
+          <p className="text-md text-gray-600">No requests available</p>
         ) : (
           <div className="space-y-4">
             {gesuche.map((ad) => (
@@ -113,9 +113,9 @@ export default function AdvertisementPage() {
 
               setAds(prev =>
                 prev.map(ad =>
-                  ad.id === saved.advertisment_id
+                  ad.id === saved.advertisement_id
                     ? {
-                      id: saved.advertisment_id,
+                      id: saved.advertisement_id,
                       title: saved.title,
                       description: saved.description,
                       type: saved.typ,
@@ -179,23 +179,23 @@ function Anzeige({
   onDelete: (ad: Ad) => void
 }) {
   return (
-    <div className="border rounded-lg p-4 flex justify-between items-start">
+    <div className="border border-white/10 rounded-lg p-4 flex justify-between items-start">
       <div>
-        <p className="font-semibold">{ad.title}</p>
-        <p className="text-sm text-gray-600">{ad.description}</p>
+        <p className="font-semibold text-gray-800 mb-1">{ad.title}</p>
+        <p className="text-md text-gray-800">{ad.description}</p>
       </div>
 
       <div className="flex gap-2">
         <button
           onClick={onEdit}
-          className="px-3 py-1 border rounded text-sm hover:bg-gray-100"
+          className="w-36 p-2 rounded-xl bg-brand-mint/10 backdrop-blur-md text-gray-700 font-semibold text-md shadow-lg border border-brand-mint/40 hover:bg-brand-mint/60 hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0 active:shadow-md transition-all duration-200 ease-out"
         >
           Edit
         </button>
 
         <button
           onClick={() => onDelete(ad)}
-          className="px-3 py-1 border rounded text-sm text-red-600 hover:bg-red-50"
+          className="w-36 p-2 rounded-xl bg-brand-pink/10 backdrop-blur-md text-gray-700 font-semibold text-md shadow-lg border border-brand-pink/40 hover:bg-brand-pink/60 hover:border-brand-pink hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0 active:shadow-md transition-all duration-200 ease-out"
         >
           Delete
         </button>

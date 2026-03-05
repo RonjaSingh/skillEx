@@ -3,13 +3,6 @@
 import React from 'react'
 import { Post } from '@/hooks/use-board';
 
-// type Post = {
-//   title: string
-//   description: string
-//   typ: 'offer' | 'request'
-//   user: { name: string } | null
-//   created_at: string
-// }
 
 type Props = {
   post: Post
@@ -28,7 +21,7 @@ export default function PostFullPopup({ post, onClose }: Props) {
         </button>
 
         <h2 className="text-md font-semibold text-black">
-          {post.typ === 'request' ? 'Suche …' : 'Biete …'}
+          {post.typ === 'request' ? 'Looking for …' : 'I offer …'}
         </h2>
 
         <h2 className="text-md font-semibold underline mt-2">{post.title}</h2>

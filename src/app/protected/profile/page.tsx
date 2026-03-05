@@ -18,42 +18,90 @@ export default function ProfilePage() {
   if (loading) return <p>Loading...</p>
 
   return (
-    <div className="max-w-2xl mx-auto mt-4 space-y-20 text-gray-800 font-semibold">
+    <div className="max-w-7xl mx-auto mt-0 space-y-8 text-gray-800 font-semibold">
 
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-10">
-          <h1 className="text-3xl"><strong>{name || 'Username'}</strong></h1>
 
+      <div className="py-2 text-center bg-white/25 backdrop-blur shadow-md p-8 rounded-full">
+
+        <div className="flex items-center justify-center gap-12">
+          <h1 className="text-2xl font-semibold">
+            {name || "Username"}
+          </h1>
           {profileImage ? (
             <img
               src={profileImage}
-              className="w-16 h-16 rounded-full object-cover border"
+              className="w-20 h-20 rounded-full object-cover border"
             />
           ) : (
-            <div className="w-16 h-16 rounded-full bg-gray-300 flex items-center justify-center text-lg font-bold ">
-              <span className="text-lg">👤</span>
+            <div className="w-20 h-20 rounded-full bg-gray-300 flex items-center justify-center">
+              👤
             </div>
           )}
+
         </div>
 
-        <button className="ml-auto w-64 p-3 rounded-xl bg-white/25 backdrop-blur-md text-gray-800 font-semibold text-lg shadow-lg border border-white/30 hover:bg-white/35 hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0 active:shadow-md transition-all duration-200 ease-out ml-auto" onClick={() => setIsPopupOpen(true)}>Edit Profile</button>
+
       </div>
 
-      <p className="text-xl m-2 gap-3"><strong>My Skills:</strong>{skills.join(', ')}</p>
-      <p className="text-xl m-2 mt-10 flex gap-3"><strong>Languages I speak:</strong> {languages.join(', ')}</p>
-      <div className="flex items-center justify-between mt-2">
-        <p className="text-xl m-2 mt-10"><strong>Attended Sessions:</strong></p>
-
+      <div className="flex justify-center ">
         <button
-          onClick={() => router.push('/protected/sessions')}
-          className="w-64 p-3 rounded-xl bg-white/25 backdrop-blur-md text-gray-800 font-semibold text-lg shadow-lg border border-white/30 hover:bg-white/35 hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0 active:shadow-md transition-all duration-200 ease-out"
+          onClick={() => setIsPopupOpen(true)}
+          className="px-8 py-2 text-lg rounded-xl bg-white/30 backdrop-blur-md shadow border border-white/30 hover:bg-white/40 transition"
         >
-          My Sessions
+          Edit Profile
         </button>
       </div>
-      <p className="text-xl underline m-2"><strong>My Calender</strong></p>
-      <Calendar />
 
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-24 relative">
+
+        <div className="hidden md:block absolute left-1/2 top-0 -translate-x-1/2 h-full w-px bg-white/25" />
+
+        <div className="space-y-16">
+
+          <div className="bg-white/25 backdrop-blur rounded-2xl shadow-md p-6">
+            <h2 className="text-xl font-semibold mb-6 text-center underline">My Skills</h2>
+
+            <p className="text-lg text-gray-700 text-center mb-4">{skills.length > 0 ? skills.join(', ') : "-"}</p>
+          </div>
+
+          <div className="bg-white/25 backdrop-blur rounded-2xl shadow-md p-6">
+            <h2 className="text-xl font-semibold mb-4 text-center underline">Languages I Speak</h2>
+
+            <p className="text-lg mb-4 text-gray-700 text-center">{languages.length > 0 ? languages.join(', ') : "-"}</p>
+          </div>
+
+          <div className="bg-white/25 backdrop-blur rounded-2xl shadow-md p-6 mb-4">
+            <h2 className="text-xl font-semibold mb-6 text-center underline">
+              Attended Sessions
+            </h2>
+
+            <div className="flex items-center justify-center gap-8 ">
+
+              <p className="text-lg text-gray-700 mb-4">
+                No sessions yet
+              </p>
+
+              <button
+                onClick={() => router.push('/protected/sessions')}
+                className="px-8 py-2 mb-4 text-lg rounded-xl bg-white/30 backdrop-blur-md shadow border border-white/30 hover:bg-white/40 transition"
+              >
+                My Sessions
+              </button>
+            </div>
+          </div>
+        </div>
+
+
+        <div className="flex items-start justify-center">
+          <div className="bg-white/25 backdrop-blur rounded-2xl shadow-md p-8 w-full">
+            <h2 className="text-lg font-semibold mb-6 text-center underline">
+              My Calendar
+            </h2>
+            <Calendar />
+
+          </div>
+        </div>
+      </div>
       {isPopupOpen && (
         <EditProfilePopup
           name={name}
