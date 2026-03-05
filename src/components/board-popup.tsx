@@ -12,7 +12,7 @@ export default function BoardPopup({ type, onClose, onSubmit }: Props) {
     const [text, setText] = useState("");
     const [title, setTitle] = useState("");
 
-    const label = type === "request" ? "Looking for…" : "I offer…";
+
     const isRequest = type === "request";
     const cancelColor = isRequest
         ? "bg-brand-magenta/40 border border-brand-magenta/20 hover:bg-brand-magenta/20"
@@ -35,11 +35,7 @@ export default function BoardPopup({ type, onClose, onSubmit }: Props) {
                     {type === "request" ? "Create Request" : "Create Offer"}
                 </h3>
 
-                <div className="">
-                    <span className="text-lg font-semibold text-gray-800">
-                        {label}
-                    </span>
-                </div>
+            
                 {  /* Titel */}
                 <input
                     type="text"
