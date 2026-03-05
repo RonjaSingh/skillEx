@@ -16,7 +16,7 @@ export default function ReadMoreCard({
     return (
         <div className="transition-all duration-300">
 
-            <h2 className="text-xl font-semibold mb-4 text-center underline">
+            <h2 className="text-lg font-semibold mb-4 text-center py-2 text-center backdrop-blur shadow-sm p-8 rounded-full">
                 {title}
             </h2>
 
@@ -29,7 +29,7 @@ export default function ReadMoreCard({
             </div>
 
 
-            <div className="mt-3 text-center bg-white bg-white/4 backdrop-blur rounded-2xl shadow-md hover:bg-white/15 transition">
+            <div className="mt-3 text-center  backdrop-blur rounded-2xl shadow-sm hover:bg-white/15 transition">
                 <button
                     onClick={() => hasMore && setExpanded(!expanded)}
                     disabled={!hasMore}

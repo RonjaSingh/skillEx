@@ -43,35 +43,28 @@ export default function ProfilePage() {
 
       </div>
 
-      <div className="flex justify-center ">
-        <button
-          onClick={() => setIsPopupOpen(true)}
-          className="px-8 py-2 text-lg rounded-xl bg-white/30 backdrop-blur-md shadow hover:bg-white/40 transition"
-        >
-          Edit Profile
-        </button>
-      </div>
+
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-24 relative">
 
         <div className="hidden md:block absolute left-1/2 top-0 -translate-x-1/2 h-full w-px bg-white/25" />
 
-        <div className="space-y-16">
+        <div className="space-y-10">
 
           <div className="bg-white/15 backdrop-blur rounded-2xl shadow-md p-6">
-            <h2 className="text-xl font-semibold mb-6 text-center underline">My Skills</h2>
+            <h2 className="text-lg font-semibold mb-4 text-center py-2 text-center  backdrop-blur shadow-sm p-8 rounded-full">My Skills</h2>
 
             <p className="text-lg text-gray-700 text-center mb-4">{skills.length > 0 ? skills.join(', ') : "-"}</p>
           </div>
 
           <div className="bg-white/15 backdrop-blur rounded-2xl shadow-md p-6">
-            <h2 className="text-xl font-semibold mb-4 text-center underline">Languages I Speak</h2>
+            <h2 className="text-lg font-semibold mb-4 text-center py-2 text-center  backdrop-blur shadow-sm p-8 rounded-full">Languages I Speak</h2>
 
             <p className="text-lg mb-4 text-gray-700 text-center">{languages.length > 0 ? languages.join(', ') : "-"}</p>
           </div>
 
           <div className="bg-white/15 backdrop-blur rounded-2xl shadow-md p-6 mb-4">
-            <h2 className="text-xl font-semibold mb-6 text-center underline">
+            <h2 className="text-lg font-semibold mb-4 text-center py-2 text-center backdrop-blur shadow-sm p-8 rounded-full">
               Attended Sessions
             </h2>
 
@@ -83,12 +76,22 @@ export default function ProfilePage() {
 
               <button
                 onClick={() => router.push('/protected/sessions')}
-                className="px-8 py-2 mb-4 text-lg rounded-xl bg-white/10 backdrop-blur-md shadow hover:bg-white/40 transition"
+                className="px-8 py-2 mb-4 text-lg rounded-xl backdrop-blur-md shadow shadow-sm hover:bg-white/20 transition"
               >
                 My Sessions
               </button>
             </div>
           </div>
+
+         
+            <button
+              onClick={() => setIsPopupOpen(true)}
+              className="w-full px-6 py-3 mt-12 text-center text-lg rounded-xl bg-white/20 backdrop-blur-md shadow hover:bg-white/40 transition"
+            >
+              Edit Profile
+            </button>
+        
+
         </div>
 
 
