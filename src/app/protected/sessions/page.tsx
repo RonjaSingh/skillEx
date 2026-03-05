@@ -67,9 +67,9 @@ export default function SessionsPage() {
 
 
    return (
-    <div className="max-w-4xl mx-auto mt-6 space-y-6">
+    <div className="max-w-7xl mx-auto m-0 p-4 space-y-10">
 
-      <SessionBox title="Session Requests">
+      <SessionBox  title="Session Requests">
         {incoming.map((s) => (
           <SessionRow
             key={s.session_request_id}
