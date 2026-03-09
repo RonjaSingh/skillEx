@@ -24,6 +24,9 @@ export function SignUpForm({ className, ...props }: React.ComponentPropsWithoutR
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
 
+  const [name, setName] = useState('')
+
+
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault()
     const supabase = createClient()
@@ -37,15 +40,34 @@ export function SignUpForm({ className, ...props }: React.ComponentPropsWithoutR
     }
 
     try {
-      const { error } = await supabase.auth.signUp({
+
+      // Auth user erstellen
+      const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
           emailRedirectTo: `${window.location.origin}/protected`,
         },
       })
+
       if (error) throw error
+
+      const userId = data.user?.id
+      if (!userId) throw new Error("User not created")
+
+      // Username user Tabelle speichern
+      const { error: insertError } = await supabase
+        .from('user')
+        .insert({
+          id: userId,
+          name: name,
+          email: email
+        })
+
+      if (insertError) throw insertError
+
       router.push('/auth/sign-up-success')
+
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : 'An error occurred')
     } finally {
@@ -63,6 +85,19 @@ export function SignUpForm({ className, ...props }: React.ComponentPropsWithoutR
         <CardContent>
           <form onSubmit={handleSignUp}>
             <div className="flex flex-col gap-6">
+
+              <div className="grid gap-2">
+                <Label htmlFor="name">Username</Label>
+                <Input
+                  id="name"
+                  type="text"
+                  placeholder="Username"
+                  required
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </div>
+
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
                 <Input

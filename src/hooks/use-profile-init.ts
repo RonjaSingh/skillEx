@@ -21,13 +21,12 @@ export default function useProfileInit() {
         .eq('id', user.id)
         .maybeSingle()
 
-      if (!profile) {
-        await supabase.from('user').insert({
-          id: user.id,
-          email: user.email,
-          name: '',
-        })
-      }
+  if (!profile) {
+  await supabase.from('user').insert({
+    id: user.id,
+    email: user.email
+  })
+}
     }
 
     init()
