@@ -175,6 +175,7 @@ export type Database = {
         Row: {
           advertisement_id: string
           created_at: string
+          descritpion: string | null
           end_time: string
           request_id: string | null
           session_id: string
@@ -187,6 +188,7 @@ export type Database = {
         Insert: {
           advertisement_id: string
           created_at?: string
+          descritpion?: string | null
           end_time: string
           request_id?: string | null
           session_id?: string
@@ -199,6 +201,7 @@ export type Database = {
         Update: {
           advertisement_id?: string
           created_at?: string
+          descritpion?: string | null
           end_time?: string
           request_id?: string | null
           session_id?: string
@@ -324,16 +327,19 @@ export type Database = {
           email: string
           id: string
           name: string
+          profile_image: string | null
         }
         Insert: {
           email: string
           id: string
           name?: string
+          profile_image?: string | null
         }
         Update: {
           email?: string
           id?: string
           name?: string
+          profile_image?: string | null
         }
         Relationships: []
       }
