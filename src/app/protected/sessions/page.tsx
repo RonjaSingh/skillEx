@@ -9,7 +9,7 @@ import {
   getOutgoingRequests,
   getCompletedSessions,
   getAcceptedRequests,
-  getActiveSessions
+  /*getActiveSessions*/
 } from '@/lib/supabase/sessionQueries'
 
 const supabase = createClient()
@@ -20,7 +20,7 @@ export default function SessionsPage() {
   const [completed, setCompleted] = useState<any[]>([])
   const [accepted, setAccepted] = useState<any[]>([])
   const [userId, setUserId] = useState<string | null>(null)
-  const [active, setActive] = useState<any[]>([])
+  /*const [active, setActive] = useState<any[]>([])*/
 
 
   useEffect(() => {
@@ -37,13 +37,13 @@ export default function SessionsPage() {
     const outgoingRes = await getOutgoingRequests(userId)
     const completedRes = await getCompletedSessions(userId)
     const acceptedRes = await getAcceptedRequests(userId)
-    const activeRes = await getActiveSessions(userId)
+    /*const activeRes = await getActiveSessions(userId)*/
 
     setIncoming(incomingRes.data || [])
     setOutgoing(outgoingRes.data || [])
     setCompleted(completedRes.data || [])
     setAccepted(acceptedRes.data || [])
-    setActive(activeRes.data || [])
+    /*setActive(activeRes.data || [])*/
     
   }
 
@@ -69,13 +69,14 @@ export default function SessionsPage() {
    return (
     <div className="max-w-7xl mx-auto m-0 p-4 space-y-10">
 
-      <SessionBox  title="Session Requests">
+      <SessionBox  title="Incoming Session Requests">
         {incoming.map((s) => (
           <SessionRow
             key={s.session_request_id}
             date={new Date(s.created_at).toLocaleString()}
             topic={s.advertisement?.title}
             name={s.request_from_user?.name}
+            description={s.description}
             actions={
               <>
                 <button
@@ -96,28 +97,34 @@ export default function SessionsPage() {
         ))}
       </SessionBox>
 
-      <SessionBox title="Accepted Sessions">
-        {accepted.map((s) => (
-            <SessionRow
-                key={s.session_request_id}
-                date= {new Date(s.availability?.start_time).toLocaleString()}
-                topic={s.advertisement?.title}
-                name={s.request_from_user?.name}
-                description={s.description}
-                actions={
-                    
-                <button
-                onClick={() => updateRequestStatus(s.session_request_id, 'cancelled')}
-                className="px-2 py-1 border rounded bg-red-100">
-                Cancel
-                </button>
-                    
-                }
-            />
-        ))}
-      </SessionBox>
+      <SessionBox title="Upcoming Sessions">
+      {accepted.map((s) => {
 
-      <SessionBox title="My requested Sessions">
+      const otherUser =
+      s.teacher_user_id === userId
+        ? s.student?.name
+        : s.teacher?.name
+
+      return (
+      <SessionRow
+        key={s.session_id}
+        date={new Date(s.start_time).toLocaleString()}
+        topic={s.advertisement?.title}
+        description={s.description}
+        name={otherUser}
+        actions={
+          <button onClick={() =>
+                updateRequestStatus(s.session_id, 'cancelled')
+              }className="px-2 py-1 border rounded bg-red-100">
+            Cancel
+          </button>
+        }
+      />
+    )
+    })}
+    </SessionBox>
+
+      <SessionBox title="Outgoing Session Requests">
         {outgoing.map((s) => (
     <SessionRow
       key={s.session_request_id}
@@ -149,7 +156,7 @@ export default function SessionsPage() {
   ))}
       </SessionBox>
 
-<SessionBox title="Active Sessions">
+{/*<SessionBox title="Active Sessions">
   {active.map((s) => {
     const otherUser =
       s.teacher_user_id === userId
@@ -170,7 +177,7 @@ export default function SessionsPage() {
       />
     )
   })}
-</SessionBox>
+</SessionBox>*/}
 
     
 
@@ -187,6 +194,7 @@ export default function SessionsPage() {
               date={new Date(s.start_time).toLocaleString()}
               topic={s.advertisement?.title}
               name={otherUserName}
+              description={s.description}
               actions={
                 <button className="px-2 py-1 border rounded bg-yellow-100">
                   Rate Session 
