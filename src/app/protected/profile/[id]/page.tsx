@@ -59,7 +59,7 @@ export default async function ProfilePage({
   return (
     <div className="max-w-7xl mx-auto mt-4 space-y-12 text-gray-800 font-semibold">
 
-      <div className="py-2 text-xl bg-white/15 backdrop-blur shadow-md p-8 rounded-full">
+      <div className="py-2 text-xl bg-white/10 backdrop-blur shadow-md p-8 rounded-full">
         <div className="flex items-center justify-center gap-12">
           <h1 className="text-2xl ">{user.name || "Username"}</h1>
 
@@ -85,14 +85,14 @@ export default async function ProfilePage({
 
         <div className="space-y-20">
 
-          <div className="bg-white bg-white/15 backdrop-blur rounded-2xl shadow-md p-6  transition">
+          <div className="bg-white bg-white/8 backdrop-blur rounded-2xl shadow-md p-6  transition">
          
             <div className="mt-3 text-right">
               <ReadMoreCard title="Skills" items={skills} />
             </div>
           </div>
 
-          <div className="bg-white bg-white/15 backdrop-blur rounded-2xl shadow-md p-8 mb-4 transition">
+          <div className="bg-white bg-white/8 backdrop-blur rounded-2xl shadow-md p-8 mb-4 transition">
               <div className="mt-3 text-right">
               <ReadMoreCard title="Languages" items={languages} />
             </div>

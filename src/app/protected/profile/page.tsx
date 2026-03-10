@@ -97,11 +97,7 @@ export default function ProfilePage() {
                   Edit Profile
                 </button>
 
-                <div className="absolute top-full mt-0 left-1/2 -translate-x-1/2 
-  opacity-0 group-hover:opacity-100 transition-all duration-200
-  z-50
-  bg-white/20 backdrop-blur-md text-magenta text-sm 
-  px-4 py-1 rounded-xl shadow-lg w-max max-w-xs text-center">
+                <div className="absolute top-full mt-0 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-200 z-50 bg-white/20 backdrop-blur-md text-magenta text-sm px-4 py-1 rounded-xl shadow-lg w-max max-w-xs text-center">
                   Update your profile so others can learn more about you.
 
                 </div>
@@ -112,7 +108,7 @@ export default function ProfilePage() {
         </div>
       )}
 
-      <div className="py-2 text-center bg-white/15 backdrop-blur shadow-md p-8 rounded-full">
+      <div className="py-2 text-center bg-white/10 backdrop-blur shadow-md p-8 rounded-full">
 
         <div className="flex items-center justify-center gap-12">
           <h1 className="text-2xl font-semibold">
@@ -141,25 +137,31 @@ export default function ProfilePage() {
         <div className="hidden md:block absolute left-1/2 top-0 -translate-x-1/2 h-full w-px bg-white/25" />
 
         <div className="space-y-10">
+          <button
+            onClick={() => setIsPopupOpen(true)}
+            className="w-full px-6 py-3 mt-2 text-center text-lg rounded-xl bg-white/20 backdrop-blur-md shadow-md hover:bg-white/40 transition"
+          >
+            Edit Profile
+          </button>
 
-          <div className="bg-white/15 backdrop-blur rounded-2xl shadow-md p-6">
+          <div className="bg-white/8 backdrop-blur rounded-2xl shadow-md p-6">
             <h2 className="text-lg font-semibold mb-4 text-center py-2 text-center  backdrop-blur shadow-sm p-8 rounded-full">My Skills</h2>
 
             <p className="text-lg text-gray-700 text-center mb-4">{skills.length > 0 ? skills.join(', ') : "-"}</p>
           </div>
 
-          <div className="bg-white/15 backdrop-blur rounded-2xl shadow-md p-6">
+          <div className="bg-white/8 backdrop-blur rounded-2xl shadow-md p-6">
             <h2 className="text-lg font-semibold mb-4 text-center py-2 text-center  backdrop-blur shadow-sm p-8 rounded-full">Languages I Speak</h2>
 
             <p className="text-lg mb-4 text-gray-700 text-center">{languages.length > 0 ? languages.join(', ') : "-"}</p>
           </div>
 
-          <div className="bg-white/15 backdrop-blur rounded-2xl shadow-md p-6 mb-4">
+          <div className="bg-white/8 backdrop-blur rounded-2xl shadow-md p-6 mb-4">
             <h2 className="text-lg font-semibold mb-4 text-center py-2 text-center backdrop-blur shadow-sm p-8 rounded-full">
               Attended Sessions
             </h2>
 
-            <div className="flex items-center justify-center gap-8 ">
+            <div className="flex items-center justify-center gap-12 ">
 
               <p className="text-lg text-gray-700 mb-4">
                 No sessions yet
@@ -173,14 +175,6 @@ export default function ProfilePage() {
               </button>
             </div>
           </div>
-
-
-          <button
-            onClick={() => setIsPopupOpen(true)}
-            className="w-full px-6 py-3 mt-12 text-center text-lg rounded-xl bg-white/20 backdrop-blur-md shadow hover:bg-white/40 transition"
-          >
-            Edit Profile
-          </button>
 
 
         </div>
