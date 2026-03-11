@@ -135,7 +135,7 @@ export default function BookingCalendar() {
       message: requestMessage,
       requested_time: session.start_time,
       status: "pending",
-    });
+    } as any);
     if (!error) {
       setRequestMessage("");
       loadRequests();
@@ -143,9 +143,9 @@ export default function BookingCalendar() {
   };
 
   const handleRequest = async (request: Request, accept: boolean) => {
-    await supabase.from("session_request").update({ status: accept ? "accepted" : "declined" }).eq("id", request.id);
+    await supabase.from("session_request").update({ status: accept ? "accepted" : "rejected" }).eq("id", request.id);
     if (accept) {
-      await supabase.from("session").update({ status: "confirmed" }).eq("id", request.session_id);
+      await supabase.from("session").update({ status: "accepted" }).eq("id", request.session_id);
     }
     loadSessions();
     loadRequests();
