@@ -175,7 +175,7 @@ export type Database = {
         Row: {
           advertisement_id: string
           created_at: string
-          descritpion: string | null
+          description: string | null
           end_time: string
           request_id: string | null
           session_id: string
@@ -188,7 +188,7 @@ export type Database = {
         Insert: {
           advertisement_id: string
           created_at?: string
-          descritpion?: string | null
+          description?: string | null
           end_time: string
           request_id?: string | null
           session_id?: string
@@ -201,7 +201,7 @@ export type Database = {
         Update: {
           advertisement_id?: string
           created_at?: string
-          descritpion?: string | null
+          description?: string | null
           end_time?: string
           request_id?: string | null
           session_id?: string
