@@ -76,6 +76,7 @@ begin
     student_user_id,
     start_time,
     end_time,
+    description,
     status
   )
   values (
@@ -85,6 +86,7 @@ begin
     new.request_from_user_id,
     v_start,
     v_end,
+    new.description,
     'accepted'
   );
 
