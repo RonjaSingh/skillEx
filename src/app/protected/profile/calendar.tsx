@@ -107,7 +107,7 @@ export default function BookingCalendar() {
   return;
   }
 
-    const { error } = await supabase.from("sessions").insert({
+    const { error } = await supabase.from("session").insert({
       title,
       date: selectedDay,
       start_time: startTime,
@@ -115,7 +115,7 @@ export default function BookingCalendar() {
       status: "free",
       creator_id: userId,
       google_meet_link: googleMeetLink,
-    });
+    }as any);
 
     if (!error) {
       setTitle("");
@@ -129,8 +129,8 @@ export default function BookingCalendar() {
 
   const sendRequest = async (session: Session) => {
     if (!userId || !requestMessage) return;
-    const { error } = await supabase.from("requests").insert({
-      session_id: session.id,
+    const { error } = await supabase.from("session_request").insert({
+      session_request_id: session.id,
       requester_id: userId,
       message: requestMessage,
       requested_time: session.start_time,
@@ -143,9 +143,9 @@ export default function BookingCalendar() {
   };
 
   const handleRequest = async (request: Request, accept: boolean) => {
-    await supabase.from("requests").update({ status: accept ? "accepted" : "declined" }).eq("id", request.id);
+    await supabase.from("session_request").update({ status: accept ? "accepted" : "declined" }).eq("id", request.id);
     if (accept) {
-      await supabase.from("sessions").update({ status: "confirmed" }).eq("id", request.session_id);
+      await supabase.from("session").update({ status: "confirmed" }).eq("id", request.session_id);
     }
     loadSessions();
     loadRequests();
