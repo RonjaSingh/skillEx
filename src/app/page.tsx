@@ -1,84 +1,169 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 
 export default function HomePage() {
-  const [posts, setPosts] = useState<{ text: string; type: "gesuch" | "angebot" }[]>([]);
-  const [newPost, setNewPost] = useState("");
-  const [filter, setFilter] = useState<"gesuch" | "angebot" | "all">("all");
-
-  const addPost = (type: "gesuch" | "angebot") => {
-    if (!newPost.trim()) return;
-    setPosts([{ text: newPost, type }, ...posts]);
-    setNewPost("");
-    setFilter(type);
-  };
-
-  const filteredPosts = posts.filter(p => filter === "all" ? true : p.type === filter);
-
   return (
-    <main className="container">
-
-      {/* HEADER */}
+    <main className="main-container">
       <header className="header">
-        <div className="left-header">
-          <Image src="/skillexchange2.0.png" alt="Logo" width={60} height={60} />
-          <h1>SkillExchange</h1>
-        </div>
-        <div className="right-header">
-          <div className="username">Name</div>
-          <div className="avatar">🎓</div>
-        </div>
+        <Image src="/skillexchange2.0.png" alt="Logo" width={110} height={110} />
+        <h1>SkillExchange</h1>
       </header>
 
-      {/* MENÜ */}
-      <section className="menu">
-        <h2>Menü</h2>
+      <section className="hero">
+        <h2>Lerne Skills. Teile Wissen. Finde Menschen.</h2>
+        <p>
+          SkillExchange verbindet Menschen, die voneinander lernen möchten.
+          Biete deine Fähigkeiten an oder finde jemanden, der dir etwas Neues beibringt.
+        </p>
       </section>
 
-      {/* SUCHLEISTE */}
-      <div className="search-area">
-        <input type="text" placeholder="Suchleiste: Skill Suche…" className="search-input" />
-        <button className="browse-btn">Browse Users…</button>
-      </div>
-
-      {/* SCHWARZES BRETT */}
-      <section className="board">
-        <h2>Schwarzes Brett</h2>
-
-        <div className="new-post">
-          <textarea
-            placeholder="Schreibe hier etwas..."
-            value={newPost}
-            onChange={(e) => setNewPost(e.target.value)}
-          />
-          <div className="post-buttons">
-            <button onClick={() => addPost("gesuch")}>Gesuch anheften</button>
-            <button onClick={() => addPost("angebot")}>Angebot anheften</button>
-          </div>
+      <section className="features">
+        <div className="card">
+          <h3>🤝 Skills tauschen</h3>
+          <p>Finde Lernpartner und tausche deine Fähigkeiten aus.</p>
         </div>
 
-        <div className="filter-buttons">
-          <button onClick={() => setFilter("all")}>Alle</button>
-          <button onClick={() => setFilter("gesuch")}>Gesuch</button>
-          <button onClick={() => setFilter("angebot")}>Angebot</button>
+        <div className="card">
+          <h3>📅 Termin Kalender</h3>
+          <p>Plane Sessions. Frei = grün, Gebucht = rot.</p>
         </div>
 
-        <div className="posts">
-          {filteredPosts.length === 0 && <div className="empty">Noch keine Beiträge.</div>}
-          {filteredPosts.map((p, i) => (
-            <div key={i} className="post">{p.text}</div>
-          ))}
+        <div className="card">
+          <h3>🌍 Community</h3>
+          <p>Entdecke neue Menschen, tausche Wissen und wachse gemeinsam.</p>
+        </div>
+
+        <div className="card">
+          <h3>🚀 Wachstum</h3>
+          <p>Entwickle neue Fähigkeiten und erweitere dein Wissen.</p>
         </div>
       </section>
 
-    
-    
-      <footer className="impressum">
-        <button>Impressum</button>
+      <section className="video-section">
+        <h2>So funktioniert SkillExchange</h2>
+        <video className="video" controls>
+          <source src="/demo.mp4" type="video/mp4" />
+        </video>
+      </section>
+
+      <section className="cta">
+        <button>Jetzt anmelden</button>
+      </section>
+
+      <footer>
+        <p>© 2025 SkillExchange</p>
       </footer>
 
+      <style jsx>{`
+        .main-container {
+          font-family: Arial, sans-serif;
+          background: linear-gradient(180deg,#0f172a,#020617);
+          color: white;
+          min-height: 100vh;
+          padding: 40px 20px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+        }
+
+        .header {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 15px;
+          margin-bottom: 50px;
+        }
+
+        .header h1 {
+          font-size: 42px;
+          letter-spacing: 1px;
+        }
+
+        .hero {
+          margin-bottom: 60px;
+        }
+
+        .hero h2 {
+          font-size: 32px;
+          margin-bottom: 20px;
+        }
+
+        .hero p {
+          font-size: 18px;
+          color: #cbd5f5;
+          max-width: 600px;
+          margin: auto;
+        }
+
+        .features {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+          gap: 25px;
+          margin-bottom: 60px;
+          width: 100%;
+          max-width: 900px;
+        }
+
+        .card {
+          background: #1e293b;
+          padding: 25px;
+          border-radius: 14px;
+          transition: 0.3s;
+          text-align: center;
+        }
+
+        .card:hover {
+          transform: translateY(-6px);
+          background: #334155;
+        }
+
+        .card h3 {
+          margin-bottom: 10px;
+        }
+
+        .card p {
+          color: #cbd5f5;
+        }
+
+        .video-section {
+          margin-bottom: 60px;
+        }
+
+        .video {
+          width: 100%;
+          max-width: 750px;
+          border-radius: 12px;
+          box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+        }
+
+        .cta {
+          margin-top: 40px;
+        }
+
+        .cta button {
+          background: #2563eb;
+          border: none;
+          padding: 14px 30px;
+          border-radius: 10px;
+          font-size: 16px;
+          cursor: pointer;
+          color: white;
+          transition: 0.2s;
+        }
+
+        .cta button:hover {
+          background: #1d4ed8;
+          transform: scale(1.05);
+        }
+
+        footer {
+          margin-top: 40px;
+          opacity: 0.6;
+        }
+      `}</style>
     </main>
   );
 }

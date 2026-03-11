@@ -12,7 +12,7 @@ interface Session {
   start_time: string;
   end_time: string;
   creator_id: string;
-  status: "free" | "booked" | "confirmed";
+  status: "free" | "reserved" | "confirmed";
   google_meet_link: string | null;
 }
 
@@ -38,9 +38,11 @@ export default function BookingCalendar() {
   const [title, setTitle] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
-  const [requestMessage, setRequestMessage] = useState("");
   const [error, setError] = useState("");
 
+  const [requestMessages, setRequestMessages] = useState<{ [key: string]: string }>({});
+
+  // Daten laden
   useEffect(() => {
     const fetchUser = async () => {
       const { data } = await supabase.auth.getUser();
@@ -50,7 +52,6 @@ export default function BookingCalendar() {
     loadSessions();
     loadRequests();
 
-    // Live Update alle 5 Sekunden
     const interval = setInterval(() => {
       loadSessions();
       loadRequests();
@@ -75,37 +76,14 @@ export default function BookingCalendar() {
     if (!error && data) setRequests(data);
   };
 
+  // Neuer Slot
   const addSession = async () => {
     if (!title || !startTime || !endTime || !selectedDay || !userId) {
       setError("Bitte alles ausfüllen");
       return;
     }
-     const start = new Date(startTime);
-     const end = new Date(endTime);
-
-    const THIRTY_MINUTES = 30 * 60 * 1000;
-
-    if (end.getTime() - start.getTime() !== THIRTY_MINUTES) {
-    setError("Die Endzeit muss genau 30 Minuten nach der Startzeit liegen.");
-    return;
-  }
 
     const googleMeetLink = `https://meet.google.com/${Math.random().toString(36).substring(2,10)}`;
-    if (!userId) {
-      setError("Du bist nicht eingeloggt.");
-      return;
-    }
-
-    const { data: existing } = await supabase
-  .from("availability")
-  .select("availability_id")
-  .eq("user_id", userId)
-  .eq("start_time", startTime);
-
-  if (existing && existing.length > 0) {
-  setError("Für diese Startzeit existiert bereits ein Slot.");
-  return;
-  }
 
     const { error } = await supabase.from("sessions").insert({
       title,
@@ -127,21 +105,32 @@ export default function BookingCalendar() {
     }
   };
 
+  // Anfrage senden
   const sendRequest = async (session: Session) => {
-    if (!userId || !requestMessage) return;
+    const message = requestMessages[session.id];
+    if (!userId || !message) return;
+
     const { error } = await supabase.from("requests").insert({
       session_id: session.id,
       requester_id: userId,
-      message: requestMessage,
+      message,
       requested_time: session.start_time,
       status: "pending",
     });
+
     if (!error) {
-      setRequestMessage("");
+      // Status auf "reserved" setzen
+      await supabase.from("sessions").update({ status: "reserved" }).eq("id", session.id);
+
+      setRequestMessages(prev => ({ ...prev, [session.id]: "" }));
+      loadSessions();
       loadRequests();
+    } else {
+      console.log("Fehler beim Erstellen der Anfrage:", error);
     }
   };
 
+  // Request bearbeiten (Owner)
   const handleRequest = async (request: Request, accept: boolean) => {
     await supabase.from("requests").update({ status: accept ? "accepted" : "declined" }).eq("id", request.id);
     if (accept) {
@@ -149,6 +138,12 @@ export default function BookingCalendar() {
     }
     loadSessions();
     loadRequests();
+  };
+
+  // Slot löschen
+  const deleteSession = async (id: string) => {
+    await supabase.from("sessions").delete().eq("id", id);
+    loadSessions();
   };
 
   const year = currentDate.getFullYear();
@@ -165,7 +160,7 @@ export default function BookingCalendar() {
 
   const getStatusColor = (status: string) => {
     if (status === "free") return "bg-green-400";
-    if (status === "booked") return "bg-yellow-400";
+    if (status === "reserved") return "bg-yellow-400";
     if (status === "confirmed") return "bg-red-300";
   };
 
@@ -176,7 +171,7 @@ export default function BookingCalendar() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-4">
+    <div className="max-w-4xl mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4 text-center text-white">Session-Kalender</h1>
 
       {/* Navigation */}
@@ -218,13 +213,11 @@ export default function BookingCalendar() {
                     const pendingCount = requests.filter(r => r.session_id === s.id && r.status === "pending").length;
                     return (
                       <div key={s.id} className="relative">
-                        {/* Live Badge */}
                         {pendingCount > 0 && (
                           <div className="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] px-1 rounded-full">
                             {pendingCount}
                           </div>
                         )}
-
                         <div
                           className={`${getStatusColor(s.status)} rounded p-1 text-[10px] flex justify-between items-center`}
                         >
@@ -280,8 +273,8 @@ export default function BookingCalendar() {
                     <input
                       type="text"
                       placeholder="Nachricht / Zweck"
-                      value={requestMessage}
-                      onChange={e=>setRequestMessage(e.target.value)}
+                      value={requestMessages[s.id] || ""}
+                      onChange={e=>setRequestMessages(prev=>({...prev, [s.id]: e.target.value}))}
                       className="flex-1 border p-1 text-xs rounded"
                     />
                     <button onClick={()=>sendRequest(s)} className="bg-blue-600 px-2 rounded hover:bg-blue-500 transition text-xs">Anfrage</button>
