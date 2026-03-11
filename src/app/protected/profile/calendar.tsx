@@ -60,7 +60,7 @@ export default function BookingCalendar() {
 
   const loadSessions = async () => {
     const { data, error } = await supabase
-      .from("sessions")
+      .from("session")
       .select("*")
       .order("date", { ascending: true })
       .order("start_time", { ascending: true });
@@ -69,7 +69,7 @@ export default function BookingCalendar() {
 
   const loadRequests = async () => {
     const { data, error } = await supabase
-      .from("requests")
+      .from("session_request")
       .select("*")
       .order("status", { ascending: true });
     if (!error && data) setRequests(data);
