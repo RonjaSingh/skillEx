@@ -81,9 +81,16 @@ export default function BookingCalendar() {
   const year = currentDate.getFullYear()
   const month = currentDate.getMonth()
   const daysInMonth = new Date(year, month + 1, 0).getDate()
-  const daysArray = Array.from({ length: daysInMonth }, (_, i) =>
-    new Date(year, month, i + 1).toISOString().split('T')[0]
-  )
+ const formatDate = (date: Date) => {
+  const y = date.getFullYear()
+  const m = String(date.getMonth() + 1).padStart(2, '0')
+  const d = String(date.getDate()).padStart(2, '0')
+  return `${y}-${m}-${d}`
+}
+
+const daysArray = Array.from({ length: daysInMonth }, (_, i) =>
+  formatDate(new Date(year, month, i + 1))
+)
   const firstDay = new Date(year, month, 1)
   let startDay = firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1
   const emptyDays = Array.from({ length: startDay })
@@ -146,7 +153,7 @@ export default function BookingCalendar() {
           <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2 ">
             {generateTimes().map(time => {
               const slotString = `${selectedDay}T${time}:00`
-              const slot = slots.find(s => s.start_time === slotString)
+  const slot = slots.find(s => s.start_time.startsWith(`${selectedDay}T${time}`))
               const isFree = !!slot
 
               return (
