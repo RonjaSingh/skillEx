@@ -106,22 +106,15 @@ export default async function ProfilePage({
 
         </div>
 
+        <div className="flex items-start justify-center">
+          <div className="w-full">
+            <PublicProfileCalendar profileUserId={id} />
 
-        <div className="flex items-center justify-center">
-          <div className="bg-white bg-white/15 backdrop-blur rounded-2xl shadow-md p-12 hover:shadow-lg transition text-center w-full">
-            <h2 className="text-xl font-semibold mb-4 underline">Book your Session</h2>
 
-
-            <div className="flex items-start justify-center">
-              <div className="w-full">
-                <PublicProfileCalendar profileUserId={id} />
-
-              </div>
-            </div>
           </div>
         </div>
-
       </div>
+
     </div>
   );
 }

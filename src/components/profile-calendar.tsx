@@ -81,16 +81,16 @@ export default function BookingCalendar() {
   const year = currentDate.getFullYear()
   const month = currentDate.getMonth()
   const daysInMonth = new Date(year, month + 1, 0).getDate()
- const formatDate = (date: Date) => {
-  const y = date.getFullYear()
-  const m = String(date.getMonth() + 1).padStart(2, '0')
-  const d = String(date.getDate()).padStart(2, '0')
-  return `${y}-${m}-${d}`
-}
+  const formatDate = (date: Date) => {
+    const y = date.getFullYear()
+    const m = String(date.getMonth() + 1).padStart(2, '0')
+    const d = String(date.getDate()).padStart(2, '0')
+    return `${y}-${m}-${d}`
+  }
 
-const daysArray = Array.from({ length: daysInMonth }, (_, i) =>
-  formatDate(new Date(year, month, i + 1))
-)
+  const daysArray = Array.from({ length: daysInMonth }, (_, i) =>
+    formatDate(new Date(year, month, i + 1))
+  )
   const firstDay = new Date(year, month, 1)
   let startDay = firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1
   const emptyDays = Array.from({ length: startDay })
@@ -113,7 +113,12 @@ const daysArray = Array.from({ length: daysInMonth }, (_, i) =>
 
             {daysArray.map(day => {
               const daySlots = slots.filter(s => s.start_time.startsWith(day))
+
+
+              const freeSlots = daySlots.filter(s => !s.is_booked)
+
               return (
+
                 <div
                   key={day}
                   className="bg-white/20 backdrop-blur rounded-2xl min-h-[60px] p-2 cursor-pointer shadow-md hover:bg-white/30 flex flex-col items-center transition"
@@ -122,18 +127,21 @@ const daysArray = Array.from({ length: daysInMonth }, (_, i) =>
                     setViewMode('day')
                   }}
                 >
-                  <div className="font-semibold mb-1">{new Date(day).getDate()}</div>
-                  {daySlots.map(slot => (
-                    <div
-                      key={slot.availability_id}
-                      className="bg-green-400/60 text-white rounded-lg text-xs px-1 py-0.5 w-full text-center mb-0.5"
-                    >
-                      {slot.start_time.slice(11,16)}
-                    </div>
-                  ))}
+
+                  <div className="font-semibold">
+                    {new Date(day).getDate()}
+                  </div>
+
+                  {freeSlots.length > 0 && (
+                    <div className="w-6 h-1 bg-brand-mint rounded-full mt-1"></div>
+                  )}
+
                 </div>
+
               )
+
             })}
+
           </div>
         </>
       )}
@@ -148,21 +156,21 @@ const daysArray = Array.from({ length: daysInMonth }, (_, i) =>
             ← Back
           </button>
 
-          <h3 className="mb-6 text-lg font-semibold text-cener text-lg font-semibold mb-4 text-center py-2 text-center shadow-sm p-4 rounded-full">{new Date(selectedDay).toDateString()}</h3>
+          <h3 className="mb-6 text-lg font-semibold text-cener text-lg font-semibold  text-center py-2 text-center shadow-sm p-4 rounded-full">{new Date(selectedDay).toDateString()}</h3>
 
           <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2 ">
             {generateTimes().map(time => {
               const slotString = `${selectedDay}T${time}:00`
-  const slot = slots.find(s => s.start_time.startsWith(`${selectedDay}T${time}`))
+              const slot = slots.find(s => s.start_time.startsWith(`${selectedDay}T${time}`))
               const isFree = !!slot
 
               return (
                 <div
                   key={time}
-                      className={`text-center text-sm sm:text-base p-2 sm:p-3 min-h-[50px] rounded-2xl cursor-pointer transition flex items-center justify-center
+                  className={`text-center text-sm sm:text-base p-2 sm:p-3 min-h-[50px] rounded-2xl cursor-pointer transition flex items-center justify-center
                     ${isFree
-                      ? 'bg-green-400/60 text-white hover:bg-red-400/70'
-                      : 'bg-white/20 hover:bg-green-400/40'}
+                      ? 'bg-brand-teal text-white hover:bg-brand-mint/70'
+                      : 'bg-white/20 text-gray-600'}
                   `}
                   onClick={() => toggleSlot(time)}
                 >
