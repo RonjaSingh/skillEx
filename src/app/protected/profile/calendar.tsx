@@ -5,8 +5,7 @@ import { createClient } from "@/lib/supabase/client";
 
 const supabase = createClient();
 
-
-/*types */
+/* types */
 
 interface Slot {
   availability_id: string;
@@ -25,9 +24,7 @@ interface Request {
   status: "pending" | "accepted" | "rejected";
 }
 
-
-
-/* component*/
+/* component */
 
 export default function BookingCalendar() {
 
@@ -37,18 +34,12 @@ export default function BookingCalendar() {
 
   const [currentDate, setCurrentDate] = useState(new Date())
 
+  const [viewMode, setViewMode] = useState<"month" | "day">("month")
   const [selectedDay, setSelectedDay] = useState<string | null>(null)
-  const [modalSlots, setModalSlots] = useState<Slot[]>([])
-  const [showModal, setShowModal] = useState(false)
 
-  const [startTime, setStartTime] = useState("")
-  const [endTime, setEndTime] = useState("")
   const [requestMessage, setRequestMessage] = useState("")
-  const [error, setError] = useState("")
 
-
-
-  /* init*/
+  /* init */
 
   useEffect(() => {
 
@@ -70,71 +61,28 @@ export default function BookingCalendar() {
 
   }, [])
 
-
-  /* loading data*/
+  /* loading data */
 
   const loadSlots = async () => {
 
-    const { data, error } = await supabase
+    const { data } = await supabase
       .from("availability")
       .select("*")
       .order("start_time", { ascending: true })
 
-    if (error || !data) return
-
-    setSlots(data as any)
+    if (data) setSlots(data as Slot[])
 
   }
 
   const loadRequests = async () => {
 
-    const { data, error } = await supabase
+    const { data } = await supabase
       .from("session_request")
       .select("*")
 
-    if (error || !data) return
-
-    setRequests(data as any)
+    if (data) setRequests(data as Request[])
 
   }
-
-  /* create slot*/
-
-  const addSlot = async () => {
-
-    if (!selectedDay || !startTime || !endTime || !userId) {
-      setError("Bitte alles ausfüllen")
-      return
-    }
-
-    const start = new Date(`${selectedDay}T${startTime}`)
-    const end = new Date(`${selectedDay}T${endTime}`)
-
-    const THIRTY_MINUTES = 30 * 60 * 1000
-
-    if (end.getTime() - start.getTime() !== THIRTY_MINUTES) {
-      setError("Slot muss genau 30 Minuten sein")
-      return
-    }
-
-    const { error } = await supabase
-      .from("availability")
-      .insert({
-        user_id: userId,
-        start_time: start.toISOString(),
-        end_time: end.toISOString(),
-        is_booked: false
-      })
-
-    if (!error) {
-      setStartTime("")
-      setEndTime("")
-      setShowModal(false)
-      loadSlots()
-    }
-
-  }
-
 
   /* request */
 
@@ -142,24 +90,18 @@ export default function BookingCalendar() {
 
     if (!userId) return
 
-    const { error } = await supabase
+    await supabase
       .from("session_request")
       .insert({
-
         request_from_user_id: userId,
         request_to_user_id: slot.user_id,
         availability_id: slot.availability_id,
         description: requestMessage,
         status: "pending"
-
       } as any)
 
-    if (!error) {
-
-      setRequestMessage("")
-      loadRequests()
-
-    }
+    setRequestMessage("")
+    loadRequests()
 
   }
 
@@ -188,7 +130,24 @@ export default function BookingCalendar() {
 
   }
 
-  /* calender*/
+  /* generate times */
+
+  const generateTimes = () => {
+
+    const times: string[] = []
+
+    for (let h = 1; h < 24; h++) {
+
+      times.push(`${String(h).padStart(2, "0")}:00`)
+      times.push(`${String(h).padStart(2, "0")}:30`)
+
+    }
+
+    return times
+
+  }
+
+  /* calendar */
 
   const year = currentDate.getFullYear()
   const month = currentDate.getMonth()
@@ -213,31 +172,24 @@ export default function BookingCalendar() {
 
   }
 
-  const openModal = (day: string) => {
+  const openDayView = (day: string) => {
 
     setSelectedDay(day)
-
-    const filtered = slots.filter(s =>
-      s.start_time.startsWith(day)
-    )
-
-    setModalSlots(filtered)
-
-    setShowModal(true)
+    setViewMode("day")
 
   }
 
   /* UI */
-  return (
 
-    <div className="max-w-3xl mx-auto p-4">
+  return (
+    <div className="w-full max-w-7xl mx-auto p-4">
 
       <h1 className="text-2xl font-bold mb-4 text-center text-white">
-        Session Calender
+        Session Calendar
       </h1>
 
-
       {/* Navigation */}
+
       <div className="flex justify-between items-center mb-3 text-white">
 
         <button
@@ -256,195 +208,98 @@ export default function BookingCalendar() {
 
       </div>
 
+      {/* MONTH VIEW */}
 
-      {/* Calendar */}
-      <div className="border rounded-lg p-3 bg-gradient-to-tr from-purple-600 via-blue-400 to-pink-400">
+      {viewMode === "month" && (
 
-        <div className="grid grid-cols-7 gap-1 mb-1 font-bold text-center text-white text-sm">
-          {["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"].map(d =>
-            <div key={d}>{d}</div>
-          )}
-        </div>
+        <div className="border rounded-lg p-3 bg-gradient-to-tr from-purple-600 via-blue-400 to-pink-400">
 
-        <div className="grid grid-cols-7 gap-1 text-xs">
+          <div className="grid grid-cols-7 gap-1 mb-1 font-bold text-center text-white text-sm">
+            {["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"].map(d =>
+              <div key={d}>{d}</div>
+            )}
+          </div>
 
-          {emptyDays.map((_, i) =>
-            <div key={i}></div>
-          )}
+          <div className="grid grid-cols-7 gap-2 sm:gap-3 text-xs sm:text-sm">
 
-          {daysArray.map(day => {
+            {emptyDays.map((_, i) => <div key={i}></div>)}
 
-            const daySlots = slots.filter(s => s.start_time.startsWith(day))
+            {daysArray.map(day => {
 
-            return (
+              const daySlots = slots.filter(s => s.start_time.startsWith(day))
 
-              <div
-                key={day}
-                className="border rounded-lg flex flex-col min-h-[80px] max-h-[80px] bg-white cursor-pointer p-1"
-                onClick={() => openModal(day)}
-              >
+              return (
 
-                <div className="font-semibold text-sm border-b mb-1">
-                  {new Date(day).getDate()}
-                </div>
-
-                {daySlots.map(slot => (
-
-                  <div
-                    key={slot.availability_id}
-                    className={`${getStatusColor(slot)} rounded p-1 text-[10px] mb-1`}
-                  >
-
-                    {slot.start_time.slice(11, 16)} - {slot.end_time.slice(11, 16)}
-
-                  </div>
-
-                ))}
-
-              </div>
-
-            )
-
-          })}
-
-        </div>
-
-      </div>
-
-
-      {/* pop up*/}
-
-      {showModal && selectedDay && (
-
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
-
-          <div className="bg-white rounded-lg w-[400px] max-w-[60vw] p-6 relative">
-
-            <button
-              className="absolute top-2 right-2 text-gray-800 hover:text-gray-800 text-lg font-bold"
-              onClick={() => setShowModal(false)}
-            >
-              ✖
-            </button>
-
-            <h3 className="font-semibold mb-2">
-              {new Date(selectedDay).toLocaleDateString()}
-            </h3>
-
-            {modalSlots.map(slot => (
-
-              <div key={slot.availability_id} className="border p-2 rounded mb-2">
-
-                <div className="flex justify-between">
-
-                  <span>
-                    {slot.start_time.slice(11, 16)} - {slot.end_time.slice(11, 16)}
-                  </span>
-
-                </div>
-
-
-                {/* student request */}
-
-                {userId !== slot.user_id && !slot.is_booked && (
-
-                  <div className="flex gap-1 mt-1">
-
-                    <input
-                      type="text"
-                      placeholder="Nachricht"
-                      value={requestMessage}
-                      onChange={e => setRequestMessage(e.target.value)}
-                      className="flex-1 border p-1 text-xs rounded"
-                    />
-
-                    <button
-                      onClick={() => sendRequest(slot)}
-                      className="bg-blue-600 text-white px-2 rounded text-xs"
-                    >
-
-                      Request
-
-                    </button>
-
-                  </div>
-
-                )}
-
-                {/* teacher request */}
-                {userId === slot.user_id &&
-
-                  requests
-                    .filter(r => r.availability_id === slot.availability_id && r.status === "pending")
-                    .map(r => (
-
-                      <div key={r.session_request_id} className="flex justify-between mt-1 bg-gray-100 p-1 rounded text-xs">
-
-                        <span>{r.description}</span>
-
-                        <div className="flex gap-1">
-
-                          <button
-                            onClick={() => handleRequest(r, true)}
-                            className="bg-green-600 text-white px-2 rounded"
-                          >
-                            ✓
-                          </button>
-
-                          <button
-                            onClick={() => handleRequest(r, false)}
-                            className="bg-red-600 text-white px-2 rounded"
-                          >
-                            ✕
-                          </button>
-
-                        </div>
-
-                      </div>
-
-                    ))
-
-                }
-
-              </div>
-
-            ))}
-
-            {/* create slot*/}
-            {userId && modalSlots.length === 0 && (
-
-              <div className="mt-2">
-
-                {error && (
-                  <p className="text-red-500 text-xs">{error}</p>
-                )}
-
-                <input
-                  type="time"
-                  value={startTime}
-                  onChange={e => setStartTime(e.target.value)}
-                  className="w-full mb-1 border p-1 rounded"
-                />
-
-                <input
-                  type="time"
-                  value={endTime}
-                  onChange={e => setEndTime(e.target.value)}
-                  className="w-full mb-1 border p-1 rounded"
-                />
-
-                <button
-                  onClick={addSlot}
-                  className="bg-green-600 text-white w-full py-1 rounded"
+                <div
+                  key={day} className="border rounded-lg flex flex-col min-h-[40px] sm:min-h-[50px] md:min-h-[60px] bg-white cursor-pointer p-2"
+                  onClick={() => openDayView(day)}
                 >
 
-                  Create Slot
+                  <div className="font-semibold text-sm border-b mb-1">
+                    {new Date(day).getDate()}
+                  </div>
 
-                </button>
+                  {daySlots.map(slot => (
 
-              </div>
+                    <div
+                      key={slot.availability_id}
+                      className={`${getStatusColor(slot)} rounded px-1 py-[2px] text-[10px] sm:text-xs mb-1 truncate`}
+                    >
+                      {slot.start_time.slice(11, 16)} - {slot.end_time.slice(11, 16)}
+                    </div>
 
-            )}
+                  ))}
+
+                </div>
+
+              )
+
+            })}
+
+          </div>
+
+        </div>
+
+      )}
+
+      {/* DAY VIEW */}
+
+      {viewMode === "day" && selectedDay && (
+
+        <div className="mt-6 bg-white p-4 rounded-lg">
+
+          <button
+            onClick={() => setViewMode("month")}
+            className="mb-3 text-sm"
+          >
+            ← zurück
+          </button>
+
+          <h2 className="font-bold mb-3">
+            {new Date(selectedDay).toLocaleDateString()}
+          </h2>
+
+          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2">
+
+            {generateTimes().map(time => {
+
+              const slot = slots.find(s =>
+                s.start_time.startsWith(`${selectedDay}T${time}`)
+              )
+
+              return (
+
+                <div
+                  key={time}
+                  className={`text-xs text-center p-2 rounded border cursor-pointer
+        ${slot ? "bg-green-300" : "bg-gray-200 hover:bg-gray-300"}`}
+                >
+                  {time}
+                </div>
+
+              )
+
+            })}
 
           </div>
 
