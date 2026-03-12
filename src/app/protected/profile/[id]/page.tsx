@@ -1,7 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { User } from "lucide-react";
 import ReadMoreCard from "@/components/readmore";
-import BookingCalendar from "@/components/profile-calendar";
+import PublicProfileCalendar from "@/components/public-profile-calendar";
 
 type UserProfile = {
   id: string;
@@ -32,8 +32,8 @@ export default async function ProfilePage({
 
 
   const { data: authData } = await supabase.auth.getUser()
-const currentUserId = authData.user?.id
-const isOwner = currentUserId === id
+  const currentUserId = authData.user?.id
+  const isOwner = currentUserId === id
 
   /* User Profil laden */
   const { data: user, error } = await supabase
@@ -57,10 +57,10 @@ const isOwner = currentUserId === id
   }
 
   const languages =
-    user.user_language?.map((l) => l.language.name) ||[];
+    user.user_language?.map((l) => l.language.name) || [];
 
   const skills =
-    user.user_skills?.map((s) => s.skills.name)|| [];
+    user.user_skills?.map((s) => s.skills.name) || [];
 
   return (
     <div className="max-w-7xl mx-auto mt-4 space-y-12 text-gray-800 font-semibold">
@@ -92,14 +92,14 @@ const isOwner = currentUserId === id
         <div className="space-y-20">
 
           <div className="bg-white bg-white/8 backdrop-blur rounded-2xl shadow-md p-6  transition">
-         
+
             <div className="mt-3 text-right">
               <ReadMoreCard title="Skills" items={skills} />
             </div>
           </div>
 
           <div className="bg-white bg-white/8 backdrop-blur rounded-2xl shadow-md p-8 mb-4 transition">
-              <div className="mt-3 text-right">
+            <div className="mt-3 text-right">
               <ReadMoreCard title="Languages" items={languages} />
             </div>
           </div>
@@ -112,16 +112,12 @@ const isOwner = currentUserId === id
             <h2 className="text-xl font-semibold mb-4 underline">Book your Session</h2>
 
 
-           <div className="flex items-start justify-center">
-  <div className="w-full">
+            <div className="flex items-start justify-center">
+              <div className="w-full">
+                <PublicProfileCalendar profileUserId={id} />
 
-    {/* <BookingCalendar
-      profileUserId={id}
-      isOwner={isOwner}
-    /> */}
-
-  </div>
-</div>
+              </div>
+            </div>
           </div>
         </div>
 
