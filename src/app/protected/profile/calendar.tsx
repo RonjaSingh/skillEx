@@ -312,13 +312,20 @@ export default function BookingCalendar() {
       </div>
 
 
-      {/* Modal*/}
+      {/* pop up*/}
 
       {showModal && selectedDay && (
 
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
 
-          <div className="bg-white rounded-lg w-96 p-4">
+          <div className="bg-white rounded-lg w-[400px] max-w-[60vw] p-6 relative">
+
+            <button
+              className="absolute top-2 right-2 text-gray-800 hover:text-gray-800 text-lg font-bold"
+              onClick={() => setShowModal(false)}
+            >
+              ✖
+            </button>
 
             <h3 className="font-semibold mb-2">
               {new Date(selectedDay).toLocaleDateString()}
