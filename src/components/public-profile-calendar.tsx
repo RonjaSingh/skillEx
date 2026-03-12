@@ -135,7 +135,7 @@ export default function PublicProfileCalendar({
 
         <div className="w-full max-w-4xl mx-auto p-4 text-gray-800 shadow-lg rounded-xl">
 
-             <h2 className="bg-white/8 text-lg font-semibold mb-4 text-center py-2 text-center backdrop-blur shadow-sm p-8 rounded-full ">Available Slots</h2>
+            <h2 className="bg-white/8 text-lg font-semibold mb-4 text-center py-2 text-center backdrop-blur shadow-sm p-8 rounded-full ">Available Slots</h2>
             {/* Month View */}
 
             {viewMode === 'month' && (
@@ -227,6 +227,11 @@ export default function PublicProfileCalendar({
                                             ? 'bg-brand-teal text-white hover:bg-brand-mint/70'
                                             : 'bg-white/20 text-gray-600'
                                         }`}
+                                    onClick={() => {
+                                        if (isFree && slot) {
+                                            setRequestingSlot(slot)
+                                        }
+                                    }}
                                 >
                                     {time}
                                 </div>
@@ -243,42 +248,43 @@ export default function PublicProfileCalendar({
 
             {requestingSlot && (
 
-                <div className="fixed inset-0 rounded-2xl flex items-center justify-center z-50">
+             <div className="fixed inset-0 flex items-center justify-center z-50 p-4">
 
-                    <div className="bg-white rounded-2xl shadow-2xl p-6 max-w-md w-full mx-4">
+  <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg md:max-w-xl p-6 md:p-8 mx-2">
 
-                        <h3 className="text-lg font-semibold mb-4">
-                            Request Slot {requestingSlot.start_time.slice(11, 16)}
-                        </h3>
+    <h3 className="text-lg md:text-xl text-gray-800 bg-brand-magenta/10 rounded-2xl p-3 font-semibold mb-6 text-center">
+      Session Request for {requestingSlot.start_time.slice(11, 16)}
+    </h3>
 
-                        <textarea
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
-                            placeholder="Describe your session..."
-                            className="w-full p-3 rounded-xl mb-4 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-400"
-                        />
+    <textarea
+      value={description}
+      onChange={(e) => setDescription(e.target.value)}
+      placeholder="Which Skill do need help with?"
+      className="w-full p-3 md:p-4 rounded-xl mb-6 border border-gray-100 focus:outline-none focus:ring-1 focus:ring-purple-200"
+      rows={4}
+    />
 
-                        <div className="flex justify-end gap-4">
+    <div className="flex justify-center gap-6 pt-2 w-full">
 
-                            <button
-                                onClick={() => setRequestingSlot(null)}
-                                className="px-4 py-2 rounded-xl hover:bg-gray-100 transition"
-                            >
-                                Cancel
-                            </button>
+<button
+  onClick={() => setRequestingSlot(null)}
+  className="flex-1 px-8 py-2 text-lg text-white rounded-xl backdrop-blur-md shadow-sm bg-brand-purple/70 hover:bg-brand-purple/20 transition"
+>
+  Cancel
+</button>
 
-                            <button
-                                onClick={sendRequest}
-                                className="px-4 py-2 rounded-xl bg-green-500 text-white hover:bg-green-600 transition"
-                            >
-                                Send Request
-                            </button>
+<button
+  onClick={sendRequest}
+  className="flex-1 px-8 py-2 text-lg rounded-xl backdrop-blur-md shadow-sm bg-brand-teal/80 text-white hover:bg-brand-mint transition"
+>
+  Send Request
+</button>
 
-                        </div>
+    </div>
 
-                    </div>
+  </div>
 
-                </div>
+</div>
 
             )}
 
