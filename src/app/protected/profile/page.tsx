@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation'
 import EditProfilePopup from '@/components/editprofile-popup'
 import useProfile from '@/hooks/use-profile'
 import useProfileInit from '@/hooks/use-profile-init'
-import BookingCalendar from '@/components/profile-calender'
+import BookingCalendar from '@/components/profile-calendar'
 
 
 export default function ProfilePage() {
