@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { User } from "lucide-react";
 import ReadMoreCard from "@/components/readmore";
+import BookingCalendar from "@/components/profile-calendar";
 
 type UserProfile = {
   id: string;
@@ -28,6 +29,11 @@ export default async function ProfilePage({
   console.log("PARAM ID:", id)
 
   const supabase = await createClient();
+
+
+  const { data: authData } = await supabase.auth.getUser()
+const currentUserId = authData.user?.id
+const isOwner = currentUserId === id
 
   /* User Profil laden */
   const { data: user, error } = await supabase
@@ -106,9 +112,16 @@ export default async function ProfilePage({
             <h2 className="text-xl font-semibold mb-4 underline">Book your Session</h2>
 
 
-            <button className="px-6 py-3 rounded-lg bg-white/20 hover:bg-white/40 transition">
-              View Availability
-            </button>
+           <div className="flex items-start justify-center">
+  <div className="w-full">
+
+    {/* <BookingCalendar
+      profileUserId={id}
+      isOwner={isOwner}
+    /> */}
+
+  </div>
+</div>
           </div>
         </div>
 
