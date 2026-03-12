@@ -183,7 +183,8 @@ export default function ProfilePage() {
 
         <div className="flex items-start justify-center">
           <div className="w-full">
-            <BookingCalendar />
+            <BookingCalendar
+            />  
 
           </div>
         </div>
