@@ -68,6 +68,20 @@ export default function BookingCalendar() {
     await loadSlots(userId)
   }
 
+
+  // month switch
+  const goToPreviousMonth = () => {
+    const newDate = new Date(currentDate)
+    newDate.setMonth(currentDate.getMonth() - 1)
+    setCurrentDate(newDate)
+  }
+
+  const goToNextMonth = () => {
+    const newDate = new Date(currentDate)
+    newDate.setMonth(currentDate.getMonth() + 1)
+    setCurrentDate(newDate)
+  }
+
   const generateTimes = () => {
     const times: string[] = []
     for (let h = 0; h < 24; h++) {
@@ -102,6 +116,21 @@ export default function BookingCalendar() {
       {/* Month view */}
       {viewMode === 'month' && (
         <>
+          <div className="flex items-center justify-between mb-4 px-6">
+
+            <button onClick={goToPreviousMonth}>
+              ←---
+            </button>
+
+            <h3>
+              {currentDate.toLocaleString('default', { month: 'long', year: 'numeric' })}
+            </h3>
+
+            <button onClick={goToNextMonth}>
+              ---→
+            </button>
+
+          </div>
           <div className="grid grid-cols-7 gap-1 mb-2 font-semibold text-center sm:text-base">
             {['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'].map(d => (
               <div key={d}>{d}</div>
@@ -133,7 +162,7 @@ export default function BookingCalendar() {
                   </div>
 
                   {freeSlots.length > 0 && (
-                    <div className="w-6 h-1 bg-brand-mint rounded-full mt-1"></div>
+                    <div className="w-12 h-3 bg-brand-mint rounded-full mt-1"></div>
                   )}
 
                 </div>

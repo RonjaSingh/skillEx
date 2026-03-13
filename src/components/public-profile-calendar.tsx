@@ -22,7 +22,7 @@ export default function PublicProfileCalendar({
     const [slots, setSlots] = useState<Slot[]>([])
     const [selectedDay, setSelectedDay] = useState<string | null>(null)
     const [viewMode, setViewMode] = useState<'month' | 'day'>('month')
-    const [currentDate] = useState(new Date())
+    const [currentDate, setCurrentDate] = useState(new Date())
 
     const [requestingSlot, setRequestingSlot] = useState<Slot | null>(null)
     const [description, setDescription] = useState('')
@@ -59,6 +59,20 @@ export default function PublicProfileCalendar({
 
         if (data) setAdvertisementId(data.advertisement_id)
     }
+
+    // zwischen monaten switchen
+    const goToPreviousMonth = () => {
+        const newDate = new Date(currentDate)
+        newDate.setMonth(currentDate.getMonth() - 1)
+        setCurrentDate(newDate)
+    }
+
+    const goToNextMonth = () => {
+        const newDate = new Date(currentDate)
+        newDate.setMonth(currentDate.getMonth() + 1)
+        setCurrentDate(newDate)
+    }
+
 
     /* Request senden */
 
@@ -136,11 +150,27 @@ export default function PublicProfileCalendar({
         <div className="w-full max-w-4xl mx-auto p-4 text-gray-800 shadow-lg rounded-xl">
 
             <h2 className="bg-white/8 text-lg font-semibold mb-4 text-center py-2 text-center backdrop-blur shadow-sm p-8 rounded-full ">Available Slots</h2>
+
             {/* Month View */}
 
             {viewMode === 'month' && (
 
                 <>
+                    <div className="flex items-center justify-between mb-4 px-6">
+
+                        <button onClick={goToPreviousMonth}>
+                            ←---
+                        </button>
+
+                        <h3>
+                            {currentDate.toLocaleString('default', { month: 'long', year: 'numeric' })}
+                        </h3>
+
+                        <button onClick={goToNextMonth}>
+                            ---→
+                        </button>
+
+                    </div>
                     <div className="grid grid-cols-7 gap-1 mb-2 font-semibold text-center">
                         {['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'].map(d => (
                             <div key={d}>{d}</div>
@@ -161,6 +191,7 @@ export default function PublicProfileCalendar({
 
                             return (
 
+
                                 <div
                                     key={day}
                                     className="bg-white/20 backdrop-blur rounded-2xl min-h-[60px] p-2 cursor-pointer shadow-md hover:bg-white/30 flex flex-col items-center transition"
@@ -175,7 +206,7 @@ export default function PublicProfileCalendar({
                                     </div>
 
                                     {freeSlots.length > 0 && (
-                                        <div className="w-6 h-1 bg-brand-mint rounded-full mt-1"></div>
+                                        <div className="w-12 h-3 bg-brand-mint rounded-full mt-1"></div>
                                     )}
 
                                 </div>
@@ -248,43 +279,43 @@ export default function PublicProfileCalendar({
 
             {requestingSlot && (
 
-             <div className="fixed inset-0 flex items-center justify-center z-50 p-4">
+                <div className="fixed inset-0 flex items-center justify-center z-50 p-4">
 
-  <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg md:max-w-xl p-6 md:p-8 mx-2">
+                    <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg md:max-w-xl p-6 md:p-8 mx-2">
 
-    <h3 className="text-lg md:text-xl text-gray-800 bg-brand-magenta/10 rounded-2xl p-3 font-semibold mb-6 text-center">
-      Session Request for {requestingSlot.start_time.slice(11, 16)}
-    </h3>
+                        <h3 className="text-lg md:text-xl text-gray-800 bg-brand-magenta/10 rounded-2xl p-3 font-semibold mb-6 text-center">
+                            Session Request for {requestingSlot.start_time.slice(11, 16)}
+                        </h3>
 
-    <textarea
-      value={description}
-      onChange={(e) => setDescription(e.target.value)}
-      placeholder="Which Skill do need help with?"
-      className="w-full p-3 md:p-4 rounded-xl mb-6 border border-gray-100 focus:outline-none focus:ring-1 focus:ring-purple-200"
-      rows={4}
-    />
+                        <textarea
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                            placeholder="Which Skill do need help with?"
+                            className="w-full p-3 md:p-4 rounded-xl mb-6 border border-gray-100 focus:outline-none focus:ring-1 focus:ring-purple-200"
+                            rows={4}
+                        />
 
-    <div className="flex justify-center gap-6 pt-2 w-full">
+                        <div className="flex justify-center gap-6 pt-2 w-full">
 
-<button
-  onClick={() => setRequestingSlot(null)}
-  className="flex-1 px-8 py-2 text-lg text-white rounded-xl backdrop-blur-md shadow-sm bg-brand-purple/70 hover:bg-brand-purple/20 transition"
->
-  Cancel
-</button>
+                            <button
+                                onClick={() => setRequestingSlot(null)}
+                                className="flex-1 px-8 py-2 text-lg text-white rounded-xl backdrop-blur-md shadow-sm bg-brand-purple/70 hover:bg-brand-purple/20 transition"
+                            >
+                                Cancel
+                            </button>
 
-<button
-  onClick={sendRequest}
-  className="flex-1 px-8 py-2 text-lg rounded-xl backdrop-blur-md shadow-sm bg-brand-teal/80 text-white hover:bg-brand-mint transition"
->
-  Send Request
-</button>
+                            <button
+                                onClick={sendRequest}
+                                className="flex-1 px-8 py-2 text-lg rounded-xl backdrop-blur-md shadow-sm bg-brand-teal/80 text-white hover:bg-brand-mint transition"
+                            >
+                                Send Request
+                            </button>
 
-    </div>
+                        </div>
 
-  </div>
+                    </div>
 
-</div>
+                </div>
 
             )}
 
