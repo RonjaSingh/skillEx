@@ -15,7 +15,20 @@ export default function ProfilePage() {
   useProfileInit()
 
   const router = useRouter()
-  const { name, setName, skills, setSkills, languages, setLanguages, profileImage, setProfileImage, saveProfile, loading } = useProfile()
+  const {
+  name,
+  setName,
+  skills,
+  setSkills,
+  languages,
+  setLanguages,
+  profileImage,
+  setProfileImage,
+  averageRating,
+  ratingCount,
+  saveProfile,
+  loading
+} = useProfile()
   const [isPopupOpen, setIsPopupOpen] = useState(false)
   const [showWelcome, setShowWelcome] = useState(false)
 
@@ -28,7 +41,7 @@ export default function ProfilePage() {
       const user = authData.user
       if (!user) return
 
-      const { data } = await supabase
+      const { data } = await (supabase as any)
         .from('user')
         .select('first_login')
         .eq('id', user.id)
@@ -37,7 +50,7 @@ export default function ProfilePage() {
       if (data?.first_login) {
         setShowWelcome(true)
 
-        await supabase
+        await (supabase as any) 
           .from('user')
           .update({ first_login: false })
           .eq('id', user.id)
@@ -131,6 +144,15 @@ export default function ProfilePage() {
 
       </div>
 
+          <div className="text-center mt-2">
+  {averageRating ? (
+    <p className="text-sm text-gray-600">
+      ⭐ {averageRating.toFixed(1)} ({ratingCount} ratings)
+    </p>
+  ) : (
+    <p className="text-sm text-gray-400">No ratings yet</p>
+  )}
+  </div>
 
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-24 relative">
