@@ -67,7 +67,8 @@ export default function PostFullPopup({ post, onClose }: Props) {
 
         {calendarUserId && (
           <div className="mt-6">
-            <PublicProfileCalendar profileUserId={calendarUserId} />
+            <PublicProfileCalendar profileUserId={calendarUserId} 
+            />
           </div>
         )}
       </div>
