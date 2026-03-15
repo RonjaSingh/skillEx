@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
+import CalendarInfo from './calendar-info-box'
+
 
 interface Slot {
   availability_id: string
@@ -159,10 +161,10 @@ export default function BookingCalendar() {
                 <div
                   key={day}
                   className={`bg-white/20 backdrop-blur rounded-2xl min-h-[60px] p-2 shadow-md flex flex-col items-center transition
-  ${isPastDay
+                 ${isPastDay
                       ? ' text-gray-500 cursor-not-allowed'
                       : 'cursor-pointer hover:bg-white/30'}
-`}
+                   `}
                   onClick={() => {
                     if (!isPastDay) {
                       setSelectedDay(day)
@@ -175,13 +177,13 @@ export default function BookingCalendar() {
                     {new Date(day).getDate()}
                   </div>
 
-                 {freeSlots.length > 0 && (
-  <div
-    className={`w-12 h-2 rounded-full mt-1
-      ${isPastDay ? 'bg-gray-400/60' : 'bg-brand-mint'}
-    `}
-  ></div>
-)}
+                  {freeSlots.length > 0 && (
+                    <div
+                      className={`w-12 h-2 rounded-full mt-1
+                 ${isPastDay ? 'bg-gray-400/60' : 'bg-brand-mint'}
+                    `}
+                    ></div>
+                  )}
 
                 </div>
 
@@ -239,6 +241,7 @@ export default function BookingCalendar() {
           </div>
         </div>
       )}
+      <CalendarInfo />
     </div>
   )
 }
