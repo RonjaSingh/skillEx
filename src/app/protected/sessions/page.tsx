@@ -20,7 +20,24 @@ export default function SessionsPage() {
   const [completed, setCompleted] = useState<any[]>([])
   const [accepted, setAccepted] = useState<any[]>([])
   const [userId, setUserId] = useState<string | null>(null)
+  const [hoverRating, setHoverRating] = useState<Record<string, number>>({})
+  const [selectedRating, setSelectedRating] = useState<Record<string, number>>({})
+  const [ratings, setRatings] = useState<Record<string, number>>({})
   /*const [active, setActive] = useState<any[]>([])*/
+
+    const sessionUserMap: Record<string, string> = {}
+
+  completed.forEach((s) => {
+    if (!userId) return
+
+    const otherUserId =
+      s.teacher_user_id === userId
+        ? s.student_user_id
+        : s.teacher_user_id
+
+    sessionUserMap[s.session_id] = otherUserId
+  })
+
 
 
   useEffect(() => {
@@ -28,24 +45,36 @@ export default function SessionsPage() {
   }, [])
 
     async function loadData() {
-    const { data: userData } = await supabase.auth.getUser()
-    const userId = userData.user?.id
-    if (!userId) return
-    setUserId(userId)
+  const { data: userData } = await supabase.auth.getUser()
+  const userId = userData.user?.id
+  if (!userId) return
+  setUserId(userId)
 
-    const incomingRes = await getIncomingRequests(userId)
-    const outgoingRes = await getOutgoingRequests(userId)
-    const completedRes = await getCompletedSessions(userId)
-    const acceptedRes = await getAcceptedRequests(userId)
-    /*const activeRes = await getActiveSessions(userId)*/
+  const incomingRes = await getIncomingRequests(userId)
+  const outgoingRes = await getOutgoingRequests(userId)
+  const completedRes = await getCompletedSessions(userId)
+  const acceptedRes = await getAcceptedRequests(userId)
 
-    setIncoming(incomingRes.data || [])
-    setOutgoing(outgoingRes.data || [])
-    setCompleted(completedRes.data || [])
-    setAccepted(acceptedRes.data || [])
-    /*setActive(activeRes.data || [])*/
-    
-  }
+  /* Ratings des aktuellen Users laden */
+  const ratingsRes = await supabase
+    .from('rating')
+    .select('session_id, stars')
+    .eq('reviewer_user_id', userId)
+
+  /* Map bauen: session_id -> stars */
+  const ratingMap: Record<string, number> = {}
+
+  ratingsRes.data?.forEach((r) => {
+    ratingMap[r.session_id] = r.stars
+  })
+
+  setIncoming(incomingRes.data || [])
+  setOutgoing(outgoingRes.data || [])
+  setCompleted(completedRes.data || [])
+  setAccepted(acceptedRes.data || [])
+
+  setRatings(ratingMap)
+}
 
    /*async function updateRequestStatus(id: string, status: 'accepted' | 'rejected' | 'cancelled') {
     await supabase
@@ -55,6 +84,7 @@ export default function SessionsPage() {
 
     loadData()
   }*/
+
  async function updateRequestStatus(
   id: string,
   status: 'accepted' | 'rejected' | 'cancelled'
@@ -77,6 +107,53 @@ export default function SessionsPage() {
     .eq('session_request_id', id)
 
     loadData()
+}
+
+
+async function handleRating(session: any, stars: number) {
+
+  const reviewedUserId =
+    session.teacher_user_id === userId
+      ? session.student_user_id
+      : session.teacher_user_id
+
+  const success = await submitRating(session.session_id, reviewedUserId, stars)
+
+  if (success) {
+    setRatings((prev) => ({
+      ...prev,
+      [session.session_id]: stars
+    }))
+  }
+}
+
+
+async function submitRating(
+  sessionId: string,
+  reviewedUserId: string,
+  stars: number,
+  comment?: string
+) {
+  if (!userId) return false
+
+  const { error } = await supabase
+    .from('rating')
+    .insert([
+      {
+        session_id: sessionId,
+        reviewer_user_id: userId,
+        reviewed_user_id: reviewedUserId,
+        stars,
+        comment: comment || null
+      }
+    ])
+
+  if (error) {
+    console.error("Rating insert error:", error)
+    return false
+  }
+
+  return true
 }
 
 
@@ -128,7 +205,7 @@ export default function SessionsPage() {
         name={otherUser}
         actions={
           <button onClick={() =>
-                updateRequestStatus(s.request_id, 'cancelled')
+                updateRequestStatus(s.session_request_id, 'cancelled')
               }className="px-2 py-1 border rounded bg-red-100">
             Cancel
           </button>
@@ -210,10 +287,36 @@ export default function SessionsPage() {
               name={otherUserName}
               description={s.description}
               actions={
-                <button className="px-2 py-1 border rounded bg-yellow-100">
-                  Rate Session 
-                </button>
-              }
+             <div className="flex gap-1 items-center">
+  <span className="mr-2 text-sm">Rate:</span>
+
+{[1,2,3,4,5].map((n) => {
+  const active =
+    hoverRating[s.session_id] >= n ||
+    ratings[s.session_id] >= n
+
+  return (
+    <button
+      key={n}
+      type="button"
+      onMouseEnter={() =>
+        setHoverRating((prev) => ({ ...prev, [s.session_id]: n }))
+      }
+      onMouseLeave={() =>
+        setHoverRating((prev) => ({ ...prev, [s.session_id]: 0 }))
+      }
+      onClick={() => handleRating(s, n)}
+      disabled={ratings[s.session_id] !== undefined}
+      className={`text-xl cursor-pointer ${
+        active ? "text-yellow-500" : "text-gray-400"
+      }`}
+    >
+      ★
+    </button>
+  )
+})}
+</div>
+                }
             />
           )
         })}

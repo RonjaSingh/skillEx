@@ -51,6 +51,13 @@ export async function getOutgoingRequests(userId: string) {
     .eq('status', 'pending')
 }
 
+export async function getMyRatings(userId: string) {
+  return await supabase
+    .from('rating')
+    .select('session_id, stars')
+    .eq('reviewer_user_id', userId)
+}
+
 export async function getCompletedSessions(userId: string) {
   return await supabase
     .from('session')
