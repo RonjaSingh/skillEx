@@ -9,6 +9,8 @@ export default function useProfile() {
   const [languages, setLanguages] = useState<string[]>([])
   const [loading, setLoading] = useState(true)
   const [profileImage, setProfileImage] = useState<string | null>(null)
+  const [averageRating, setAverageRating] = useState<number | null>(null)
+  const [ratingCount, setRatingCount] = useState<number>(0)
 
 
   useEffect(() => {
@@ -22,6 +24,15 @@ export default function useProfile() {
         setLoading(false)
         return
       }
+
+    const { data: ratingData } = await (supabase as any)
+   .from('user_rating_summary')
+   .select('average_rating, rating_count')
+   .eq('user_id', user.id)
+   .maybeSingle()
+
+    setAverageRating(ratingData?.average_rating ?? null)
+    setRatingCount(ratingData?.rating_count ?? 0)
 
       // Name laden
       const { data: profile } = await supabase
@@ -144,7 +155,17 @@ export default function useProfile() {
   }
 
   return {
-    name, setName, skills, setSkills, languages, setLanguages, profileImage,
-    setProfileImage, loading, saveProfile
+    name,
+  setName,
+  skills,
+  setSkills,
+  languages,
+  setLanguages,
+  profileImage,
+  setProfileImage,
+  averageRating,
+  ratingCount,
+  loading,
+  saveProfile
   }
 }

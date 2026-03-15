@@ -325,21 +325,18 @@ export type Database = {
       user: {
         Row: {
           email: string
-          first_login: boolean
           id: string
           name: string
           profile_image: string | null
         }
         Insert: {
           email: string
-          first_login?: boolean
           id: string
           name?: string
           profile_image?: string | null
         }
         Update: {
           email?: string
-          first_login?: boolean
           id?: string
           name?: string
           profile_image?: string | null
