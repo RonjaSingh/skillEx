@@ -65,7 +65,7 @@ export default async function ProfilePage({
   return (
     <div className="max-w-7xl mx-auto mt-4 space-y-12 text-gray-800 font-semibold">
 
-      <div className="py-2 text-xl bg-white/10 backdrop-blur shadow-md p-8 rounded-full">
+      <div className="py-2 text-xl bg-white/10 backdrop-blur shadow-sm p-8 rounded-full">
         <div className="flex items-center justify-center gap-12">
           <h1 className="text-2xl ">{user.name || "Username"}</h1>
 
@@ -73,10 +73,10 @@ export default async function ProfilePage({
             <img
               src={user.profile_image}
               alt="Profile Image"
-              className="w-20 h-20 rounded-full object-cover border"
+              className="w-16 h-16 rounded-full object-cover "
             />
           ) : (
-            <div className="w-20 h-20 rounded-full bg-gray-300 flex items-center justify-center text-xl">
+            <div className="w-16 h-16 rounded-full bg-white/10 backdrop-blur flex items-center justify-center text-xl">
               👤
             </div>
           )}

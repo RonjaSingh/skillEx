@@ -6,7 +6,10 @@ export type Post = {
   title: string;
   description: string;
   typ: "offer" | "request";
-  user?: { name: string } | null;
+  user?: {
+    id: string;      
+    name: string;
+  }| null;
   created_at: string;
 };
 
@@ -19,6 +22,8 @@ export default function useBoard() {
     async function fetchPosts() {
       const res = await fetch("/api/advertisements");
       const data = await res.json();
+
+        console.log("Fetched posts:", data); // <-- Hier einfügen
       setPosts(data);
     }
     fetchPosts();

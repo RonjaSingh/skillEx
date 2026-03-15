@@ -33,9 +33,11 @@ export default function PublicProfileCalendar({
     /* Slots laden */
 
     useEffect(() => {
-        loadSlots()
-        loadAdvertisement()
-    }, [])
+        if (profileUserId) {
+            loadSlots()
+            loadAdvertisement()
+        }
+    }, [profileUserId])
 
     const loadSlots = async () => {
 
@@ -246,51 +248,40 @@ export default function PublicProfileCalendar({
 
                     <button
                         onClick={() => setViewMode('month')}
-                        className="mb-2 px-4 py-2 text-sm rounded-xl hover:bg-white/15 transition"
+                        className="mb-2 px-4 py-2 text-sm font-semibold rounded-xl hover:bg-white/15 transition"
                     >
                         ← Back
                     </button>
 
-                    <h3 className="mb-6 text-lg font-semibold text-cener text-lg font-semibold  text-center py-2 text-center shadow-sm p-4 rounded-full">
+                    <h3 className="mb-6 text-lg font-semibold text-gray-700 text-center text-lg py-2 shadow-sm p-4 rounded-xl">
                         {new Date(selectedDay).toDateString()}
                     </h3>
 
-                    <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2">
-
+                    <div className="grid grid-cols-[repeat(auto-fit,minmax(80px,1fr))] gap-1">
                         {generateTimes().map(time => {
-
-
-                            const slotDate = new Date(`${selectedDay}T${time}`)
-                            const now = new Date()
-                            const isPast = slotDate < now
-
-                            const slot = slots.find(s =>
-                                s.start_time.startsWith(`${selectedDay}T${time}`)
-                            )
-
-                            const isFree = slot && !slot.is_booked
+                            const slot = slots.find(s => s.start_time.startsWith(`${selectedDay}T${time}`));
+                            const slotDate = new Date(`${selectedDay}T${time}`);
+                            const now = new Date();
+                            const isPast = slotDate < now;
+                            const isFree = slot && !slot.is_booked;
 
                             return (
-
                                 <div
                                     key={time}
-                                    className={`text-center text-sm sm:text-base p-2 sm:p-3 min-h-[50px] rounded-2xl cursor-pointer transition flex items-center justify-center
-                                      ${isPast
+                                    className={`backdrop-blur rounded-2xl min-h-[60px] p-4 shadow-md flex flex-col items-center justify-center transition
+          ${isPast
                                             ? 'bg-gray-400/40 text-gray-700 cursor-not-allowed'
                                             : isFree
-                                                ? 'bg-brand-teal text-white hover:bg-brand-mint/70'
-                                                : 'bg-white/20 text-gray-600'
+                                                ? 'bg-brand-teal text-white hover:bg-brand-mint/70 cursor-pointer'
+                                                : 'bg-white/20 text-gray-800'
                                         }`}
                                     onClick={() => {
-                                        if (!isPast && isFree && slot) {
-                                            setRequestingSlot(slot)
-                                        }
+                                        if (!isPast && isFree && slot) setRequestingSlot(slot);
                                     }}
                                 >
                                     {time}
                                 </div>
-
-                            )
+                            );
                         })}
                     </div>
 
@@ -313,7 +304,7 @@ export default function PublicProfileCalendar({
                         <textarea
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
-                            placeholder="Which Skill do need help with?"
+                            placeholder="..."
                             className="w-full p-3 md:p-4 rounded-xl mb-6 border border-gray-100 focus:outline-none focus:ring-1 focus:ring-purple-200"
                             rows={4}
                         />
