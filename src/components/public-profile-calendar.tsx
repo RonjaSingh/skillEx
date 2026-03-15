@@ -14,9 +14,11 @@ interface Slot {
 }
 
 export default function PublicProfileCalendar({
-    profileUserId
+    profileUserId,
+    variant = "default"
 }: {
     profileUserId: string
+    variant?: "default" | "popup"
 }) {
 
     const supabase = createClient()
@@ -29,6 +31,8 @@ export default function PublicProfileCalendar({
     const [requestingSlot, setRequestingSlot] = useState<Slot | null>(null)
     const [description, setDescription] = useState('')
     const [advertisementId, setAdvertisementId] = useState<string | null>(null)
+
+    const [successMessage, setSuccessMessage] = useState(false)
 
     /* Slots laden */
 
@@ -109,7 +113,11 @@ export default function PublicProfileCalendar({
             return
         }
 
-        alert('Session request sent!')
+        setSuccessMessage(true)
+
+        setTimeout(() => {
+            setSuccessMessage(false)
+        }, 2000)
 
         setRequestingSlot(null)
         setDescription('')
@@ -256,8 +264,7 @@ export default function PublicProfileCalendar({
                     <h3 className="mb-6 text-lg font-semibold text-gray-700 text-center text-lg py-2 shadow-sm p-4 rounded-xl">
                         {new Date(selectedDay).toDateString()}
                     </h3>
-
-                    <div className="grid grid-cols-[repeat(auto-fit,minmax(80px,1fr))] gap-1">
+                    <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-9 gap-2">
                         {generateTimes().map(time => {
                             const slot = slots.find(s => s.start_time.startsWith(`${selectedDay}T${time}`));
                             const slotDate = new Date(`${selectedDay}T${time}`);
@@ -269,7 +276,7 @@ export default function PublicProfileCalendar({
                                 <div
                                     key={time}
                                     className={`backdrop-blur rounded-2xl min-h-[60px] p-4 shadow-md flex flex-col items-center justify-center transition
-          ${isPast
+                                      ${isPast
                                             ? 'bg-gray-400/40 text-gray-700 cursor-not-allowed'
                                             : isFree
                                                 ? 'bg-brand-teal text-white hover:bg-brand-mint/70 cursor-pointer'
@@ -333,6 +340,18 @@ export default function PublicProfileCalendar({
 
             )}
             <PublicCalendarInfo />
+
+
+            {successMessage && (
+                <div className="fixed inset-0 flex items-center justify-center z-50">
+                    <div className="bg-brand-teal/70 backdrop-blur shadow-xl rounded-2xl px-8 py-6 text-center">
+                        <p className="text-lg font-semibold text-white">
+                            Session request sent!
+                        </p>
+                    </div>
+                </div>
+            )}
+
         </div>
 
     )

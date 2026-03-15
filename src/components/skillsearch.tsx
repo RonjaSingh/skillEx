@@ -158,7 +158,7 @@ export default function SkillSearch() {
           e.preventDefault();
           handleSearch();
         }}
-     className="flex justify-center gap-4 p-6 mt-30 lg:mt-10 mb-6 backdrop-blur-md bg-white/20 rounded-2xl shadow-xl"
+        className="flex justify-center gap-4 p-6 mt-30 lg:mt-10 mb-6 backdrop-blur-md bg-white/20 rounded-2xl shadow-xl"
       >
         <input
           type="text"
@@ -217,36 +217,38 @@ export default function SkillSearch() {
       )}
 
       {/* calendar popup */}
-{calendarUserId && (
-  <div className="fixed inset-0 flex items-center justify-center z-50 p-6">
+      {calendarUserId && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 p-6">
 
-    {/* Overlay hinter dem Kalender */}
-    <div
-      className="absolute inset-0 bg-black/30"
-      onClick={() => setCalendarUserId(null)}
-    />
+          {/* Overlay hinter dem Kalender */}
+          <div
+            className="absolute inset-0 bg-black/30"
+            onClick={() => setCalendarUserId(null)}
+          />
 
-    {/* Kalender selbst */}
-    <div
-      className="relative w-full max-w-4xl bg-white rounded-2xl shadow-2xl overflow-auto p-6"
-      onClick={(e) => e.stopPropagation()} // Klick auf Kalender stoppt Schließen
-    >
-      {/* Kalender direkt ohne hideWrapper */}
-      <PublicProfileCalendar profileUserId={calendarUserId} />
+          {/* Kalender selbst */}
+          <div
+            className="relative w-full max-w-4xl bg-white rounded-2xl shadow-2xl overflow-auto p-6"
+            onClick={(e) => e.stopPropagation()}
+          >
 
-      {/* Button unter dem Kalender */}
-      <div className="flex justify-center mt-6">
-        <button
-          onClick={() => setCalendarUserId(null)}
-          className="px-6 py-3 bg-gray-200 rounded-xl shadow-md hover:bg-gray-300 transition"
-        >
-          Kalender schließen
-        </button>
-      </div>
-    </div>
+            <PublicProfileCalendar profileUserId={calendarUserId}
+             
+            />
 
-  </div>
-)}
+            {/* Button unter dem Kalender */}
+            <div className="flex justify-center mt-6">
+              <button
+                onClick={() => setCalendarUserId(null)}
+                className="px-6 py-3 bg-gray-200 rounded-xl shadow-md hover:bg-gray-300 transition"
+              >
+                Kalender schließen
+              </button>
+            </div>
+          </div>
+
+        </div>
+      )}
     </div>
 
   )
