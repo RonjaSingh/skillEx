@@ -9,7 +9,9 @@ export async function GET() {
     .select(`
       *,
       user:user_id (
-        name
+      id,
+      name
+        
       )
     `)
     .order("created_at", { ascending: false });
@@ -40,6 +42,7 @@ export async function POST(req: Request) {
     .select(`
       *,
       user:user_id (
+      id,
         name
       )
     `)
