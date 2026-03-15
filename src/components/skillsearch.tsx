@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
+import PublicProfileCalendar from "@/components/public-profile-calendar"
 
 export default function SkillSearch() {
   const supabase = createClient();
@@ -17,6 +18,8 @@ export default function SkillSearch() {
 
   const resultsRef = useRef<HTMLDivElement | null>(null);
 
+
+  const [calendarUserId, setCalendarUserId] = useState<string | null>(null)
 
   // Alle skills laden
   useEffect(() => {
@@ -195,9 +198,7 @@ export default function SkillSearch() {
 
               {/* Button rechts */}
               <button
-                onClick={() => {
-                  /*  router.push(`/calendar/${user.user_id}`) */
-                }}
+                onClick={() => setCalendarUserId(user.user_id)}
                 className="bg-brand-blue/80 text-white w-40 px-2 py-2 rounded-lg shadow-md hover:shadow-lg transition hover:bg-brand-blue/80 transition"
               >
                 Book a session
@@ -213,6 +214,39 @@ export default function SkillSearch() {
           )}
         </div>
       )}
+
+      {/* calendar popup */}
+{calendarUserId && (
+  <div className="fixed inset-0 flex items-center justify-center z-50 p-6">
+
+    {/* Overlay hinter dem Kalender */}
+    <div
+      className="absolute inset-0 bg-black/30"
+      onClick={() => setCalendarUserId(null)}
+    />
+
+    {/* Kalender selbst */}
+    <div
+      className="relative w-full max-w-4xl bg-white rounded-2xl shadow-2xl overflow-auto p-6"
+      onClick={(e) => e.stopPropagation()} // Klick auf Kalender stoppt Schließen
+    >
+      {/* Kalender direkt ohne hideWrapper */}
+      <PublicProfileCalendar profileUserId={calendarUserId} />
+
+      {/* Button unter dem Kalender */}
+      <div className="flex justify-center mt-6">
+        <button
+          onClick={() => setCalendarUserId(null)}
+          className="px-6 py-3 bg-gray-200 rounded-xl shadow-md hover:bg-gray-300 transition"
+        >
+          Kalender schließen
+        </button>
+      </div>
     </div>
+
+  </div>
+)}
+    </div>
+
   )
 }
