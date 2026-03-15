@@ -152,12 +152,13 @@ export default function SkillSearch() {
 
 
       {/* Suchleiste Container */}
+
       <form
         onSubmit={(e) => {
           e.preventDefault();
           handleSearch();
         }}
-        className="flex justify-center gap-4 p-6 mt-10 mb-6 backdrop-blur-md bg-white/20 rounded-2xl shadow-xl "
+     className="flex justify-center gap-4 p-6 mt-30 lg:mt-10 mb-6 backdrop-blur-md bg-white/20 rounded-2xl shadow-xl"
       >
         <input
           type="text"

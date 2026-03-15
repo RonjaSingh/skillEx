@@ -13,10 +13,10 @@ type HeaderProps = {
 export function Header({ username, avatarUrl }: HeaderProps) {
   return (
     <header className="w-full h-22 bg-gradient-to-r from-brand-magenta to-brand-teal">
-      <div className="mx-auto px-12 pt-6 grid grid-cols-[auto_1fr_auto] items-center gap-x-6">
+  <div className="mx-auto px-6 lg:px-12 pt-6 grid grid-cols-2 lg:grid-cols-[auto_1fr_auto] grid-rows-[auto_auto] lg:grid-rows-1 items-center gap-x-4 gap-y-3">
 
         {/* Left: Logo */}
-        <div className=" flex justify-start">
+    <div className="col-span-2 lg:col-span-1 row-start-1 flex justify-center lg:justify-start">
           <Link href="/protected">
             <Image
               src="/skillexchange2.0.png"
@@ -28,18 +28,17 @@ export function Header({ username, avatarUrl }: HeaderProps) {
 
         </div>
 
-
-        <div className="flex justify-center items-center min-w-0">
+<div className="row-start-2 lg:row-start-auto flex justify-center lg:justify-center items-center min-w-0">
           <Navbar />
         </div>
 
         {/* Right: User */}
-        <div className='flex justify-end'>
+     <div className="row-start-2 lg:row-start-auto flex justify-center lg:justify-end">
           <Link
             href="/protected/profile"
-            className="group flex items-center gap-3 px-10 h-20 rounded-full bg-white/15 hover:bg-white/15 backdrop-blur-md  transition-all duration-300"
+            className="group flex items-center gap-5 px-10 h-20 rounded-full  hover:bg-white/8 backdrop-blur-md  transition-all duration-300"
           >
-         <span className="hidden sm:flex text-lg font-medium text-gray-800 max-w-[120px] truncate items-center">
+         <span className=" sm:flex text-xl font-medium text-gray-800 max-w-[120px] truncate items-center">
               {username}
             </span>
 
