@@ -179,7 +179,7 @@ export default function BookingCalendar() {
 
                   {freeSlots.length > 0 && (
                     <div
-                      className={`w-12 h-2 rounded-full mt-1
+                      className={`w-full h-2 rounded-full mt-1
                  ${isPastDay ? 'bg-gray-400/60' : 'bg-brand-mint'}
                     `}
                     ></div>

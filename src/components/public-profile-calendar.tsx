@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 
+import PublicCalendarInfo from './public-calendar-info-box'
+
 interface Slot {
     availability_id: string
     user_id: string
@@ -183,6 +185,13 @@ export default function PublicProfileCalendar({
 
                         {daysArray.map(day => {
 
+
+                            const today = new Date()
+                            today.setHours(0, 0, 0, 0)
+
+                            const dayDate = new Date(day)
+                            const isPastDay = dayDate < today
+
                             const daySlots = slots.filter(s =>
                                 s.start_time.startsWith(day)
                             )
@@ -194,19 +203,26 @@ export default function PublicProfileCalendar({
 
                                 <div
                                     key={day}
-                                    className="bg-white/20 backdrop-blur rounded-2xl min-h-[60px] p-2 cursor-pointer shadow-md hover:bg-white/30 flex flex-col items-center transition"
+                                    className={`backdrop-blur rounded-2xl min-h-[60px] p-2 shadow-md flex flex-col items-center transition
+                                          ${isPastDay
+                                            ? 'bg-gray-400/40 cursor-not-allowed'
+                                            : 'bg-white/20 hover:bg-white/30 cursor-pointer'}
+                                               `}
                                     onClick={() => {
-                                        setSelectedDay(day)
-                                        setViewMode('day')
+                                        if (!isPastDay) {
+                                            setSelectedDay(day)
+                                            setViewMode('day')
+                                        }
                                     }}
                                 >
-
                                     <div className="font-semibold mb-1">
                                         {new Date(day).getDate()}
                                     </div>
 
                                     {freeSlots.length > 0 && (
-                                        <div className="w-12 h-3 bg-brand-mint rounded-full mt-1"></div>
+                                        <div className={`w-full h-2 rounded-full mt-1
+                                      ${isPastDay ? 'bg-gray-400/60' : 'bg-brand-mint'}
+                                       `}></div>
                                     )}
 
                                 </div>
@@ -243,6 +259,11 @@ export default function PublicProfileCalendar({
 
                         {generateTimes().map(time => {
 
+
+                            const slotDate = new Date(`${selectedDay}T${time}`)
+                            const now = new Date()
+                            const isPast = slotDate < now
+
                             const slot = slots.find(s =>
                                 s.start_time.startsWith(`${selectedDay}T${time}`)
                             )
@@ -254,12 +275,14 @@ export default function PublicProfileCalendar({
                                 <div
                                     key={time}
                                     className={`text-center text-sm sm:text-base p-2 sm:p-3 min-h-[50px] rounded-2xl cursor-pointer transition flex items-center justify-center
-                                        ${isFree
-                                            ? 'bg-brand-teal text-white hover:bg-brand-mint/70'
-                                            : 'bg-white/20 text-gray-600'
+                                      ${isPast
+                                            ? 'bg-gray-400/40 text-gray-700 cursor-not-allowed'
+                                            : isFree
+                                                ? 'bg-brand-teal text-white hover:bg-brand-mint/70'
+                                                : 'bg-white/20 text-gray-600'
                                         }`}
                                     onClick={() => {
-                                        if (isFree && slot) {
+                                        if (!isPast && isFree && slot) {
                                             setRequestingSlot(slot)
                                         }
                                     }}
@@ -318,7 +341,7 @@ export default function PublicProfileCalendar({
                 </div>
 
             )}
-
+            <PublicCalendarInfo />
         </div>
 
     )

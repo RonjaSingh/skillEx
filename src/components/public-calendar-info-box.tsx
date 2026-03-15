@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 
-export default function CalendarInfo() {
+export default function PublicCalendarInfo() {
   const [showInfo, setShowInfo] = useState(false)
 
   return (
@@ -11,47 +11,46 @@ export default function CalendarInfo() {
       <button
         onClick={() => setShowInfo(!showInfo)}
         className="flex items-center gap-2 text-sm text-gray-700 hover:text-gray-900 transition"
-      >  How it works
+      >
+        How it works
         <span className="w-6 h-6 flex items-center justify-center rounded-full bg-white/30 text-gray-800 font-bold">
           ?
         </span>
-
       </button>
 
       {showInfo && (
         <div className="mt-3 p-5 rounded-xl bg-white/20 backdrop-blur text-sm text-gray-800 shadow-md max-w-md w-full">
 
-          <p className=" mb-5 text-center underline text-gray-700">
-            How this calendar works
+          <p className="font-semibold mb-4 text-center">
+            How to book a session
           </p>
 
           <div className="grid grid-cols-2 gap-6">
 
             {/* Erklärung */}
-            <div className="space-y-2 leading-relaxed text-gray-700">
-              <ul className="list-disc pl-5 space-y-2">
+            <ul className="list-disc pl-5 space-y-2">
 
-                <li>
-                  Click on a day to open its time slots.
-                </li>
+              <li>
+                Click on a marked day to see available time slots.
+              </li>
 
-                <li>
-                  Select a time slot to add or remove your availability.
-                </li>
+              <li>
+                Select a time slot create a session request.
+              </li>
 
-                <li>
-                  Other users can choose from your available times to send you a session request.
-                </li>
+              <li>
+                The session host will receive your request and can confirm the booking.
+              </li>
 
-                <li>
-                  Past days and times cannot be selected.
-                </li>
+              <li>
+                Past days and booked slots cannot be selected.
+              </li>
 
-              </ul>
-            </div>
+            </ul>
 
             {/* Legende */}
             <div className="space-y-3">
+
 
               <div className="flex items-center gap-2">
                 <div className="w-8 h-2 bg-brand-mint rounded"></div>
@@ -65,7 +64,7 @@ export default function CalendarInfo() {
 
               <div className="flex items-center gap-2">
                 <div className="w-4 h-4 bg-gray-500/50 rounded"></div>
-                <span>Past time</span>
+                <span>Past or unavailable</span>
               </div>
 
             </div>
@@ -74,6 +73,7 @@ export default function CalendarInfo() {
 
         </div>
       )}
+
     </div>
   )
 }
