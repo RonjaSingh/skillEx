@@ -141,6 +141,14 @@ export default function BookingCalendar() {
             {emptyDays.map((_, i) => <div key={i} />)}
 
             {daysArray.map(day => {
+
+
+              const today = new Date()
+              today.setHours(0, 0, 0, 0)
+
+              const dayDate = new Date(day)
+              const isPastDay = dayDate < today
+
               const daySlots = slots.filter(s => s.start_time.startsWith(day))
 
 
@@ -150,10 +158,16 @@ export default function BookingCalendar() {
 
                 <div
                   key={day}
-                  className="bg-white/20 backdrop-blur rounded-2xl min-h-[60px] p-2 cursor-pointer shadow-md hover:bg-white/30 flex flex-col items-center transition"
+                  className={`bg-white/20 backdrop-blur rounded-2xl min-h-[60px] p-2 shadow-md flex flex-col items-center transition
+  ${isPastDay
+                      ? ' text-gray-500 cursor-not-allowed'
+                      : 'cursor-pointer hover:bg-white/30'}
+`}
                   onClick={() => {
-                    setSelectedDay(day)
-                    setViewMode('day')
+                    if (!isPastDay) {
+                      setSelectedDay(day)
+                      setViewMode('day')
+                    }
                   }}
                 >
 
@@ -161,9 +175,13 @@ export default function BookingCalendar() {
                     {new Date(day).getDate()}
                   </div>
 
-                  {freeSlots.length > 0 && (
-                    <div className="w-12 h-3 bg-brand-mint rounded-full mt-1"></div>
-                  )}
+                 {freeSlots.length > 0 && (
+  <div
+    className={`w-12 h-2 rounded-full mt-1
+      ${isPastDay ? 'bg-gray-400/60' : 'bg-brand-mint'}
+    `}
+  ></div>
+)}
 
                 </div>
 
@@ -189,6 +207,15 @@ export default function BookingCalendar() {
 
           <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2 ">
             {generateTimes().map(time => {
+
+
+              const slotDate = new Date(`${selectedDay}T${time}:00`)
+              const now = new Date()
+
+              const isPast =
+                slotDate.getTime() < now.getTime()
+
+
               const slotString = `${selectedDay}T${time}:00`
               const slot = slots.find(s => s.start_time.startsWith(`${selectedDay}T${time}`))
               const isFree = !!slot
@@ -196,12 +223,14 @@ export default function BookingCalendar() {
               return (
                 <div
                   key={time}
-                  className={`text-center text-sm sm:text-base p-2 sm:p-3 min-h-[50px] rounded-2xl cursor-pointer transition flex items-center justify-center
-                    ${isFree
-                      ? 'bg-brand-teal text-white hover:bg-brand-mint/70'
-                      : 'bg-white/20 text-gray-600'}
+                  className={`text-center text-sm sm:text-base p-2 sm:p-3 min-h-[50px] rounded-2xl transition flex items-center justify-center
+                   ${isPast
+                      ? 'bg-gray-500/50 text-gray-700 cursor-not-allowed'
+                      : isFree
+                        ? 'bg-brand-teal text-white hover:bg-brand-mint/70 cursor-pointer'
+                        : 'bg-white/20 text-gray-600 cursor-pointer'}
                   `}
-                  onClick={() => toggleSlot(time)}
+                  onClick={() => { if (!isPast) toggleSlot(time) }}
                 >
                   {time}
                 </div>
