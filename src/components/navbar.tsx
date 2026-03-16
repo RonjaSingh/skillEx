@@ -31,7 +31,7 @@ export function Navbar() {
       <div>
         <button
           onClick={() => setOpen(!open)}
-          className="w-44  md:w-52 lg:w-64 p-3 mt-4 mb-0 rounded-xl bg-white/25 backdrop-blur-md text-gray-800 font-semibold text-lg shadow-lg hover:bg-white/35 hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0 active:shadow-md transition-all duration-200 ease-out"
+          className="w-54  md:w-64 lg:w-64 p-3 mt-4 mb-0 rounded-xl bg-white/25 backdrop-blur-md text-gray-800 font-semibold text-lg shadow-lg hover:bg-white/35 hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0 active:shadow-md transition-all duration-200 ease-out"
         >
           Menu
         </button>
