@@ -325,18 +325,21 @@ export type Database = {
       user: {
         Row: {
           email: string
+          first_login: boolean | null
           id: string
           name: string
           profile_image: string | null
         }
         Insert: {
           email: string
+          first_login?: boolean | null
           id: string
           name?: string
           profile_image?: string | null
         }
         Update: {
           email?: string
+          first_login?: boolean | null
           id?: string
           name?: string
           profile_image?: string | null
@@ -411,7 +414,22 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      user_rating_summary: {
+        Row: {
+          average_rating: number | null
+          rating_count: number | null
+          user_id: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "rating_reviewed_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
       [_ in never]: never
