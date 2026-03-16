@@ -23,12 +23,22 @@ export default function BoardPopup({ type, onClose, onSubmit }: Props) {
         : "bg-brand-blue/60 border border-brand-blue/40 hover:bg-brand-blue/40";
 
     return (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-            <div className="w-full max-w-xl bg-white border rounded-lg p-6 space-y-4">
+        <div className="fixed inset-0 backdrop-blur-xl flex items-center justify-center z-50">
+            <div className="w-full 
+    max-w-2xl
+    min-h-[35vh]
+    bg-white/60
+    backdrop-blur-xl
+    shadow-2xl
+    rounded-3xl
+    overflow-auto
+    px-8
+    py-8
+    text-gray-800">
 
                 {/* Popup Titel */}
                 <h3
-                    className={`text-xl font-bold text-center text-gray-800 backdrop-blur-md rounded-2xl p-2
+                    className={`mb-2 text-xl font-bold text-center text-gray-800 backdrop-blur-md rounded-2xl p-2
                      ${isRequest
                             ? "bg-brand-magenta/25 border border-brand-magenta/40"
                             : "bg-brand-teal/25 border border-brand-teal/40"}`}>
@@ -39,11 +49,11 @@ export default function BoardPopup({ type, onClose, onSubmit }: Props) {
                 {  /* Titel */}
                 <input
                     type="text"
-                    className={`w-full border border-brand-mint/25 rounded p-3
+                    className={`w-full rounded p-3 border
                      ${isRequest
-                            ? "bg-brand-magenta/20"
-                            : "bg-brand-teal/20"}
-                            focus:outline-none focus:ring-1 focus:ring-brand-mint/30 focus:border-brand-mint`}
+                          ? "bg-brand-magenta/20 border-brand-magenta/10 focus:ring-1 focus:ring-brand-magenta/20 focus:border-brand-magenta"
+      : "bg-brand-teal/20 border-brand-teal/10 focus:ring-1 focus:ring-brand-teal/20 focus:border-brand-teal"}
+                               focus:outline-none transition-all duration-200`}
                     placeholder="Title..."
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
@@ -51,17 +61,17 @@ export default function BoardPopup({ type, onClose, onSubmit }: Props) {
 
 
                 {/* Textarea */}
-                <textarea
-                    className={`w-full h-[150px] resize-none border border-brand-mint/25 rounded p-3
-                  ${isRequest
-                            ? "bg-brand-magenta/20"
-                            : "bg-brand-teal/20"}
-                 focus:outline-none focus:ring-1 focus:ring-brand-mint/30 focus:border-brand-mint`}
-                    placeholder="Description..."
-                    value={text}
-                    onChange={(e) => setText(e.target.value)}
-                />
-
+               <textarea
+  className={`w-full h-[150px] resize-none rounded p-3 mt-1 border
+    ${isRequest
+      ? "bg-brand-magenta/20 border-brand-magenta/10 focus:ring-1 focus:ring-brand-magenta/20 focus:border-brand-magenta"
+      : "bg-brand-teal/20 border-brand-teal/40 focus:ring-1 focus:ring-brand-teal/30 focus:border-brand-teal"
+    }
+    focus:outline-none transition-all duration-200`}
+  placeholder="Description..."
+  value={text}
+  onChange={(e) => setText(e.target.value)}
+/>
                 {/* Buttons */}
                 <div className="flex justify-center gap-4 m-3">
                     <button
