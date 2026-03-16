@@ -5,6 +5,8 @@ import { Post } from '@/hooks/use-board';
 import { useState } from 'react';
 import { useEffect } from "react"
 
+import Link from 'next/link';
+
 import PublicProfileCalendar from './public-profile-calendar';
 
 
@@ -33,7 +35,7 @@ useEffect(() => {
     w-full 
  max-w-2xl
 max-h-[90vh]
-    bg-white/50
+    bg-white/70
     backdrop-blur-xl
     shadow-2xl
     rounded-3xl
@@ -48,16 +50,23 @@ max-h-[90vh]
           ✕
         </button>
 
-        <h2 className="text-md font-semibold text-black ">
-          {post.typ === 'request' ? 'Looking for …' : 'I offer …'}
-        </h2>
 
-        <h2 className="text-md font-semibold underline ">{post.title}</h2>
 
-        <p className="mt-1 text-md text-gray-800 whitespace-pre-wrap break-words">{post.description}</p>
+        <h2 className="text-lg font-bold ">{post.title}</h2>
 
-        <div className="mt-4 text-gray-500 text-xs">
-          Createt from <strong>{post.user?.name || "Unknown User"}</strong> am{' '}
+        <p className="mt-1 text-md font-semibold text-gray-800 whitespace-pre-wrap break-words">{post.description}</p>
+
+        <div className="mt-4 text-gray-500 text-sm">
+          Createt from {post.user?.id ? (
+  <Link
+    href={`/protected/profile/${post.user.id}`}
+    className="font-semibold text-brand-teal hover:underline hover:text-brand-mint transition"
+  >
+    {post.user.name}
+  </Link>
+) : (
+  <strong>Unknown User</strong>
+)} at{' '}
           {new Date(post.created_at).toLocaleString()}
         </div>
   {!calendarUserId && (

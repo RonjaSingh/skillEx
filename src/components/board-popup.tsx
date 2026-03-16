@@ -27,7 +27,7 @@ export default function BoardPopup({ type, onClose, onSubmit }: Props) {
             <div className="w-full 
     max-w-2xl
     min-h-[35vh]
-    bg-white/60
+    bg-white/70
     backdrop-blur-xl
     shadow-2xl
     rounded-3xl
