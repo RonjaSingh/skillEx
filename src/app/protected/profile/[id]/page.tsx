@@ -63,7 +63,7 @@ export default async function ProfilePage({
     user.user_skills?.map((s) => s.skills.name) || [];
 
   return (
-    <div className="max-w-8xl mx-auto mt-4 px-6 space-y-12 text-gray-800 font-semibold">
+    <div className="max-w-8xl mx-auto mt-4 px-24 space-y-12 text-gray-800 font-semibold">
 
       <div className="py-2 text-xl bg-white/10 backdrop-blur shadow-sm p-8 rounded-full">
         <div className="flex items-center justify-center gap-12">

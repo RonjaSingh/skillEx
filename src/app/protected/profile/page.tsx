@@ -67,7 +67,7 @@ export default function ProfilePage() {
 
 
   return (
-    <div className="max-w-7xl mx-auto mt-0 space-y-8 text-gray-800 font-semibold">
+    <div className="max-w-8xl mx-auto mt-0 px-24 space-y-8 text-gray-800 font-semibold">
 
 
       {showWelcome && (
