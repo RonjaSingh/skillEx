@@ -20,32 +20,43 @@ export default function PostFullPopup({ post, onClose }: Props) {
 
 
   return (
-    <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-xl max-w-lg w-full p-6 relative shadow-lg max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 backdrop-blur-xl z-50 flex items-center justify-center p-4">
+      <div className="   relative 
+    w-full 
+    max-w-2xl
+    min-h-[35vh]
+    bg-white/50
+    backdrop-blur-xl
+    shadow-2xl
+    rounded-3xl
+    overflow-auto
+    px-8
+    py-8
+    text-gray-800 flex flex-col justify-between">
         <button
           onClick={onClose}
-          className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 font-bold"
+          className="absolute top-4 right-5 text-gray-500 hover:text-gray-700 text-xl font-bold"
         >
           ✕
         </button>
 
-        <h2 className="text-md font-semibold text-black">
+        <h2 className="text-md font-semibold text-black ">
           {post.typ === 'request' ? 'Looking for …' : 'I offer …'}
         </h2>
 
-        <h2 className="text-md font-semibold underline mt-2">{post.title}</h2>
+        <h2 className="text-md font-semibold underline ">{post.title}</h2>
 
-        <p className="mt-4 text-md text-gray-800 whitespace-pre-wrap break-words">{post.description}</p>
+        <p className="mt-1 text-md text-gray-800 whitespace-pre-wrap break-words">{post.description}</p>
 
         <div className="mt-4 text-gray-500 text-xs">
           Createt from <strong>{post.user?.name || "Unknown User"}</strong> am{' '}
           {new Date(post.created_at).toLocaleString()}
         </div>
 
-        <div className="flex justify-center gap-4 mt-5">
+        <div className="flex justify-center gap-8 mt-1">
           <button
             onClick={onClose}
-            className="px-2 py-2 w-48 h-10 bg-gray-500 text-white rounded-lg hover:bg-gray-700">
+            className="w-48 p-2 rounded-xl bg-brand-mint/28 backdrop-blur-md text-gray-800 font-semibold text-lg shadow-lg hover:bg-brand-mint/35 ">
             Cancel
           </button>
 
@@ -59,7 +70,7 @@ export default function PostFullPopup({ post, onClose }: Props) {
                 alert("User not available")
               }
             }}
-            className="px-2 py-2 w-48 h-10 bg-pink-500 text-white rounded-lg hover:bg-pink-700"
+            className="w-48 p-2 rounded-xl bg-brand-teal/28 backdrop-blur-md text-gray-800 font-semibold text-lg shadow-lg hover:bg-brand-teal/35 "
           >
             Book your Session
           </button>
