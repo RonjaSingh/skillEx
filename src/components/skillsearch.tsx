@@ -240,7 +240,7 @@ export default function SkillSearch() {
             className="    relative 
     w-full 
     max-w-5xl
-    bg-white/20
+    bg-white/50
     backdrop-blur-xl
     border border-white/20
     shadow-2xl
