@@ -16,20 +16,20 @@ export default function ProfilePage() {
 
   const router = useRouter()
   const {
-  name,
-  setName,
-  skills,
-  setSkills,
-  languages,
-  setLanguages,
-  profileImage,
-  setProfileImage,
-  averageRating,
-  ratingCount,
-  attendedSessionsCount,
-  saveProfile,
-  loading
-} = useProfile()
+    name,
+    setName,
+    skills,
+    setSkills,
+    languages,
+    setLanguages,
+    profileImage,
+    setProfileImage,
+    averageRating,
+    ratingCount,
+    attendedSessionsCount,
+    saveProfile,
+    loading
+  } = useProfile()
   const [isPopupOpen, setIsPopupOpen] = useState(false)
   const [showWelcome, setShowWelcome] = useState(false)
 
@@ -51,7 +51,7 @@ export default function ProfilePage() {
       if (data?.first_login) {
         setShowWelcome(true)
 
-        await (supabase as any) 
+        await (supabase as any)
           .from('user')
           .update({ first_login: false })
           .eq('id', user.id)
@@ -71,9 +71,9 @@ export default function ProfilePage() {
 
 
       {showWelcome && (
-        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">
+        <div className="fixed inset-0  backdrop-blur-sm flex items-center justify-center z-50">
 
-          <div className="relative bg-brand-mint/70 text-xl text-brand-purple text-shadow-sm px-12 pb-16 pt-16 leading-loose rounded-xl text-center shadow-md max-w-xl w-full">
+          <div className="relative w-full max-w-2xl p-14 backdrop-blur-xl bg-white/30 border border-white/10 shadow-2xl rounded-3xl text-center text-gray-800">
 
             <button
               onClick={() => setShowWelcome(false)}
@@ -81,46 +81,51 @@ export default function ProfilePage() {
             >
               ✕
             </button>
-            Hi {name}! 👋 <br />
-            Welcome to SkillExchange! <br />
-            Start connecting with others & sharing your knowledge!<br />
+            <p className='text-lg leading-loose'>  Hi {name}! 👋 <br />
+              Welcome to SkillExchange! <br />
+              Start connecting with others & sharing your knowledge!<br />
+            </p>
 
-            <div className="flex justify-center gap-10 mt-10 flex-wrap">
-              <div className="relative group">
-                <Link
-                  href="/protected"
-                  className="px-8 py-2 mb-4 text-lg rounded-xl backdrop-blur-md shadow hover:bg-brand-magenta/20 transition"
-                >
-                  Show Board
-                </Link>
 
-                <div className="absolute top-full left-1/2 -translate-x-1/2 
-  opacity-0 group-hover:opacity-100 transition-all duration-200
-  z-50
-  bg-white/20 backdrop-blur-md text-magenta text-sm 
-  px-4 py-1 rounded-xl shadow-lg w-max max-w-xs text-center">
+     <div className="flex justify-center items-center gap-10 mt-8">
 
-                  Explore the board, discover sessions and connect with others.
+  <div className="relative group flex flex-col items-center">
+    <Link
+      href="/protected"
+      className="inline-flex items-center justify-center px-8 py-3 text-lg rounded-xl backdrop-blur-md shadow hover:bg-brand-magenta/20 transition"
+    >
+      Show Board
+    </Link>
 
-                </div>
-              </div>
-              <div className="relative group">
-                <button
-                  onClick={() => setIsPopupOpen(true)}
-                  className="px-8 py-2 mb-4 text-lg rounded-xl backdrop-blur-md shadow hover:bg-brand-magenta/20 transition"
-                >
-                  Edit Profile
-                </button>
+    <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 
+      opacity-0 group-hover:opacity-100 transition-all duration-200
+      z-50 bg-white/20 backdrop-blur-md text-magenta text-sm 
+      px-4 py-1 rounded-xl shadow-lg w-max max-w-xs text-center">
+      Explore the board, discover sessions and connect with others.
+    </div>
+  </div>
 
-                <div className="absolute top-full mt-0 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-200 z-50 bg-white/20 backdrop-blur-md text-magenta text-sm px-4 py-1 rounded-xl shadow-lg w-max max-w-xs text-center">
-                  Update your profile so others can learn more about you.
+  <div className="relative group flex flex-col items-center">
+    <button
+      onClick={() => setIsPopupOpen(true)}
+      className="inline-flex items-center justify-center px-8 py-3 text-lg rounded-xl backdrop-blur-md shadow hover:bg-brand-magenta/20 transition"
+    >
+      Edit Profile
+    </button>
 
-                </div>
-              </div>
+    <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 
+      opacity-0 group-hover:opacity-100 transition-all duration-200 
+      z-50 bg-white/20 backdrop-blur-md text-magenta text-sm 
+      px-4 py-1 rounded-xl shadow-lg w-max max-w-xs text-center">
+      Update your profile so others can learn more about you.
+    </div>
+  </div>
+
+</div>
             </div>
           </div>
 
-        </div>
+  
       )}
 
       <div className="py-2 text-center bg-white/10 backdrop-blur shadow-sm p-8 rounded-full">
@@ -145,15 +150,15 @@ export default function ProfilePage() {
 
       </div>
 
-          <div className="text-center mt-2">
-  {averageRating ? (
-    <p className="text-sm text-gray-600">
-      ⭐ {averageRating.toFixed(1)} ({ratingCount} ratings)
-    </p>
-  ) : (
-    <p className="text-sm text-gray-400">No ratings yet</p>
-  )}
-  </div>
+      <div className="text-center mt-2">
+        {averageRating ? (
+          <p className="text-sm text-gray-600">
+            ⭐ {averageRating.toFixed(1)} ({ratingCount} ratings)
+          </p>
+        ) : (
+          <p className="text-sm text-gray-400">No ratings yet</p>
+        )}
+      </div>
 
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-24 relative">
