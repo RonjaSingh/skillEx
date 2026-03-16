@@ -87,12 +87,27 @@ export default function SessionsPage() {
 
  async function updateRequestStatus(
   id: string,
-  status: 'accepted' | 'rejected' | 'cancelled'
+  status: 'accepted' | 'rejected' | 'cancelled' 
 ) {
   const { data, error } = await supabase
     .from('session_request')
     .update({ status })
     .eq('session_request_id', id)
+
+  console.log('update result:', data)
+  console.error('update error:', error)
+
+  if (!error) loadData()
+}
+
+ async function updateSessionStatus(
+  id: string,
+  status: 'accepted' | 'completed' | 'cancelled'
+) {
+  const { data, error } = await supabase
+    .from('session')
+    .update({ status })
+    .eq('session_id', id)
 
   console.log('update result:', data)
   console.error('update error:', error)
@@ -209,7 +224,7 @@ async function submitRating(
         name={otherUser}
         actions={
           <button onClick={() =>
-                updateRequestStatus(s.session_request_id, 'cancelled')
+                updateSessionStatus(s.session_id, 'cancelled')
               }className="px-2 py-1 border rounded bg-red-100">
             Cancel
           </button>
