@@ -38,7 +38,7 @@ export function Header({ username, avatarUrl }: HeaderProps) {
             href="/protected/profile"
             className="group flex items-center gap-5 px-10 h-20 rounded-full  hover:bg-white/8 backdrop-blur-md  transition-all duration-300"
           >
-         <span className=" sm:flex text-xl font-medium text-gray-800 max-w-[120px] truncate items-center">
+         <span className=" sm:flex text-xl font-semibold font-medium text-gray-800 max-w-[120px] truncate items-center">
               {username}
             </span>
 
