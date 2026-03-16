@@ -77,10 +77,15 @@ export function SignUpForm({ className, ...props }: React.ComponentPropsWithoutR
 
   return (
     <div className={cn('flex flex-col gap-6', className)} {...props}>
-      <Card>
+      <Card className="
+  bg-white/30
+  backdrop-blur-xl
+  border border-white/10
+  shadow-2xl
+  rounded-2xl text-gray-800">
         <CardHeader>
           <CardTitle className="text-2xl">Sign up</CardTitle>
-          <CardDescription>Create a new account</CardDescription>
+          <CardDescription className='text-gray-800'>Create a new account</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSignUp}>
@@ -95,6 +100,16 @@ export function SignUpForm({ className, ...props }: React.ComponentPropsWithoutR
                   required
                   value={name}
                   onChange={(e) => setName(e.target.value)}
+                  className="
+  bg-white/30
+  border-white/10
+  text-gray-800
+  placeholder:text-gray-500
+  backdrop-blur-md
+  focus:ring-1
+  transition-all
+  duration-200
+"
                 />
               </div>
 
@@ -107,6 +122,14 @@ export function SignUpForm({ className, ...props }: React.ComponentPropsWithoutR
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  className='  bg-white/30
+  border-white/10
+  text-gray-800
+  placeholder:text-gray-500
+  backdrop-blur-md
+  focus:ring-1
+  transition-all
+  duration-200'
                 />
               </div>
               <div className="grid gap-2">
@@ -119,6 +142,16 @@ export function SignUpForm({ className, ...props }: React.ComponentPropsWithoutR
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  className="
+  bg-white/30
+  border-white/10
+  text-gray-800
+  placeholder:text-gray-500
+  backdrop-blur-md
+  focus:ring-1
+  transition-all
+  duration-200
+"
                 />
               </div>
               <div className="grid gap-2">
@@ -131,10 +164,34 @@ export function SignUpForm({ className, ...props }: React.ComponentPropsWithoutR
                   required
                   value={repeatPassword}
                   onChange={(e) => setRepeatPassword(e.target.value)}
+                  className='  bg-white/30
+  border-white/10
+  text-gray-800
+  placeholder:text-gray-500
+  backdrop-blur-md
+  focus:ring-1
+  transition-all
+  duration-200'
                 />
               </div>
               {error && <p className="text-sm text-red-500">{error}</p>}
-              <Button type="submit" className="w-full" disabled={isLoading}>
+              <Button type="submit" className=" w-full
+    p-3
+    rounded-xl
+    bg-white/25
+    backdrop-blur-md
+    text-gray-800
+    font-semibold
+    text-lg
+    shadow-lg
+    hover:bg-white/35
+    hover:-translate-y-0.5
+    hover:shadow-xl
+    active:translate-y-0
+    active:shadow-md
+    transition-all
+    duration-200
+    ease-out" disabled={isLoading}>
                 {isLoading ? 'Creating an account...' : 'Sign up'}
               </Button>
             </div>
