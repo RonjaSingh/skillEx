@@ -87,12 +87,27 @@ export default function SessionsPage() {
 
  async function updateRequestStatus(
   id: string,
-  status: 'accepted' | 'rejected' | 'cancelled'
+  status: 'accepted' | 'rejected' | 'cancelled' 
 ) {
   const { data, error } = await supabase
     .from('session_request')
     .update({ status })
     .eq('session_request_id', id)
+
+  console.log('update result:', data)
+  console.error('update error:', error)
+
+  if (!error) loadData()
+}
+
+ async function updateSessionStatus(
+  id: string,
+  status: 'accepted' | 'completed' | 'cancelled'
+) {
+  const { data, error } = await supabase
+    .from('session')
+    .update({ status })
+    .eq('session_id', id)
 
   console.log('update result:', data)
   console.error('update error:', error)
@@ -164,8 +179,10 @@ async function submitRating(
         {incoming.map((s) => (
           <SessionRow
             key={s.session_request_id}
-            date={new Date(s.created_at).toLocaleString()}
-            topic={s.advertisement?.title}
+            date={s.availability
+    ? `${new Date(s.availability.start_time).toLocaleString()} - ${new Date(s.availability.end_time).toLocaleTimeString()}`
+    : 'No time selected'}
+            topic={s.advertisement?.title ?? 'Direct request'}
             name={s.request_from_user?.name}
             description={s.description}
             actions={
@@ -199,13 +216,15 @@ async function submitRating(
       return (
       <SessionRow
         key={s.session_id}
-        date={new Date(s.start_time).toLocaleString()}
-        topic={s.advertisement?.title}
+        date={s.availability
+    ? `${new Date(s.availability.start_time).toLocaleString()} - ${new Date(s.availability.end_time).toLocaleTimeString()}`
+    : 'No time selected'}
+        topic={s.advertisement?.title ?? 'Direct request'}
         description={s.description}
         name={otherUser}
         actions={
           <button onClick={() =>
-                updateRequestStatus(s.session_request_id, 'cancelled')
+                updateSessionStatus(s.session_id, 'cancelled')
               }className="px-2 py-1 border rounded bg-red-100">
             Cancel
           </button>
@@ -219,8 +238,10 @@ async function submitRating(
         {outgoing.map((s) => (
     <SessionRow
       key={s.session_request_id}
-      date={new Date(s.created_at).toLocaleString()}
-      topic={s.advertisement?.title}
+      date={s.availability
+    ? `${new Date(s.availability.start_time).toLocaleString()} - ${new Date(s.availability.end_time).toLocaleTimeString()}`
+    : 'No time selected'}
+      topic={s.advertisement?.title ?? 'Direct request'}
       name={s.request_to_user?.name}
       description={s.description}
       editable={s.status === 'pending'}
@@ -282,8 +303,10 @@ async function submitRating(
           return (
             <SessionRow
               key={s.session_id}
-              date={new Date(s.start_time).toLocaleString()}
-              topic={s.advertisement?.title}
+              date={s.availability
+    ? `${new Date(s.availability.start_time).toLocaleString()} - ${new Date(s.availability.end_time).toLocaleTimeString()}`
+    : 'No time selected'}
+              topic={s.advertisement?.title ?? 'Direct request'}
               name={otherUserName}
               description={s.description}
               actions={
