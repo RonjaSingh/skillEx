@@ -10,6 +10,7 @@ export async function getIncomingRequests(userId: string) {
       status,
       created_at,
       description,
+      availability(start_time,end_time),
       advertisement(title),
       request_from_user:user!session_request_request_from_user_id_fkey(name)
     `)
@@ -44,6 +45,7 @@ export async function getOutgoingRequests(userId: string) {
       status,
       created_at,
       description,
+      availability(start_time,end_time),
       advertisement(title),
       request_to_user:user!session_request_request_to_user_id_fkey(name)
     `)

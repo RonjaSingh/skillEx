@@ -164,8 +164,10 @@ async function submitRating(
         {incoming.map((s) => (
           <SessionRow
             key={s.session_request_id}
-            date={new Date(s.created_at).toLocaleString()}
-            topic={s.advertisement?.title}
+            date={s.availability
+    ? `${new Date(s.availability.start_time).toLocaleString()} - ${new Date(s.availability.end_time).toLocaleTimeString()}`
+    : 'No time selected'}
+            topic={s.advertisement?.title ?? 'Direct request'}
             name={s.request_from_user?.name}
             description={s.description}
             actions={
@@ -199,8 +201,10 @@ async function submitRating(
       return (
       <SessionRow
         key={s.session_id}
-        date={new Date(s.start_time).toLocaleString()}
-        topic={s.advertisement?.title}
+        date={s.availability
+    ? `${new Date(s.availability.start_time).toLocaleString()} - ${new Date(s.availability.end_time).toLocaleTimeString()}`
+    : 'No time selected'}
+        topic={s.advertisement?.title ?? 'Direct request'}
         description={s.description}
         name={otherUser}
         actions={
@@ -219,8 +223,10 @@ async function submitRating(
         {outgoing.map((s) => (
     <SessionRow
       key={s.session_request_id}
-      date={new Date(s.created_at).toLocaleString()}
-      topic={s.advertisement?.title}
+      date={s.availability
+    ? `${new Date(s.availability.start_time).toLocaleString()} - ${new Date(s.availability.end_time).toLocaleTimeString()}`
+    : 'No time selected'}
+      topic={s.advertisement?.title ?? 'Direct request'}
       name={s.request_to_user?.name}
       description={s.description}
       editable={s.status === 'pending'}
@@ -282,8 +288,10 @@ async function submitRating(
           return (
             <SessionRow
               key={s.session_id}
-              date={new Date(s.start_time).toLocaleString()}
-              topic={s.advertisement?.title}
+              date={s.availability
+    ? `${new Date(s.availability.start_time).toLocaleString()} - ${new Date(s.availability.end_time).toLocaleTimeString()}`
+    : 'No time selected'}
+              topic={s.advertisement?.title ?? 'Direct request'}
               name={otherUserName}
               description={s.description}
               actions={
