@@ -11,13 +11,21 @@ export default function Page() {
     <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
       <div className="w-full max-w-sm">
         <div className="flex flex-col gap-6">
-          <Card>
+          <Card  className="
+  bg-white/30
+  border-white/10
+  text-gray-800
+  placeholder:text-gray-500
+  backdrop-blur-md
+  focus:ring-1
+  transition-all
+  duration-200">
             <CardHeader>
               <CardTitle className="text-2xl">Thank you for signing up!</CardTitle>
-              <CardDescription>Check your email to confirm</CardDescription>
+              <CardDescription className='text-gray-800 mt-2' >Check your email to confirm</CardDescription>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-gray-800">
                 You&apos;ve successfully signed up. Please check your email to confirm your account
                 before signing in.
               </p>

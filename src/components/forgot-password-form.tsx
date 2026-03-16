@@ -44,7 +44,12 @@ export function ForgotPasswordForm({ className, ...props }: React.ComponentProps
   return (
     <div className={cn('flex flex-col gap-6', className)} {...props}>
       {success ? (
-        <Card>
+        <Card className="
+  bg-white/30
+  backdrop-blur-xl
+  border border-white/10
+  shadow-2xl
+  rounded-2xl text-gray-800">
           <CardHeader>
             <CardTitle className="text-2xl">Check Your Email</CardTitle>
             <CardDescription>Password reset instructions sent</CardDescription>
@@ -57,10 +62,15 @@ export function ForgotPasswordForm({ className, ...props }: React.ComponentProps
           </CardContent>
         </Card>
       ) : (
-        <Card>
+        <Card  className="
+  bg-white/30
+  backdrop-blur-xl
+  border border-white/10
+  shadow-2xl
+  rounded-2xl text-gray-800">
           <CardHeader>
             <CardTitle className="text-2xl">Reset Your Password</CardTitle>
-            <CardDescription>
+            <CardDescription className='text-gray-800'>
               Type in your email and we&apos;ll send you a link to reset your password
             </CardDescription>
           </CardHeader>
@@ -76,6 +86,15 @@ export function ForgotPasswordForm({ className, ...props }: React.ComponentProps
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                     className="
+  bg-white/30
+  border-white/10
+  text-gray-800
+  placeholder:text-gray-500
+  backdrop-blur-md
+  focus:ring-1
+  transition-all
+  duration-200"
                   />
                 </div>
                 {error && <p className="text-sm text-red-500">{error}</p>}

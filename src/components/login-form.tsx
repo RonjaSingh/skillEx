@@ -46,10 +46,10 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
 
   return (
     <div className={cn('flex flex-col gap-6', className)} {...props}>
-      <Card>
+     <Card className="backdrop-blur-xl bg-white/30 border border-white/10 shadow-2xl rounded-3xl text-gray-800">
         <CardHeader>
           <CardTitle className="text-2xl">Login</CardTitle>
-          <CardDescription>Enter your email below to login to your account</CardDescription>
+          <CardDescription className='text-gray-800'>Enter your email below to login to your account</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleLogin}>
@@ -63,6 +63,7 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                   className="bg-white/30 border-white/10 placeholder:text-gray-500 backdrop-blur-md focus:ring-1 "
                 />
               </div>
               <div className="grid gap-2">
@@ -81,11 +82,35 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  className="
+    bg-white/30
+    border-white/10
+    placeholder:text-gray-500
+    backdrop-blur-md
+    focus:ring-1
+  "
                 />
               </div>
               {error && <p className="text-sm text-red-500">{error}</p>}
-              <Button type="submit" className="w-full" disabled={isLoading}>
+              <Button type="submit" className=" w-full
+    p-3
+    rounded-xl
+    bg-white/25
+    backdrop-blur-md
+    text-gray-800
+    font-semibold
+    text-lg
+    shadow-lg
+    hover:bg-white/35
+    hover:-translate-y-0.5
+    hover:shadow-xl
+    active:translate-y-0
+    active:shadow-md
+    transition-all
+    duration-200
+    ease-out" disabled={isLoading}>
                 {isLoading ? 'Logging in...' : 'Login'}
+                
               </Button>
             </div>
             <div className="mt-4 text-center text-sm">
