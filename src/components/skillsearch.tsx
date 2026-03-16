@@ -51,34 +51,48 @@ export default function SkillSearch() {
 
   // Suche starten
   const handleSearch = async () => {
-    if (!search.trim()) return;
+  if (!search.trim()) return;
 
-    setHasSearched(true);
+  setHasSearched(true);
+  const searchTerm = search.toLowerCase();
 
+  /* 1️⃣ Skill Matches */
+  const { data: skillMatches, error: skillError } = await supabase
+    .from("user_skills")
+    .select("user_id, skills!inner(name)")
+    .ilike("skills.name", `%${search}%`);
 
-    /* passende user ids finden */
-    const { data: matches, error: matchError } = await supabase
-      .from("user_skills")
-      .select("user_id, skills!inner(name)")
-      .ilike("skills.name", `%${search}%`);
+  if (skillError) {
+    console.error(skillError);
+    return;
+  }
 
-    if (matchError) {
-      console.error(matchError);
-      return;
-    }
+  /* 2️⃣ Username Matches */
+  const { data: nameMatches, error: nameError } = await supabase
+    .from("user")
+    .select("id")
+    .ilike("name", `%${search}%`);
 
-    if (!matches || matches.length === 0) {
-      setResults([]);
-      return;
-    }
+  if (nameError) {
+    console.error(nameError);
+    return;
+  }
 
+  /* 3️⃣ IDs kombinieren */
+  const skillUserIds = skillMatches?.map((m: any) => m.user_id) || [];
+  const nameUserIds = nameMatches?.map((u: any) => u.id) || [];
 
-    /* Alle Daten dieser User laden */
-    const userIds = [...new Set(matches.map((m: any) => m.user_id))];
+  const userIds = [...new Set([...skillUserIds, ...nameUserIds])];
 
-    const { data, error } = await supabase
-      .from("user")
-      .select(`
+  if (userIds.length === 0) {
+    setResults([]);
+    return;
+  }
+
+  /* 4️⃣ Userdaten laden */
+  const { data, error } = await supabase
+    .from("user")
+    .select(`
       id,
       name,
       user_language (
@@ -88,47 +102,42 @@ export default function SkillSearch() {
         skills ( name )
       )
     `)
-      .in("id", userIds);
+    .in("id", userIds);
 
-    if (error) {
-      console.error(error);
-      return;
-    }
+  if (error) {
+    console.error(error);
+    return;
+  }
 
+  /* 5️⃣ Für UI formatieren */
+  const formatted = data.map((user: any) => {
+    const skillList =
+      user.user_skills
+        ?.filter((s: any) => s.skills)
+        .map((s: any) => s.skills.name) || [];
 
-    /* für UI formatieren */
-    const formatted = data.map((user: any) => {
-      const skillList =
-        user.user_skills
-          ?.filter((s: any) => s.skills)
-          .map((s: any) => s.skills.name) || [];
+    const sortedSkills = skillList.sort((a: string, b: string) => {
+      const aMatch = a.toLowerCase().includes(searchTerm);
+      const bMatch = b.toLowerCase().includes(searchTerm);
 
-      // Gesuchten skill als erstes anzeigen
-      const sortedSkills = skillList.sort((a: string, b: string) => {
-        const searchLower = search.toLowerCase();
-
-        const aMatch = a.toLowerCase().includes(searchLower);
-        const bMatch = b.toLowerCase().includes(searchLower);
-
-        if (aMatch && !bMatch) return -1;
-        if (!aMatch && bMatch) return 1;
-        return 0;
-      });
-
-      return {
-        user_id: user.id,
-        name: user.name,
-        languages:
-          user.user_language
-            ?.map((l: any) => l.language.name)
-            .join(", ") || "—",
-        skills: sortedSkills
-      };
+      if (aMatch && !bMatch) return -1;
+      if (!aMatch && bMatch) return 1;
+      return 0;
     });
 
-    setResults(formatted);
-  };
+    return {
+      user_id: user.id,
+      name: user.name,
+      languages:
+        user.user_language
+          ?.map((l: any) => l.language.name)
+          .join(", ") || "—",
+      skills: sortedSkills
+    };
+  });
 
+  setResults(formatted);
+};
   //Helferfunktionen:
   // erster Buchstabe immer gross
   const capitalize = (str: string) => {
