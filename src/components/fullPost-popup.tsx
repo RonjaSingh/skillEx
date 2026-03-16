@@ -3,6 +3,7 @@
 import React from 'react'
 import { Post } from '@/hooks/use-board';
 import { useState } from 'react';
+import { useEffect } from "react"
 
 import PublicProfileCalendar from './public-profile-calendar';
 
@@ -18,18 +19,25 @@ export default function PostFullPopup({ post, onClose }: Props) {
   const [calendarUserId, setCalendarUserId] = useState<string | null>(null)
 
 
+useEffect(() => {
+  document.body.style.overflow = "hidden"
+
+  return () => {
+    document.body.style.overflow = "auto"
+  }
+}, [])
 
   return (
     <div className="fixed inset-0 backdrop-blur-xl z-50 flex items-center justify-center p-4">
       <div className="   relative 
     w-full 
-    max-w-2xl
-    min-h-[35vh]
+ max-w-2xl
+max-h-[90vh]
     bg-white/50
     backdrop-blur-xl
     shadow-2xl
     rounded-3xl
-    overflow-auto
+    overflow-y-scroll
     px-8
     py-8
     text-gray-800 flex flex-col justify-between">
@@ -52,8 +60,8 @@ export default function PostFullPopup({ post, onClose }: Props) {
           Createt from <strong>{post.user?.name || "Unknown User"}</strong> am{' '}
           {new Date(post.created_at).toLocaleString()}
         </div>
-
-        <div className="flex justify-center gap-8 mt-1">
+  {!calendarUserId && (
+        <div className="flex justify-center gap-8 mt-6">
           <button
             onClick={onClose}
             className="w-48 p-2 rounded-xl bg-brand-mint/28 backdrop-blur-md text-gray-800 font-semibold text-lg shadow-lg hover:bg-brand-mint/35 ">
@@ -75,9 +83,9 @@ export default function PostFullPopup({ post, onClose }: Props) {
             Book your Session
           </button>
         </div>
-
+  )}
         {calendarUserId && (
-          <div className="mt-6">
+          <div className="mt-2">
             <PublicProfileCalendar profileUserId={calendarUserId} 
             />
           </div>
