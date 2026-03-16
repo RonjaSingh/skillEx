@@ -73,7 +73,7 @@ export default function BoardPopup({ type, onClose, onSubmit }: Props) {
   onChange={(e) => setText(e.target.value)}
 />
                 {/* Buttons */}
-                <div className="flex justify-center gap-4 m-3">
+                <div className="flex justify-center gap-4 m-3 ">
                     <button
                         onClick={onClose}
                         className={`w-64 p-3 rounded-xl backdrop-blur-md text-gray-800 font-semibold text-lg shadow-lg
