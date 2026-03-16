@@ -87,45 +87,44 @@ export default function ProfilePage() {
             </p>
 
 
-     <div className="flex justify-center items-center gap-10 mt-8">
+            <div className="flex justify-center items-center gap-10 mt-8">
 
-  <div className="relative group flex flex-col items-center">
-    <Link
-      href="/protected"
-      className="inline-flex items-center justify-center px-8 py-3 text-lg rounded-xl backdrop-blur-md shadow hover:bg-brand-magenta/20 transition"
-    >
-      Show Board
-    </Link>
+              <div className="relative group flex flex-col items-center">
+                <Link
+                  href="/protected"
+                  className="inline-flex items-center justify-center px-8 py-3 text-lg rounded-xl backdrop-blur-md shadow hover:bg-brand-magenta/20 transition"
+                >
+                  Show Board
+                </Link>
 
-    <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 
+                <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 
       opacity-0 group-hover:opacity-100 transition-all duration-200
       z-50 bg-white/20 backdrop-blur-md text-magenta text-sm 
       px-4 py-1 rounded-xl shadow-lg w-max max-w-xs text-center">
-      Explore the board, discover sessions and connect with others.
-    </div>
-  </div>
+                  Explore the board, discover sessions and connect with others.
+                </div>
+              </div>
 
-  <div className="relative group flex flex-col items-center">
-    <button
-      onClick={() => setIsPopupOpen(true)}
-      className="inline-flex items-center justify-center px-8 py-3 text-lg rounded-xl backdrop-blur-md shadow hover:bg-brand-magenta/20 transition"
-    >
-      Edit Profile
-    </button>
+              <div className="relative group flex flex-col items-center">
+                <button
+                  onClick={() => setIsPopupOpen(true)}
+                  className="inline-flex items-center justify-center px-8 py-3 text-lg rounded-xl backdrop-blur-md shadow hover:bg-brand-magenta/20 transition"
+                >
+                  Edit Profile
+                </button>
 
-    <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 
+                <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 
       opacity-0 group-hover:opacity-100 transition-all duration-200 
       z-50 bg-white/20 backdrop-blur-md text-magenta text-sm 
       px-4 py-1 rounded-xl shadow-lg w-max max-w-xs text-center">
-      Update your profile so others can learn more about you.
-    </div>
-  </div>
+                  Update your profile so others can learn more about you.
+                </div>
+              </div>
 
-</div>
             </div>
           </div>
+        </div>
 
-  
       )}
 
       <div className="py-2 text-center bg-white/10 backdrop-blur shadow-sm p-8 rounded-full">
@@ -145,20 +144,21 @@ export default function ProfilePage() {
             </div>
           )}
 
+
+          <div className="text-center mt-2">
+            {averageRating ? (
+              <p className="text-sm text-gray-600">
+                ⭐ {averageRating.toFixed(1)} ({ratingCount} ratings)
+              </p>
+            ) : (
+              <p className="text-sm text-gray-800 ">(No ratings yet)</p>
+            )}
+          </div>
         </div>
 
 
       </div>
 
-      <div className="text-center mt-2">
-        {averageRating ? (
-          <p className="text-sm text-gray-600">
-            ⭐ {averageRating.toFixed(1)} ({ratingCount} ratings)
-          </p>
-        ) : (
-          <p className="text-sm text-gray-400">No ratings yet</p>
-        )}
-      </div>
 
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-24 relative">
@@ -168,24 +168,24 @@ export default function ProfilePage() {
         <div className="space-y-10 flex flex-col items-center">
           <button
             onClick={() => setIsPopupOpen(true)}
-            className="w-full max-w-xs py-2 mt-2 text-center text-lg rounded-xl bg-white/10 backdrop-blur-sm shadow-sm hover:bg-white/20 transition"
+            className="w-full max-w-xs py-2 mt-0 mb-5 text-center text-lg rounded-xl bg-white/10 backdrop-blur-sm shadow-sm hover:bg-white/20 transition"
           >
             Edit Profile
           </button>
 
-          <div className="bg-white/8 backdrop-blur rounded-2xl shadow-md p-6 w-full">
+          <div className="bg-white/8 backdrop-blur rounded-2xl shadow-md p-4  mb-3 w-full">
             <h2 className="text-lg font-semibold mb-4 text-center py-2 text-center  backdrop-blur shadow-sm p-8 rounded-full">My Skills</h2>
 
             <p className="text-lg text-gray-700 text-center mb-4">{skills.length > 0 ? skills.join(', ') : "-"}</p>
           </div>
 
-          <div className="bg-white/8 backdrop-blur rounded-2xl shadow-md p-6 w-full">
+          <div className="bg-white/8 backdrop-blur rounded-2xl shadow-md p-4 mb-3 w-full">
             <h2 className="text-lg font-semibold mb-4 text-center py-2 text-center  backdrop-blur shadow-sm p-8 rounded-full ">Languages I Speak</h2>
 
             <p className="text-lg mb-4 text-gray-700 text-center">{languages.length > 0 ? languages.join(', ') : "-"}</p>
           </div>
 
-          <div className="bg-white/8 backdrop-blur rounded-2xl shadow-md p-6 mb-4 w-full">
+          <div className="bg-white/8 backdrop-blur rounded-2xl shadow-md p-4 mb-4 w-full">
             <h2 className="text-lg font-semibold mb-4 text-center py-2 text-center backdrop-blur shadow-sm p-8 rounded-full">
               Attended Sessions
             </h2>

@@ -5,12 +5,16 @@ type Props = {
 
 export default function SessionBox({ title, children }: Props) {
   return (
-    <div className="max-w-7xl mx-auto m-0 p-4 space-y-10">
-      <h2 className="text-xl text-center font-semibold text-gray-800 bg-white/25 backdrop-blur-md rounded-2xl p-2">{title}</h2>
+    <section className="bg-white/15 backdrop-blur rounded-2xl shadow-md p-6">
 
-      <div className="overflow-y-auto flex-1 space-y-2">
+      <h2 className="text-lg text-center font-semibold text-gray-800 mb-6 backdrop-blur-md rounded-2xl p-2">
+        {title}
+      </h2>
+
+      <div className="space-y-4">
         {children}
       </div>
-    </div>
+
+    </section>
   )
 }

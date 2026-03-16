@@ -188,14 +188,14 @@ function Anzeige({
       <div className="flex gap-2">
         <button
           onClick={onEdit}
-          className="w-36 p-2 rounded-xl bg-brand-mint/10 backdrop-blur-md text-gray-700 font-semibold text-md shadow-lg border border-brand-mint/40 hover:bg-brand-mint/60 hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0 active:shadow-md transition-all duration-200 ease-out"
+          className="w-36 p-2 rounded-xl bg-brand-mint/10 backdrop-blur-md text-gray-700 font-semibold text-md shadow-lg border border-brand-mint/10 hover:bg-brand-mint/60 hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0 active:shadow-md transition-all duration-200 ease-out"
         >
           Edit
         </button>
 
         <button
           onClick={() => onDelete(ad)}
-          className="w-36 p-2 rounded-xl bg-brand-pink/10 backdrop-blur-md text-gray-700 font-semibold text-md shadow-lg border border-brand-pink/40 hover:bg-brand-pink/60 hover:border-brand-pink hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0 active:shadow-md transition-all duration-200 ease-out"
+          className="w-36 p-2 rounded-xl bg-brand-pink/10 backdrop-blur-md text-gray-700 font-semibold text-md shadow-lg border border-brand-pink/10 hover:bg-brand-pink/60 hover:border-brand-pink hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0 active:shadow-md transition-all duration-200 ease-out"
         >
           Delete
         </button>

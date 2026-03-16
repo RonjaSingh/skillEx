@@ -112,7 +112,7 @@ export default function BookingCalendar() {
   const emptyDays = Array.from({ length: startDay })
 
   return (
-    <div className="w-full max-w-4xl mx-auto p-4 text-gray-800 shadow-lg rounded-xl">
+    <div className="w-full max-w-4xl mx-auto p-4 mt-0 text-gray-800 shadow-lg rounded-xl">
       <h2 className="bg-white/8 text-lg font-semibold mb-4 text-center py-2 text-center backdrop-blur shadow-sm p-8 rounded-full ">My Availability</h2>
 
       {/* Month view */}
@@ -160,7 +160,7 @@ export default function BookingCalendar() {
 
                 <div
                   key={day}
-                  className={`bg-white/20 backdrop-blur rounded-2xl min-h-[60px] p-2 shadow-md flex flex-col items-center transition
+                  className={`bg-white/20 backdrop-blur rounded-2xl min-h-[60px] p-2  shadow-md flex flex-col items-center transition
                  ${isPastDay
                       ? ' text-gray-500 cursor-not-allowed'
                       : 'cursor-pointer hover:bg-white/30'}

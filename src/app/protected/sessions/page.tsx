@@ -172,13 +172,27 @@ async function submitRating(
               <>
                 <button
                   onClick={() => updateRequestStatus(s.session_request_id, 'accepted')}
-                  className="px-2 py-1 border rounded bg-green-100"
+                  className="px-3 py-1 rounded-xl 
+           bg-brand-mint/30 
+           backdrop-blur-md 
+           text-gray-800 
+           font-semibold 
+           shadow-md
+           hover:bg-brand-mint/50 
+           transition"
                 >
                   Accept
                 </button>
                 <button
                   onClick={() => updateRequestStatus(s.session_request_id, 'rejected')}
-                  className="px-2 py-1 border rounded bg-red-100"
+                  className="px-3 py-1 rounded-xl 
+           bg-brand-magenta/30 
+           backdrop-blur-md 
+           text-gray-800 
+           font-semibold 
+           shadow-md
+           hover:bg-brand-magenta/50 
+           transition"
                 >
                   Reject
                 </button>
@@ -206,7 +220,14 @@ async function submitRating(
         actions={
           <button onClick={() =>
                 updateRequestStatus(s.session_request_id, 'cancelled')
-              }className="px-2 py-1 border rounded bg-red-100">
+              }className="px-3 py-1 rounded-xl 
+           bg-brand-magenta/30 
+           backdrop-blur-md 
+           text-gray-800 
+           font-semibold 
+           shadow-md
+           hover:bg-brand-magenta/50 
+           transition">
             Cancel
           </button>
         }

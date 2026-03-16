@@ -6,7 +6,7 @@ export default function CalendarInfo() {
   const [showInfo, setShowInfo] = useState(false)
 
   return (
-    <div className="mt-6 flex flex-col items-center">
+    <div className="mt-3 flex flex-col items-center">
 
       <button
         onClick={() => setShowInfo(!showInfo)}
