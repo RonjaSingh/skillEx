@@ -27,7 +27,7 @@ export default function BoardPopup({ type, onClose, onSubmit }: Props) {
             <div className="w-full 
     max-w-2xl
     min-h-[35vh]
-    bg-white/60
+    bg-white/70
     backdrop-blur-xl
     shadow-2xl
     rounded-3xl
@@ -45,14 +45,14 @@ export default function BoardPopup({ type, onClose, onSubmit }: Props) {
                     {type === "request" ? "Create Request" : "Create Offer"}
                 </h3>
 
-            
+
                 {  /* Titel */}
                 <input
                     type="text"
                     className={`w-full rounded p-3 border
                      ${isRequest
-                          ? "bg-brand-magenta/20 border-brand-magenta/10 focus:ring-1 focus:ring-brand-magenta/20 focus:border-brand-magenta"
-      : "bg-brand-teal/20 border-brand-teal/10 focus:ring-1 focus:ring-brand-teal/20 focus:border-brand-teal"}
+                            ? "bg-brand-magenta/20 border-brand-magenta/10 focus:ring-1 focus:ring-brand-magenta/20 focus:border-brand-magenta"
+                            : "bg-brand-teal/20 border-brand-teal/10 focus:ring-1 focus:ring-brand-teal/20 focus:border-brand-teal"}
                                focus:outline-none transition-all duration-200`}
                     placeholder="Title..."
                     value={title}
@@ -61,19 +61,19 @@ export default function BoardPopup({ type, onClose, onSubmit }: Props) {
 
 
                 {/* Textarea */}
-               <textarea
-  className={`w-full h-[150px] resize-none rounded p-3 mt-1 border
+                <textarea
+                    className={`w-full h-[150px] resize-none rounded p-3 mt-1 border
     ${isRequest
-      ? "bg-brand-magenta/20 border-brand-magenta/10 focus:ring-1 focus:ring-brand-magenta/20 focus:border-brand-magenta"
-      : "bg-brand-teal/20 border-brand-teal/40 focus:ring-1 focus:ring-brand-teal/30 focus:border-brand-teal"
-    }
+                            ? "bg-brand-magenta/20 border-brand-magenta/10 focus:ring-1 focus:ring-brand-magenta/20 focus:border-brand-magenta"
+                            : "bg-brand-teal/20 border-brand-teal/40 focus:ring-1 focus:ring-brand-teal/30 focus:border-brand-teal"
+                        }
     focus:outline-none transition-all duration-200`}
-  placeholder="Description..."
-  value={text}
-  onChange={(e) => setText(e.target.value)}
-/>
+                    placeholder="Description..."
+                    value={text}
+                    onChange={(e) => setText(e.target.value)}
+                />
                 {/* Buttons */}
-                <div className="flex justify-center gap-4 m-3">
+                <div className="flex justify-center gap-4 m-3 ">
                     <button
                         onClick={onClose}
                         className={`w-64 p-3 rounded-xl backdrop-blur-md text-gray-800 font-semibold text-lg shadow-lg

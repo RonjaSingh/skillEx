@@ -33,16 +33,16 @@ export default function SessionRow({
   }
   
    return (
-    <div className="border rounded p-2 text-sm space-y-2">
+    <div className=" shadow-sm rounded p-2 text-sm space-y-2">
 
       {/* ROW */}
-      <div className="grid grid-cols-5 items-center">
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-2 items-center">
         <div>{date}</div>
         <div>{topic}</div>
         <div>{name}</div>
 
         <div
-          className="text-gray-600 truncate cursor-pointer"
+          className="text-gray-800 truncate cursor-pointer"
           onClick={() => setExpanded(!expanded)}
         >
           {description || '-'}
@@ -66,10 +66,10 @@ export default function SessionRow({
 
       
       {expanded && (
-        <div className="bg-gray-50 border rounded p-3 space-y-2">
+        <div className="  rounded p-3 space-y-2">
 
           {!editing ? (
-            <p className="text-gray-700 whitespace-pre-wrap">
+            <p className="text-gray-800 whitespace-pre-wrap">
               {description || 'No description'}
             </p>
           ) : (
