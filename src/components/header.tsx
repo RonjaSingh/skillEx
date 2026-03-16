@@ -34,7 +34,7 @@ export function Header({ username, avatarUrl }: HeaderProps) {
         </div>
 
         {/* Right: Notifications + User */}
-        <div className="row-start-2 lg:row-start-auto flex justify-center lg:justify-end items-center gap-6">
+        <div className="row-start-2 lg:row-start-auto flex justify-center lg:justify-end items-center gap-3">
 
           {/* Notification */}
           <NotificationBell />
