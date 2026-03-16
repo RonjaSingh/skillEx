@@ -26,6 +26,7 @@ export default function ProfilePage() {
   setProfileImage,
   averageRating,
   ratingCount,
+  attendedSessionsCount,
   saveProfile,
   loading
 } = useProfile()
@@ -187,7 +188,7 @@ export default function ProfilePage() {
             <div className="flex items-center justify-center gap-12 ">
 
               <p className="text-lg text-gray-700 mb-4">
-                No sessions yet
+                {attendedSessionsCount > 0 ? attendedSessionsCount : "No sessions yet"}
               </p>
 
               <button
