@@ -1,84 +1,282 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function HomePage() {
-  const [posts, setPosts] = useState<{ text: string; type: "gesuch" | "angebot" }[]>([]);
-  const [newPost, setNewPost] = useState("");
-  const [filter, setFilter] = useState<"gesuch" | "angebot" | "all">("all");
 
-  const addPost = (type: "gesuch" | "angebot") => {
-    if (!newPost.trim()) return;
-    setPosts([{ text: newPost, type }, ...posts]);
-    setNewPost("");
-    setFilter(type);
-  };
+return (
 
-  const filteredPosts = posts.filter(p => filter === "all" ? true : p.type === filter);
+<main className="container">
 
-  return (
-    <main className="container">
+<style jsx>{`
 
-      {/* HEADER */}
-      <header className="header">
-        <div className="left-header">
-          <Image src="/skillexchange2.0.png" alt="Logo" width={60} height={60} />
-          <h1>SkillExchange</h1>
-        </div>
-        <div className="right-header">
-          <div className="username">Name</div>
-          <div className="avatar">🎓</div>
-        </div>
-      </header>
-
-      {/* MENÜ */}
-      <section className="menu">
-        <h2>Menü</h2>
-      </section>
-
-      {/* SUCHLEISTE */}
-      <div className="search-area">
-        <input type="text" placeholder="Suchleiste: Skill Suche…" className="search-input" />
-        <button className="browse-btn">Browse Users…</button>
-      </div>
-
-      {/* SCHWARZES BRETT */}
-      <section className="board">
-        <h2>Schwarzes Brett</h2>
-
-        <div className="new-post">
-          <textarea
-            placeholder="Schreibe hier etwas..."
-            value={newPost}
-            onChange={(e) => setNewPost(e.target.value)}
-          />
-          <div className="post-buttons">
-            <button onClick={() => addPost("gesuch")}>Gesuch anheften</button>
-            <button onClick={() => addPost("angebot")}>Angebot anheften</button>
-          </div>
-        </div>
-
-        <div className="filter-buttons">
-          <button onClick={() => setFilter("all")}>Alle</button>
-          <button onClick={() => setFilter("gesuch")}>Gesuch</button>
-          <button onClick={() => setFilter("angebot")}>Angebot</button>
-        </div>
-
-        <div className="posts">
-          {filteredPosts.length === 0 && <div className="empty">Noch keine Beiträge.</div>}
-          {filteredPosts.map((p, i) => (
-            <div key={i} className="post">{p.text}</div>
-          ))}
-        </div>
-      </section>
-
-    
-    
-      <footer className="impressum">
-        <button>Impressum</button>
-      </footer>
-
-    </main>
-  );
+:global(html, body){
+  margin:0;
+  padding:0;
+  background: linear-gradient(180deg, #7f00ff, #e91ef0, #6dd5fa);
 }
+
+.container{
+  min-height:100vh;
+  width:100%;
+  max-width:1200px;     /* sorgt dafür, dass Inhalt nicht zu breit wird */
+  margin:0 auto;        /* 👉 DAS zentriert alles wieder */
+  font-family:Arial, sans-serif;
+  color:white;
+  background: transparent;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+/* Header max-width entfernen oder anpassen */
+.header{
+  width:100%;
+  max-width:1200px;   /* gleiche Breite wie Container */
+  margin:0 auto;      /* mittig */
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:15px;
+font-size:30px;
+font-weight:bold;
+}
+
+.logo img{
+filter:drop-shadow(0 0 12px rgba(221, 42, 221, 0.4));
+}
+
+.auth-buttons{
+display:flex;
+gap:10px;
+}
+
+.login{
+background:transparent;
+border:1px solid #db32db;
+color:white;
+padding:8px 16px;
+border-radius:8px;
+cursor:pointer;
+}
+
+.login:hover{
+background: #d43be9;
+}
+
+.register{
+background: #b822c5d8;
+border:none;
+padding:8px 16px;
+border-radius:8px;
+color:white;
+cursor:pointer;
+}
+
+.register:hover{
+background: #22e6ecd3;
+}
+
+/* HERO */
+
+.hero{
+text-align:center;
+max-width:800px;
+margin-bottom:80px;
+}
+
+.hero h1{
+font-size:48px;
+margin-bottom:20px;
+}
+
+.hero p{
+font-size:20px;
+color: #e2e8f0;
+}
+
+/* FEATURES */
+
+.features{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:25px;
+max-width:1000px;
+width:100%;
+margin-bottom:80px;
+}
+
+.card{
+background: #b00db68c;
+padding:25px;
+border-radius:16px;
+transition:0.3s;
+text-align:center;
+}
+
+.card:hover{
+transform:translateY(-6px);
+background: #3cd9ee9d;
+}
+
+.card h3{
+margin-bottom:10px;
+}
+
+.card p{
+color: #e2e8f0;
+}
+
+/* CTA */
+
+.cta{
+text-align:center;
+margin-bottom:60px;
+}
+
+.cta h2{
+font-size:30px;
+margin-bottom:20px;
+}
+
+.cta button{
+background: #29dfec;
+border:none;
+padding:16px 32px;
+font-size:18px;
+border-radius:12px;
+cursor:pointer;
+color:white;
+}
+
+.cta button:hover{
+background: #ee12e3 ;
+transform:scale(1.05);
+}
+
+/* FOOTER */
+
+footer{
+opacity:0.6;
+margin-top:30px;
+}
+
+`}</style>
+
+
+{/* HEADER */}
+
+<header className="header">
+
+<div className="logo">
+<Image
+src="/skillexchange2.0.png"
+alt="SkillExchange Logo"
+width={240}
+height={40}
+/>
+SkillExchange
+</div>
+
+<div className="auth-buttons">
+
+<Link href="/login">
+<button className="login">
+Login
+</button>
+</Link>
+
+<Link href="/sign-up">
+<button className="register">
+Registrieren
+</button>
+</Link>
+
+</div>
+
+</header>
+
+
+{/* HERO */}
+
+<section className="hero">
+
+<h1>Teile dein Wissen. Lerne neue Skills.</h1>
+
+<p>
+SkillExchange verbindet Menschen die voneinander lernen möchten.
+Finde neue Fähigkeiten, teile dein Wissen und werde Teil einer
+Community die gemeinsam wächst.
+</p>
+
+</section>
+
+
+{/* FEATURES */}
+
+<section className="features">
+
+<div className="card">
+<h3>🤝 Skills tauschen</h3>
+<p>
+Finde Menschen die dir neue Fähigkeiten beibringen oder teile dein Wissen.
+</p>
+</div>
+
+<div className="card">
+<h3>📅 Termine planen</h3>
+<p>
+Organisiere Sessions im Kalender und sehe sofort freie Zeiten.
+</p>
+</div>
+
+<div className="card">
+<h3>🌍 Community</h3>
+<p>
+Verbinde dich mit Menschen und lerne gemeinsam neue Dinge.
+</p>
+</div>
+
+<div className="card">
+<h3>🚀 Neues entdecken</h3>
+<p>
+Entdecke Skills die du schon immer lernen wolltest.
+</p>
+</div>
+
+</section>
+
+
+{/* CALL TO ACTION */}
+
+<section className="cta">
+
+<h2>Starte jetzt mit SkillExchange</h2>
+
+<Link href="/page.tsx">
+<button>
+Jetzt kostenlos registrieren
+</button>
+</Link>
+
+</section>
+
+
+<footer>
+
+<p>© 2026 SkillExchange</p>
+
+</footer>
+
+</main>
+
+)
+
+} 
