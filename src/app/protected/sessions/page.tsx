@@ -199,7 +199,12 @@ export default function SessionsPage() {
                     Accept
                   </button>
                   <button
-                    onClick={() => updateRequestStatus(s.session_request_id, 'rejected')}
+                    onClick={() => { const confirmed = window.confirm("Are you sure you want to reject the request?");
+                      if (confirmed) {
+                        updateRequestStatus(s.session_request_id, 'rejected')
+                      }
+                    }}
+                      
                     className="px-2 py-2 min-w-[100px] shadow-md rounded-xl bg-red-100 hover:bg-red-100"
                   >
                     Reject
@@ -258,7 +263,10 @@ export default function SessionsPage() {
                   </a>
 
                   <button
-                    onClick={() => updateSessionStatus(s.session_id, 'cancelled')}
+                    onClick={() => { const confirmed = window.confirm("Are you sure you want to reject the request?");
+                      if (confirmed) {
+                        updateSessionStatus(s.session_id, 'cancelled')}
+                      }}
                     className="px-2 py-2 min-w-[100px] shadow-md rounded-xl bg-red-100 hover:bg-red-100"
                   >
                     Cancel
@@ -289,8 +297,9 @@ export default function SessionsPage() {
 
                 {s.status === 'pending' && (
                   <button
-                    onClick={() =>
-                      updateRequestStatus(s.session_request_id, 'cancelled')
+                    onClick={() => { const confirmed = window.confirm("Are you sure you want to reject the request?");
+                      if (confirmed) {
+                      updateRequestStatus(s.session_request_id, 'cancelled')}}
                     }
                     className="px-2 py-2 min-w-[100px] shadow-md rounded-xl bg-red-100 hover:bg-red-100"
                   >
