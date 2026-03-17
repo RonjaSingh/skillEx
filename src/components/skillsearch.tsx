@@ -172,7 +172,7 @@ export default function SkillSearch() {
         <input
           type="text"
           className="w-96 px-5 py-3 rounded-xl bg-white text-gray-800 placeholder:text-gray-400 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brand-purple/40 focus:border-brand-purple transition-all shadow-sm"
-          placeholder="Skill eingeben..."
+          placeholder="Skill or User..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
@@ -219,7 +219,7 @@ export default function SkillSearch() {
           {/*Keine Ergebnisse */}
           {hasSearched && results.length === 0 && (
             <p className="text-center text-gray-500 mt-6">
-              Keine Ergebnisse gefunden
+             No Results
             </p>
           )}
         </div>
@@ -261,7 +261,7 @@ export default function SkillSearch() {
                 onClick={() => setCalendarUserId(null)}
                 className="px-6 py-3  bg-gradient-to-r from-brand-magenta/10 to-brand-teal/10 rounded-xl shadow-md hover:from-brand-magenta/30 hover:to-brand-teal/30 font-semibold transition"
               >
-                Kalender schließen
+               Close Calendar
               </button>
             </div>
           </div>
