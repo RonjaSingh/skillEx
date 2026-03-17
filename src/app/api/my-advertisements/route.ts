@@ -73,13 +73,26 @@ export async function DELETE(req: Request) {
 
   const { id } = await req.json();
 
-  const { error } = await supabase
+  // 🔥 1. Sessions löschen
+  const { error: sessionError } = await supabase
+    .from("session")
+    .delete()
+    .eq("advertisement_id", id);
+
+  if (sessionError) {
+    return NextResponse.json(sessionError, { status: 500 });
+  }
+
+  // 🔥 2. Anzeige löschen
+  const { error: adError } = await supabase
     .from("advertisement")
     .delete()
     .eq("advertisement_id", id)
     .eq("user_id", user.id);
 
-  if (error) return NextResponse.json(error, { status: 500 });
+  if (adError) {
+    return NextResponse.json(adError, { status: 500 });
+  }
 
   return NextResponse.json({ success: true });
 }

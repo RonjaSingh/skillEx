@@ -142,13 +142,16 @@ export default function AdvertisementPage() {
             if (!adToDelete) return;
 
             try {
-              const res = await fetch("/api/my-advertisements", {
-                method: "DELETE",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ id: adToDelete.id }),
-              });
+             const res = await fetch("/api/my-advertisements", {
+  method: "DELETE",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ id: adToDelete.id }),
+});
 
-              if (!res.ok) throw new Error("Delete error");
+const text = await res.text();
+console.log("DELETE RESPONSE:", res.status, text);
+
+if (!res.ok) throw new Error("Delete error");
 
 
               setAds(prev =>
