@@ -55,6 +55,7 @@ export default function SessionsPage() {
   const completedRes = await getCompletedSessions(userId)
   const acceptedRes = await getAcceptedRequests(userId)
 
+  
   /* Ratings des aktuellen Users laden */
   const ratingsRes = await supabase
     .from('rating')
@@ -176,7 +177,11 @@ async function submitRating(
     <div className="max-w-7xl mx-auto m-0 p-4 space-y-10">
 
       <SessionBox  title="Incoming Session Requests">
-        {incoming.map((s) => (
+        {incoming.map((s) => {
+  console.log("Incoming object:", s)
+  return (
+
+          
           <SessionRow
             key={s.session_request_id}
             date={s.availability
@@ -189,71 +194,63 @@ async function submitRating(
               <>
                 <button
                   onClick={() => updateRequestStatus(s.session_request_id, 'accepted')}
-                  className="px-3 py-1 rounded-xl 
-           bg-brand-mint/30 
-           backdrop-blur-md 
-           text-gray-800 
-           font-semibold 
-           shadow-md
-           hover:bg-brand-mint/50 
-           transition"
+                  className="px-2 py-1 border rounded bg-green-100"
                 >
                   Accept
                 </button>
                 <button
                   onClick={() => updateRequestStatus(s.session_request_id, 'rejected')}
-                  className="px-3 py-1 rounded-xl 
-           bg-brand-magenta/30 
-           backdrop-blur-md 
-           text-gray-800 
-           font-semibold 
-           shadow-md
-           hover:bg-brand-magenta/50 
-           transition"
+                  className="px-2 py-1 border rounded bg-red-100"
                 >
                   Reject
                 </button>
               </>
             }
           />
-        ))}
+
+  )
+})}
       </SessionBox>
 
-      <SessionBox title="Upcoming Sessions">
-      {accepted.map((s) => {
+    <SessionBox title="Upcoming Sessions">
+  {accepted.map((s) => {
 
-      const otherUser =
+    console.log("ACCEPTED SESSION:", s)  
+
+    const otherUser =
       s.teacher_user_id === userId
         ? s.student?.name
         : s.teacher?.name
 
-      return (
+    return (
       <SessionRow
         key={s.session_id}
-        date={s.availability
-    ? `${new Date(s.availability.start_time).toLocaleString()} - ${new Date(s.availability.end_time).toLocaleTimeString()}`
-    : 'No time selected'}
+        date={`${new Date(s.start_time).toLocaleString()} - ${new Date(s.end_time).toLocaleTimeString()}`}
         topic={s.advertisement?.title ?? 'Direct request'}
         description={s.description}
         name={otherUser}
-        actions={
-          <button onClick={() =>
-                updateSessionStatus(s.session_id, 'cancelled')
-              }className="px-3 py-1 rounded-xl 
-           bg-brand-magenta/30 
-           backdrop-blur-md 
-           text-gray-800 
-           font-semibold 
-           shadow-md
-           hover:bg-brand-magenta/50 
-           transition">
-            Cancel
-          </button>
-        }
-      />
+actions={
+  <div className="flex gap-2">
+    <a
+      href={`https://meet.jit.si/skill-exchange-${s.session_id}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="px-3 py-1 border rounded bg-blue-100"
+    >
+      Join Call
+    </a>
+
+    <button
+      onClick={() => updateSessionStatus(s.session_id, 'cancelled')}
+      className="px-2 py-1 border rounded bg-red-100"
+    >
+      Cancel
+    </button>
+  </div>
+}  />
     )
-    })}
-    </SessionBox>
+  })}
+</SessionBox>
 
       <SessionBox title="Outgoing Session Requests">
         {outgoing.map((s) => (
@@ -324,9 +321,7 @@ async function submitRating(
           return (
             <SessionRow
               key={s.session_id}
-              date={s.availability
-    ? `${new Date(s.availability.start_time).toLocaleString()} - ${new Date(s.availability.end_time).toLocaleTimeString()}`
-    : 'No time selected'}
+             date={`${new Date(s.start_time).toLocaleString()} - ${new Date(s.end_time).toLocaleTimeString()}`}
               topic={s.advertisement?.title ?? 'Direct request'}
               name={otherUserName}
               description={s.description}
