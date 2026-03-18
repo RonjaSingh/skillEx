@@ -8,6 +8,7 @@ import {
 
 import Link from 'next/link'
 
+
 export default function Page() {
   return (
     <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
@@ -33,7 +34,7 @@ export default function Page() {
               </p>
 
               <Link
-                href="/login"
+                href="/auth/login"
                 className="w-full
     p-2
     rounded-xl
