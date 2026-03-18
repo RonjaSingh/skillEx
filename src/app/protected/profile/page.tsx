@@ -154,6 +154,7 @@ export default function ProfilePage() {
               <p className="text-sm text-gray-800 ">(No ratings yet)</p>
             )}
           </div>
+          
         </div>
 
 
