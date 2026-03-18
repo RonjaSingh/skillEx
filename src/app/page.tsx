@@ -7,10 +7,6 @@ export default function HomePage() {
   return (
     <main className="container">
 
-
-
-
-
       <style jsx>{`
         :global(html, body){
           margin:0;
@@ -50,10 +46,10 @@ export default function HomePage() {
         }
 
         .logo img {
-        filter: drop-shadow(0 0 12px rgba(221, 42, 221, 0.4));
-        border-radius: 50%; /* macht das Bild rund/oval */
-        background: transparent; /* sicherstellen, dass kein Hintergrund eingefärbt wird */
-       }
+          filter: drop-shadow(0 0 12px rgba(221, 42, 221, 0.4));
+          border-radius: 50%; /* makes the logo round/oval */
+          background: transparent; /* ensures no background color */
+        }
 
         .auth-buttons{
           display:flex;
@@ -156,7 +152,7 @@ export default function HomePage() {
             alt="SkillExchange Logo"
             width={240}
             height={40}
-            style={{ objectFit: 'contain' }} // verhindert Verzerrung
+            style={{ objectFit: 'contain' }} // prevents distortion
           />
           SkillExchange
         </div>
@@ -167,61 +163,61 @@ export default function HomePage() {
           </Link>
 
           <Link href="/auth/sign-up">
-            <button className="register">Registrieren</button>
+            <button className="register">Sign Up</button>
           </Link>
         </div>
       </header>
 
       {/* HERO */}
       <section className="hero">
-        <h1>Teile dein Wissen. Lerne neue Skills.</h1>
+        <h1>Share Your Knowledge. Learn New Skills.</h1>
         <p>
-          SkillExchange verbindet Menschen die voneinander lernen möchten.
-          Finde neue Fähigkeiten, teile dein Wissen und werde Teil einer
-          Community die gemeinsam wächst.
+          SkillExchange connects people who want to learn from each other.
+          Discover new skills, share your expertise, and become part of a
+          community that grows together.
         </p>
       </section>
 
-     {/* FEATURES */}
-<section className="features">
-  <div className="card">
-    <h3>🤝 Skills tauschen</h3>
-    <p>
-      Finde Menschen, die dir neue Fähigkeiten beibringen, oder teile dein eigenes Wissen.
-      Egal ob Programmieren, Sprachen oder Hobbys – lerne voneinander und wachse gemeinsam.
-    </p>
-  </div>
+      {/* FEATURES */}
+      <section className="features">
+        <div className="card">
+          <h3>🤝 Exchange Skills</h3>
+          <p>
+            Find people who can teach you new abilities or share your own knowledge.
+            Whether programming, languages, or hobbies – learn from each other and grow together.
+          </p>
+        </div>
 
-  <div className="card">
-    <h3>📅 Termine planen</h3>
-    <p>
-      Buche ganz einfach 30-minütige Mentoring-Sessions über den integrierten Kalender.
-      Wähle verfügbare Zeiten aus oder lege selbst fest, wann du verfügbar bist.
-    </p>
-  </div>
+        <div className="card">
+          <h3>📅 Schedule Sessions</h3>
+          <p>
+            Easily book 30-minute mentoring sessions through the integrated calendar.
+            Choose available times or set your own availability.
+          </p>
+        </div>
 
-  <div className="card">
-    <h3>🌍 Community</h3>
-    <p>
-      Werde Teil einer aktiven Community, die sich gegenseitig unterstützt.
-      Tausche dich aus, knüpfe neue Kontakte und lerne gemeinsam mit anderen.
-    </p>
-  </div>
+        <div className="card">
+          <h3>🌍 Community</h3>
+          <p>
+            Become part of an active community that supports each other.
+            Connect with others, exchange ideas, and learn together.
+          </p>
+        </div>
 
-  <div className="card">
-    <h3>🚀 Neues entdecken</h3>
-    <p>
-      Entdecke neue Skills und Themen, die dich interessieren.
-      Erweitere deinen Horizont und probiere Dinge aus, die du schon immer lernen wolltest.
-    </p>
-  </div>
-</section>
-     
+        <div className="card">
+          <h3>🚀 Discover New Things</h3>
+          <p>
+            Explore new skills and topics that interest you.
+            Expand your horizons and try things you've always wanted to learn.
+          </p>
+        </div>
+      </section>
+
       {/* CALL TO ACTION */}
       <section className="cta">
-        <h2>Starte jetzt mit SkillExchange</h2>
+        <h2>Get Started with SkillExchange</h2>
         <Link href="/auth/sign-up">
-          <button className="register">Jetzt Kostenlos Registrieren</button>
+          <button className="register">Sign Up for Free</button>
         </Link>
       </section>
 
