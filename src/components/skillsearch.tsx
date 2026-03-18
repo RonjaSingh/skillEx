@@ -21,6 +21,19 @@ export default function SkillSearch() {
 
   const [calendarUserId, setCalendarUserId] = useState<string | null>(null)
 
+useEffect(() => {
+  if (calendarUserId) {
+    document.body.style.overflow = 'hidden'
+  } else {
+    document.body.style.overflow = 'auto'
+  }
+
+  return () => {
+    document.body.style.overflow = 'auto'
+  }
+}, [calendarUserId])
+
+
   // Alle skills laden
   useEffect(() => {
     const loadSkills = async () => {
@@ -56,7 +69,7 @@ export default function SkillSearch() {
     setHasSearched(true);
     const searchTerm = search.toLowerCase();
 
-    /* 1️⃣ Skill Matches */
+    /* Skill Matches */
     const { data: skillMatches, error: skillError } = await supabase
       .from("user_skills")
       .select("user_id, skills!inner(name)")
@@ -67,7 +80,7 @@ export default function SkillSearch() {
       return;
     }
 
-    /* 2️⃣ Username Matches */
+    /* Username Matches */
     const { data: nameMatches, error: nameError } = await supabase
       .from("user")
       .select("id")
@@ -78,7 +91,7 @@ export default function SkillSearch() {
       return;
     }
 
-    /* 3️⃣ IDs kombinieren */
+    /* IDs kombinieren */
     const skillUserIds = skillMatches?.map((m: any) => m.user_id) || [];
     const nameUserIds = nameMatches?.map((u: any) => u.id) || [];
 
@@ -89,7 +102,7 @@ export default function SkillSearch() {
       return;
     }
 
-    /* 4️⃣ Userdaten laden */
+    /* Userdaten laden */
     const { data, error } = await supabase
       .from("user")
       .select(`
@@ -109,7 +122,7 @@ export default function SkillSearch() {
       return;
     }
 
-    /* 5️⃣ Für UI formatieren */
+    /* Für UI formatieren */
     const formatted = data.map((user: any) => {
       const skillList =
         user.user_skills
@@ -239,12 +252,13 @@ export default function SkillSearch() {
           <div
             className="    relative 
     w-full 
-    max-w-5xl
+    max-w-4xl
     bg-white/50
     backdrop-blur-xl
     border border-white/20
     shadow-2xl
     rounded-3xl
+    max-h-[90vh] 
     overflow-auto
     p-8
     text-gray-800"
