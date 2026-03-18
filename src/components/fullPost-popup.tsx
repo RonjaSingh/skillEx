@@ -96,6 +96,7 @@ max-h-[90vh]
         {calendarUserId && (
           <div className="mt-2">
             <PublicProfileCalendar profileUserId={calendarUserId} 
+              advertisementId={post.advertisement_id}
             />
           </div>
         )}
