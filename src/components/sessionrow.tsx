@@ -11,6 +11,7 @@ type Props = {
   editable?: boolean
   onSave?: (newDescription: string) => void
   actions?: React.ReactNode
+  className?: string
 }
 
 export default function SessionRow({
@@ -20,7 +21,8 @@ export default function SessionRow({
   description,
   editable,
   onSave,
-  actions
+  actions,
+  className=""
 }: Props)  {
   
     const [expanded, setExpanded] = useState(false)
@@ -33,7 +35,7 @@ export default function SessionRow({
   }
   
    return (
-    <div className=" shadow-sm rounded p-2 text-sm space-y-2">
+<div className={`shadow-sm rounded-xl p-2 text-md font-semibold space-y- transition ${className}`}>
 
       {/* ROW */}
       <div className="grid grid-cols-1 md:grid-cols-5 gap-2 items-center">

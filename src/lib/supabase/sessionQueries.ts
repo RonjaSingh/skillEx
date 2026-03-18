@@ -1,3 +1,4 @@
+'use client'
 import { createClient } from '@/lib/supabase/client'
 
 const supabase = createClient()
@@ -5,18 +6,17 @@ const supabase = createClient()
 export async function getIncomingRequests(userId: string) {
   return await supabase
     .from('session_request')
-      .select(`
+    .select(`
       session_request_id,
       status,
       created_at,
       description,
       availability(start_time,end_time),
-      advertisement_id(title),
+      advertisement:advertisement_id(title),
       request_from_user:user!session_request_request_from_user_id_fkey(name)
     `)
     .eq('request_to_user_id', userId)
     .eq('status', 'pending')
-   
 }
 
 export async function getAcceptedRequests(userId: string) {
@@ -24,9 +24,10 @@ export async function getAcceptedRequests(userId: string) {
     .from('session')
     .select(`
       session_id,
-      availability(start_time,end_time),
+      start_time,
+      end_time,
       description,
-      advertisement_id(title),
+      advertisement:advertisement_id(title),
       teacher_user_id,
       student_user_id,
       teacher:user!session_teacher_fkey(name),
@@ -39,13 +40,13 @@ export async function getAcceptedRequests(userId: string) {
 export async function getOutgoingRequests(userId: string) {
   return await supabase
     .from('session_request')
-      .select(`
+    .select(`
       session_request_id,
       status,
       created_at,
       description,
       availability(start_time,end_time),
-      advertisement_id(title),
+      advertisement:advertisement_id(title),
       request_to_user:user!session_request_request_to_user_id_fkey(name)
     `)
     .eq('request_from_user_id', userId)
@@ -64,9 +65,10 @@ export async function getCompletedSessions(userId: string) {
     .from('session')
     .select(`
       session_id,
-      availability(start_time,end_time),
+      start_time,
+      end_time,
       description,
-      advertisement_id(title),
+      advertisement:advertisement_id(title),
       teacher_user_id,
       student_user_id,
       teacher:user!session_teacher_fkey(name),
@@ -83,7 +85,7 @@ export async function getCompletedSessions(userId: string) {
       session_id,
       start_time,
       end_time,
-      advertisement(title),
+      advertisement:advertisement_id(title),
       teacher_user_id,
       student_user_id,
       teacher:user!session_teacher_fkey(name),
