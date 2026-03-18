@@ -41,7 +41,7 @@ export default function Page() {
     backdrop-blur-md
     text-gray-800
     font-semibold
-    text-lg
+    text-md
     shadow-lg
     hover:bg-white/35
     "
