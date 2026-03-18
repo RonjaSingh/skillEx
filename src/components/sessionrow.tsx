@@ -22,10 +22,10 @@ export default function SessionRow({
   editable,
   onSave,
   actions,
-  className=""
-}: Props)  {
-  
-    const [expanded, setExpanded] = useState(false)
+  className = ""
+}: Props) {
+
+  const [expanded, setExpanded] = useState(false)
   const [editing, setEditing] = useState(false)
   const [text, setText] = useState(description || '')
 
@@ -33,22 +33,22 @@ export default function SessionRow({
     onSave?.(text)
     setEditing(false)
   }
-  
-   return (
-<div className={`shadow-sm rounded-xl p-2 text-md font-semibold space-y- transition ${className}`}>
+
+  return (
+    <div className={`shadow-sm rounded-xl p-2 text-md font-semibold space-y- transition ${className}`}>
 
       {/* ROW */}
       <div className="grid grid-cols-1 md:grid-cols-5 gap-2 items-center">
-        <div>{date}</div>
+        <div className='text-red-900'>{date}</div>
         <div>{topic}</div>
-        <div>{name}</div>
-
         <div
           className="text-gray-800 truncate cursor-pointer"
           onClick={() => setExpanded(!expanded)}
         >
           {description || '-'}
         </div>
+        <div>{name}</div>
+
 
         <div className="flex gap-2 justify-end">
           {editable && !editing && (
@@ -66,7 +66,7 @@ export default function SessionRow({
         </div>
       </div>
 
-      
+
       {expanded && (
         <div className="  rounded p-3 space-y-2">
 
@@ -108,6 +108,5 @@ export default function SessionRow({
     </div>
   )
 }
-  
-  
-    
+
+
