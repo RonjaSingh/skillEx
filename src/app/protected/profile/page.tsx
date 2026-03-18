@@ -148,6 +148,7 @@ export default function ProfilePage() {
 
 
 
+
 {/*<div className="text-center mt-2">
   {averageRating ? (() => {
     const fullStars = Math.floor(averageRating)

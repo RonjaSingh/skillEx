@@ -73,7 +73,7 @@ export async function DELETE(req: Request) {
 
   const { id } = await req.json();
 
-  // 🔥 1. Sessions löschen
+  // Sessions löschen
   const { error: sessionError } = await supabase
     .from("session")
     .delete()
@@ -83,7 +83,7 @@ export async function DELETE(req: Request) {
     return NextResponse.json(sessionError, { status: 500 });
   }
 
-  // 🔥 2. Anzeige löschen
+  // Anzeige löschen
   const { error: adError } = await supabase
     .from("advertisement")
     .delete()

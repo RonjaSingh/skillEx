@@ -173,7 +173,8 @@ export type Database = {
       }
       session: {
         Row: {
-          advertisement_id: string
+          advertisement_id: string | null
+          availability_id: string | null
           created_at: string
           description: string | null
           end_time: string
@@ -186,7 +187,8 @@ export type Database = {
           updated_at: string
         }
         Insert: {
-          advertisement_id: string
+          advertisement_id?: string | null
+          availability_id?: string | null
           created_at?: string
           description?: string | null
           end_time: string
@@ -199,7 +201,8 @@ export type Database = {
           updated_at?: string
         }
         Update: {
-          advertisement_id?: string
+          advertisement_id?: string | null
+          availability_id?: string | null
           created_at?: string
           description?: string | null
           end_time?: string
@@ -218,6 +221,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "advertisement"
             referencedColumns: ["advertisement_id"]
+          },
+          {
+            foreignKeyName: "session_availability_fkey"
+            columns: ["availability_id"]
+            isOneToOne: false
+            referencedRelation: "availability"
+            referencedColumns: ["availability_id"]
           },
           {
             foreignKeyName: "session_request_fkey"
@@ -244,7 +254,7 @@ export type Database = {
       }
       session_request: {
         Row: {
-          advertisement_id: string
+          advertisement_id: string | null
           availability_id: string
           created_at: string
           description: string | null
@@ -255,7 +265,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
-          advertisement_id: string
+          advertisement_id?: string | null
           availability_id: string
           created_at?: string
           description?: string | null
@@ -266,7 +276,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
-          advertisement_id?: string
+          advertisement_id?: string | null
           availability_id?: string
           created_at?: string
           description?: string | null

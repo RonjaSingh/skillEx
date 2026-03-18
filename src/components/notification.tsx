@@ -129,7 +129,11 @@ export default function NotificationBell() {
             className={`text-xs font-bold -mt-1 ${isUrgent ? 'text-red-700' : 'text-gray-400'
               }`}
           >
-            {callCountdown === 0 ? 'now' : `${callCountdown}m`}
+            {callCountdown === 0
+              ? 'now'
+              : callCountdown < 60
+                ? `${callCountdown}m`
+                : `${Math.floor(callCountdown / 60)}h`}
           </span>
         </div>
       )}
