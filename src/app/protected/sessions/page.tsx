@@ -72,7 +72,25 @@ export default function SessionsPage() {
     setIncoming(incomingRes.data || [])
     setOutgoing(outgoingRes.data || [])
     setCompleted(completedRes.data || [])
-    setAccepted(acceptedRes.data || [])
+    const acceptedSessions = acceptedRes.data || []
+    const now = new Date()
+
+    for (const session of acceptedSessions) {
+      const end = new Date(session.end_time)
+
+      if (end < now) {
+        await supabase
+          .from('session')
+          .update({ status: 'completed' })
+          .eq('session_id', session.session_id)
+      }
+    }
+
+    setAccepted(
+      acceptedSessions.filter(
+        (s) => new Date(s.end_time) >= now
+      )
+    )
 
     setRatings(ratingMap)
   }
@@ -199,12 +217,13 @@ export default function SessionsPage() {
                     Accept
                   </button>
                   <button
-                    onClick={() => { const confirmed = window.confirm("Are you sure you want to reject the request?");
+                    onClick={() => {
+                      const confirmed = window.confirm("Are you sure you want to reject the request?");
                       if (confirmed) {
                         updateRequestStatus(s.session_request_id, 'rejected')
                       }
                     }}
-                      
+
                     className="px-2 py-2 min-w-[100px] shadow-md rounded-xl bg-red-100 hover:bg-red-100"
                   >
                     Reject
@@ -241,10 +260,10 @@ export default function SessionsPage() {
           return (
             <SessionRow
               className={`${isLive
-                  ? 'bg-white/25'
-                  : isStartingSoon
-                    ? 'bg-white/20'
-                    : ''
+                ? 'bg-white/25'
+                : isStartingSoon
+                  ? 'bg-white/20'
+                  : ''
                 }`}
               key={s.session_id}
               date={`${new Date(s.start_time).toLocaleString()} - ${new Date(s.end_time).toLocaleTimeString()}`}
@@ -254,7 +273,7 @@ export default function SessionsPage() {
               actions={
                 <div className="flex gap-5 text-center font-semibold text-gray-800">
                   <a
-                    href={`https://meet.jit.si/skill-exchange-${s.session_id}`}
+                    href={`https://meet.jit.si/skill-exchange-${s.session_id}-${Date.now()}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="px-4 py-2 min-w-[100px] shadow-md rounded-xl bg-brand-mint/60 hover:bg-brand-mint/30 "
@@ -263,10 +282,12 @@ export default function SessionsPage() {
                   </a>
 
                   <button
-                    onClick={() => { const confirmed = window.confirm("Are you sure you want to reject the request?");
+                    onClick={() => {
+                      const confirmed = window.confirm("Are you sure you want to reject the request?");
                       if (confirmed) {
-                        updateSessionStatus(s.session_id, 'cancelled')}
-                      }}
+                        updateSessionStatus(s.session_id, 'cancelled')
+                      }
+                    }}
                     className="px-2 py-2 min-w-[100px] shadow-md rounded-xl bg-red-100 hover:bg-red-100"
                   >
                     Cancel
@@ -297,9 +318,12 @@ export default function SessionsPage() {
 
                 {s.status === 'pending' && (
                   <button
-                    onClick={() => { const confirmed = window.confirm("Are you sure you want to reject the request?");
+                    onClick={() => {
+                      const confirmed = window.confirm("Are you sure you want to reject the request?");
                       if (confirmed) {
-                      updateRequestStatus(s.session_request_id, 'cancelled')}}
+                        updateRequestStatus(s.session_request_id, 'cancelled')
+                      }
+                    }
                     }
                     className="px-2 py-2 min-w-[100px] shadow-md rounded-xl bg-red-100 hover:bg-red-100"
                   >
