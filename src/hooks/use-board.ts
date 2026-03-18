@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 
 export type Post = {
-  advertisment_id?: string;
+  advertisement_id?: string;
   title: string;
   description: string;
   typ: "offer" | "request";

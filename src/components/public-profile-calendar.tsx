@@ -14,12 +14,15 @@ interface Slot {
 }
 
 export default function PublicProfileCalendar({
-    profileUserId,
-    variant = "default"
+  profileUserId,
+  advertisementId,
+  variant = "default"
 }: {
-    profileUserId: string
-    variant?: "default" | "popup"
-}) {
+  profileUserId: string
+  advertisementId?: string | null
+  variant?: "default" | "popup"
+}) 
+{
 
     const supabase = createClient()
 
@@ -30,7 +33,7 @@ export default function PublicProfileCalendar({
 
     const [requestingSlot, setRequestingSlot] = useState<Slot | null>(null)
     const [description, setDescription] = useState('')
-    const [advertisementId, setAdvertisementId] = useState<string | null>(null)
+ 
 
     const [successMessage, setSuccessMessage] = useState(false)
 
@@ -39,7 +42,7 @@ export default function PublicProfileCalendar({
     useEffect(() => {
         if (profileUserId) {
             loadSlots()
-            loadAdvertisement()
+   
         }
     }, [profileUserId])
 
@@ -54,19 +57,7 @@ export default function PublicProfileCalendar({
         if (data) setSlots(data as Slot[])
     }
 
-    /* Advertisement des user laden */
-
-    const loadAdvertisement = async () => {
-
-        const { data } = await supabase
-            .from('advertisement')
-            .select('advertisement_id')
-            .eq('user_id', profileUserId)
-            .limit(1)
-            .single()
-
-        if (data) setAdvertisementId(data.advertisement_id)
-    }
+    
 
     // zwischen monaten switchen
     const goToPreviousMonth = () => {
