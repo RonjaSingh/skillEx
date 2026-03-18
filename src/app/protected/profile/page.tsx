@@ -8,6 +8,7 @@ import EditProfilePopup from '@/components/editprofile-popup'
 import useProfile from '@/hooks/use-profile'
 import useProfileInit from '@/hooks/use-profile-init'
 import BookingCalendar from '@/components/profile-calendar'
+import StarRating from "@/components/average-rating";
 
 
 export default function ProfilePage() {
@@ -32,7 +33,6 @@ export default function ProfilePage() {
   } = useProfile()
   const [isPopupOpen, setIsPopupOpen] = useState(false)
   const [showWelcome, setShowWelcome] = useState(false)
-
 
   useEffect(() => {
     const checkFirstLogin = async () => {
@@ -145,17 +145,47 @@ export default function ProfilePage() {
           )}
 
 
-          <div className="text-center mt-2">
-            {averageRating ? (
-              <p className="text-sm text-gray-600">
-                ⭐ {averageRating.toFixed(1)} ({ratingCount} ratings)
-              </p>
-            ) : (
-              <p className="text-sm text-gray-800 ">(No ratings yet)</p>
-            )}
-          </div>
-        </div>
 
+
+
+{/*<div className="text-center mt-2">
+  {averageRating ? (() => {
+    const fullStars = Math.floor(averageRating)
+    const hasHalfStar = averageRating % 1 >= 0.25 && averageRating % 1 < 0.75
+    const roundedUp = averageRating % 1 >= 0.75
+    const totalFullStars = roundedUp ? fullStars + 1 : fullStars
+    return (
+      <div className="flex items-center justify-center gap-1 text-yellow-500">
+        {[1, 2, 3, 4, 5].map((n) => {
+          if (n <= totalFullStars) {
+            return <span key={n}>★</span>
+          }
+          if (n === totalFullStars + 1 && hasHalfStar) {
+            return <span key={n} className="opacity-50">★</span>
+          }
+          return <span key={n} className="text-gray-300">★</span>
+        })}
+        <span className="ml-2 text-sm text-gray-600">
+          {averageRating.toFixed(1)} ({ratingCount})
+        </span>
+      </div>
+    )
+  })() : (
+    <p className="text-sm text-gray-800">(No ratings yet)</p>
+  )}
+</div> */}
+
+
+<div className="text-center mt-2">
+  <StarRating
+    rating={averageRating}
+    count={ratingCount}
+  />
+</div> 
+          
+
+
+</div>
 
       </div>
 

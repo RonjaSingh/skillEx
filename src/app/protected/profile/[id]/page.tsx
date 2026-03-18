@@ -2,6 +2,8 @@ import { createClient } from "@/lib/supabase/server";
 import { User } from "lucide-react";
 import ReadMoreCard from "@/components/readmore";
 import PublicProfileCalendar from "@/components/public-profile-calendar";
+import StarRating from "@/components/average-rating";
+
 
 type UserProfile = {
   id: string;
@@ -17,6 +19,8 @@ type UserProfile = {
       name: string;
     };
   }[] | null;
+
+
 };
 
 export default async function ProfilePage({
@@ -56,6 +60,24 @@ export default async function ProfilePage({
     return <div className="p-6">Profil nicht gefunden</div>;
   }
 
+
+  
+
+  //rating data laden
+  const { data: ratings } = await supabase
+  .from('rating')
+  .select('stars')
+  .eq('reviewed_user_id', id)
+
+const safeRatings = ratings ?? []
+
+const ratingCount = safeRatings.length
+
+const averageRating =
+  ratingCount > 0
+    ? safeRatings.reduce((sum, r) => sum + r.stars, 0) / ratingCount
+    : null
+
   const languages =
     user.user_language?.map((l) => l.language.name) || [];
 
@@ -80,6 +102,26 @@ export default async function ProfilePage({
               👤
             </div>
           )}
+
+<div className="flex flex-col items-center">
+  {averageRating ? (
+    <div className="flex items-center gap-1 text-yellow-500">
+      {[1,2,3,4,5].map(n => (
+        <span key={n} className={n <= Math.round(averageRating) ? '' : 'text-gray-300'}>
+          ★
+        </span>
+      ))}
+      <span className="ml-2 text-sm text-gray-600">
+        {averageRating.toFixed(1)} ({ratingCount})
+      </span>
+    </div>
+  ) : (
+    <p className="text-sm text-gray-800">(No ratings yet)</p>
+  )}
+</div>
+
+
+
         </div>
       </div>
 
