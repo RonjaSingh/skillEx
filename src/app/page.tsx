@@ -7,6 +7,10 @@ export default function HomePage() {
   return (
     <main className="container">
 
+
+
+
+
       <style jsx>{`
         :global(html, body){
           margin:0;
@@ -45,9 +49,11 @@ export default function HomePage() {
           font-weight:bold;
         }
 
-        .logo img{
-          filter: drop-shadow(0 0 12px rgba(221, 42, 221, 0.4));
-        }
+        .logo img {
+        filter: drop-shadow(0 0 12px rgba(221, 42, 221, 0.4));
+        border-radius: 50%; /* macht das Bild rund/oval */
+        background: transparent; /* sicherstellen, dass kein Hintergrund eingefärbt wird */
+       }
 
         .auth-buttons{
           display:flex;
@@ -176,37 +182,41 @@ export default function HomePage() {
         </p>
       </section>
 
-      {/* FEATURES */}
-      <section className="features">
-        <div className="card">
-          <h3>🤝 Skills tauschen</h3>
-          <p>
-            Finde Menschen die dir neue Fähigkeiten beibringen oder teile dein Wissen.
-          </p>
-        </div>
+     {/* FEATURES */}
+<section className="features">
+  <div className="card">
+    <h3>🤝 Skills tauschen</h3>
+    <p>
+      Finde Menschen, die dir neue Fähigkeiten beibringen, oder teile dein eigenes Wissen.
+      Egal ob Programmieren, Sprachen oder Hobbys – lerne voneinander und wachse gemeinsam.
+    </p>
+  </div>
 
-        <div className="card">
-          <h3>📅 Termine planen</h3>
-          <p>
-            Organisiere Sessions im Kalender und sehe sofort freie Zeiten.
-          </p>
-        </div>
+  <div className="card">
+    <h3>📅 Termine planen</h3>
+    <p>
+      Buche ganz einfach 30-minütige Mentoring-Sessions über den integrierten Kalender.
+      Wähle verfügbare Zeiten aus oder lege selbst fest, wann du verfügbar bist.
+    </p>
+  </div>
 
-        <div className="card">
-          <h3>🌍 Community</h3>
-          <p>
-            Verbinde dich mit Menschen und lerne gemeinsam neue Dinge.
-          </p>
-        </div>
+  <div className="card">
+    <h3>🌍 Community</h3>
+    <p>
+      Werde Teil einer aktiven Community, die sich gegenseitig unterstützt.
+      Tausche dich aus, knüpfe neue Kontakte und lerne gemeinsam mit anderen.
+    </p>
+  </div>
 
-        <div className="card">
-          <h3>🚀 Neues entdecken</h3>
-          <p>
-            Entdecke Skills die du schon immer lernen wolltest.
-          </p>
-        </div>
-      </section>
-
+  <div className="card">
+    <h3>🚀 Neues entdecken</h3>
+    <p>
+      Entdecke neue Skills und Themen, die dich interessieren.
+      Erweitere deinen Horizont und probiere Dinge aus, die du schon immer lernen wolltest.
+    </p>
+  </div>
+</section>
+     
       {/* CALL TO ACTION */}
       <section className="cta">
         <h2>Starte jetzt mit SkillExchange</h2>
