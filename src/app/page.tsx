@@ -142,6 +142,58 @@ export default function HomePage() {
           margin-top:30px;
         }
 
+          /* Tablets */
+        @media (max-width: 1024px) {
+          .hero h1{
+            font-size:40px;
+          }
+          .hero p{
+            font-size:18px;
+          }
+          .cta h2{
+            font-size:26px;
+          }
+          .login, .register, .cta button{
+            padding: 14px 28px;
+            font-size:15px;
+          }
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+          .header{
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+          }
+          .logo{
+            font-size:26px;
+          }
+          .auth-buttons{
+            width:100%;
+            justify-content: space-between;
+          }
+          .hero h1{
+            font-size:32px;
+          }
+          .hero p{
+            font-size:16px;
+          }
+          .cta h2{
+            font-size:24px;
+          }
+          .login, .register, .cta button{
+            padding: 12px 24px;
+            font-size:14px;
+          }
+          .features{
+            grid-template-columns: 1fr;
+          }
+        }
+
+
+
+
       `}</style>
 
       {/* HEADER */}
