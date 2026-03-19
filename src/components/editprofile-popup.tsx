@@ -73,8 +73,8 @@ export default function EditProfilePopup({ name, setName, skills, setSkills, lan
   }
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-white/30 backdrop-blur-xl p-6 rounded-2xl w-full max-w-md text-md text-gray-800 shadow-xl border border-white/10 space-y-5">
+    <div className="fixed inset-0 backdrop-blur-xl flex items-center justify-center z-50">
+      <div className="bg-white/30 p-6 rounded-2xl w-full max-w-md text-md text-gray-800 shadow-xl border border-white/10 space-y-5">
         <h2 className="text-xl font-bold mb-4">Edit Profile</h2>
 
 
@@ -124,7 +124,7 @@ export default function EditProfilePopup({ name, setName, skills, setSkills, lan
           </div>
           <div className="flex flex-wrap gap-2">
             {tempSkills.map((s) => (
-              <span key={s} className="bg-brand-blue/50 px-3 py-2 text-gray-800 rounded-full flex items-center gap-2 text-sm">
+              <span key={s} className="bg-brand-blue/40 px-3 py-2 text-gray-800 rounded-full flex items-center gap-2 text-sm">
                 {s}
                 <button type="button" onClick={() => setTempSkills(tempSkills.filter((x) => x !== s))} className="text-xl cursor-pointer text-red-700">×</button>
               </span>
@@ -149,7 +149,7 @@ export default function EditProfilePopup({ name, setName, skills, setSkills, lan
           </div>
           <div className="flex flex-wrap gap-2">
             {tempLanguages.map((l) => (
-              <span key={l} className="bg-brand-teal/50 px-3 py-2 text-gray-800 rounded-full flex items-center gap-2 text-sm">
+              <span key={l} className="bg-brand-blue/40 px-3 py-2 text-gray-800 rounded-full flex items-center gap-2 text-sm">
                 {l}
                 <button type="button" onClick={() => setTempLanguages(tempLanguages.filter((x) => x !== l))} className="text-xl cursor-pointer text-red-700">×</button>
               </span>
