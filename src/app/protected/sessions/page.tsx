@@ -143,52 +143,59 @@ export default function SessionsPage() {
     loadData()
   }
 
+async function handleRating(session: any, stars: number) {
+  if (!userId) return
 
-  async function handleRating(session: any, stars: number) {
+  const reviewedUserId =
+    session.teacher_user_id === userId
+      ? session.student_user_id
+      : session.teacher_user_id
 
-    const reviewedUserId =
-      session.teacher_user_id === userId
-        ? session.student_user_id
-        : session.teacher_user_id
+  const success = await submitRating(
+    session.session_id,
+    reviewedUserId,
+    stars
+  )
 
-    const success = await submitRating(session.session_id, reviewedUserId, stars)
-
-    if (success) {
-      setRatings((prev) => ({
-        ...prev,
-        [session.session_id]: stars
-      }))
-    }
+  if (success) {
+    setRatings((prev) => ({
+      ...prev,
+      [session.session_id]: stars
+    }))
   }
+}
 
 
   async function submitRating(
-    sessionId: string,
-    reviewedUserId: string,
-    stars: number,
-    comment?: string
-  ) {
-    if (!userId) return false
+  sessionId: string,
+  reviewedUserId: string,
+  stars: number,
+  comment?: string
+) {
+  if (!userId) return false
 
-    const { error } = await supabase
-      .from('rating')
-      .insert([
-        {
-          session_id: sessionId,
-          reviewer_user_id: userId,
-          reviewed_user_id: reviewedUserId,
-          stars,
-          comment: comment || null
-        }
-      ])
+  const { error } = await supabase
+    .from('rating')
+    .upsert(
+      {
+        session_id: sessionId,
+        reviewer_user_id: userId,
+        reviewed_user_id: reviewedUserId,
+        stars,
+        comment: comment || null
+      },
+      {
+        onConflict: 'session_id,reviewer_user_id'
+      }
+    )
 
-    if (error) {
-      console.error("Rating insert error:", error)
-      return false
-    }
-
-    return true
+  if (error) {
+    console.error("Rating upsert error:", error)
+    return false
   }
+
+  return true
+}
 
 
   return (
@@ -395,9 +402,10 @@ export default function SessionsPage() {
                           setHoverRating((prev) => ({ ...prev, [s.session_id]: 0 }))
                         }
                         onClick={() => handleRating(s, n)}
-                        disabled={ratings[s.session_id] !== undefined}
-                        className={`text-xl cursor-pointer ${active ? "text-yellow-500" : "text-gray-400"
-                          }`}
+                        
+                        className={`text-xl cursor-pointer transition-transform duration-100 ${
+                        active ? "text-yellow-500 scale-110" : "text-gray-400"
+                        }`}
                       >
                         ★
                       </button>
