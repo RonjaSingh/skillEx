@@ -8,13 +8,7 @@ export default function HomePage() {
     <main className="container">
 
       <style jsx>{`
-        :global(html, body){
-          margin:0;
-          padding:0;
-          background: linear-gradient(180deg, #7f00ff, #e91ef0, #6dd5fa);
-          font-family: Arial, sans-serif;
-        }
-
+        
         .container{
           min-height:100vh;
           width:100%;
@@ -37,20 +31,8 @@ export default function HomePage() {
           padding:20px;
         }
 
-        .logo{
-          display:flex;
-          align-items:center;
-          gap:15px;
-          font-size:30px;
-          font-weight:bold;
-        }
-
-        .logo img {
-          filter: drop-shadow(0 0 12px rgba(221, 42, 221, 0.4));
-          border-radius: 50%; /* makes the logo round/oval */
-          background: transparent; /* ensures no background color */
-        }
-
+        
+       
         .auth-buttons{
           display:flex;
           gap:10px;
@@ -136,7 +118,7 @@ export default function HomePage() {
           margin-bottom:20px;
         }
 
-        /* FOOTER */
+        /* FOOTER */mia.kautz@gmx.de
         footer{
           opacity:0.6;
           margin-top:30px;
@@ -204,9 +186,10 @@ export default function HomePage() {
             alt="SkillExchange Logo"
             width={240}
             height={40}
-            style={{ objectFit: 'contain' }} // prevents distortion
+           
+             className="h-20 w-[248px] sm:w-[248px] lg:w-[248px] object-cover rounded-full"
           />
-          SkillExchange
+         
         </div>
 
         <div className="auth-buttons">
