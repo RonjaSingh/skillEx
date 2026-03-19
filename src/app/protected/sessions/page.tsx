@@ -273,7 +273,7 @@ export default function SessionsPage() {
               actions={
                 <div className="flex gap-5 text-center font-semibold text-gray-800">
                   <a
-                    href={`https://meet.jit.si/skill-exchange-${s.session_id}-${Date.now()}`}
+                  href={`https://meet.jit.si/skill-exchange-${s.session_id}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="px-4 py-2 min-w-[100px] shadow-md rounded-xl bg-brand-mint/60 hover:bg-brand-mint/30 "
