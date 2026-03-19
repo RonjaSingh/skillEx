@@ -17,7 +17,17 @@ export default function PostCard({ post, onReadMore }: Props) {
     const isRequest = post.typ === "request";
 
     return (
-        <div className=" relative rounded-lg p-4 bg-white border border-gray-200 aspect-square flex flex-col shadow-[0_14px_22px_rgba(0,0,0,0.22)] before:absolute before:inset-0 before:rounded-lg before:ring-1 before:ring-black/5 before:pointer-events-none transition-shadow duration-300 cursor-default">
+<div
+  className={`relative rounded-lg p-3 flex flex-col
+  h-[180px]
+  bg-white
+  border
+  
+  ${isRequest
+    ? "border-brand-magenta"
+    : "border-brand-teal"
+  }`}
+>
 
             {/* Pin/Magnet */}
             <div
