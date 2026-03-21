@@ -50,14 +50,14 @@ export default function SessionRow({
         <div>{name}</div>
 
 
-        <div className="flex gap-2 justify-end">
+        <div className="flex gap-5 justify-end">
           {editable && !editing && (
             <button
               onClick={() => {
                 setExpanded(true)
                 setEditing(true)
               }}
-              className="px-2 py-1 border rounded bg-blue-100"
+              className="px-4 py-2 min-w-[100px] shadow-md rounded-xl bg-brand-mint/60 hover:bg-brand-mint/30"
             >
               Edit
             </button>
