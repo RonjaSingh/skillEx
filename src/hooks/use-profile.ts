@@ -54,7 +54,9 @@ export default function useProfile() {
         .select('skills(name)')
         .eq('user_id', user.id)
 
-      setSkills(skillData?.map((s: any) => s.skills.name) || [])
+   setSkills(
+  [...new Set(skillData?.map((s: any) => s.skills.name) || [])]
+)
 
       // Languages laden
       const { data: langData } = await supabase
@@ -62,7 +64,9 @@ export default function useProfile() {
         .select('language(name)')
         .eq('user_id', user.id)
 
-      setLanguages(langData?.map((l: any) => l.language.name) || [])
+      setLanguages(
+  [...new Set(langData?.map((l: any) => l.language.name) || [])]
+)
       
       
       // Anzahl besuchter Sessions laden

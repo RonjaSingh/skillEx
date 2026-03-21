@@ -123,12 +123,23 @@ export default function EditProfilePopup({ name, setName, skills, setSkills, lan
             <button type="button" onClick={handleAddSkill} className="px-4 py-2 rounded-xl bg-white/20 hover:bg-white/40 transition shadow-sm text-gray-800">Add</button>
           </div>
           <div className="flex flex-wrap gap-2">
-            {tempSkills.map((s) => (
-              <span key={s} className="bg-brand-blue/40 px-3 py-2 text-gray-800 rounded-full flex items-center gap-2 text-sm">
-                {s}
-                <button type="button" onClick={() => setTempSkills(tempSkills.filter((x) => x !== s))} className="text-xl cursor-pointer text-red-700">×</button>
-              </span>
-            ))}
+{tempSkills.map((s, index) => (
+  <span
+    key={`${s}-${index}`}
+    className="bg-brand-blue/40 px-3 py-2 text-gray-800 rounded-full flex items-center gap-2 text-sm"
+  >
+    {s}
+    <button
+      type="button"
+      onClick={() =>
+        setTempSkills(tempSkills.filter((_, i) => i !== index))
+      }
+      className="text-xl cursor-pointer text-red-700"
+    >
+      ×
+    </button>
+  </span>
+))}
           </div>
         </label>
 
@@ -148,12 +159,23 @@ export default function EditProfilePopup({ name, setName, skills, setSkills, lan
             <button type="button" onClick={handleAddLang} className="px-4 py-2 rounded-xl bg-white/20 hover:bg-white/40 transition shadow-sm text-gray-800">Add</button>
           </div>
           <div className="flex flex-wrap gap-2">
-            {tempLanguages.map((l) => (
-              <span key={l} className="bg-brand-blue/40 px-3 py-2 text-gray-800 rounded-full flex items-center gap-2 text-sm">
-                {l}
-                <button type="button" onClick={() => setTempLanguages(tempLanguages.filter((x) => x !== l))} className="text-xl cursor-pointer text-red-700">×</button>
-              </span>
-            ))}
+  {tempLanguages.map((l, index) => (
+  <span
+    key={`${l}-${index}`}
+    className="bg-brand-blue/40 px-3 py-2 text-gray-800 rounded-full flex items-center gap-2 text-sm"
+  >
+    {l}
+    <button
+      type="button"
+      onClick={() =>
+        setTempLanguages(tempLanguages.filter((_, i) => i !== index))
+      }
+      className="text-xl cursor-pointer text-red-700"
+    >
+      ×
+    </button>
+  </span>
+))}
           </div>
         </label>
 
