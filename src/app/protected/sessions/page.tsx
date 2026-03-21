@@ -319,7 +319,7 @@ async function handleRating(session: any, stars: number) {
             onSave={(text) => updateDescription(s.session_request_id, text)}
             actions={
               <div className="flex gap-5 text-center font-semibold text-gray-800">
-                <span className="text-sm px-2 py-1 rounded-xl bg-gray-100">
+                <span className="flex items-center justify-center text-sm px-2 py-1 rounded-xl bg-gray-100">
                   {s.status}
                 </span>
 
