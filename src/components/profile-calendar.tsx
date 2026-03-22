@@ -84,6 +84,22 @@ export default function BookingCalendar() {
     setCurrentDate(newDate)
   }
 
+  // day switch
+
+  const goToPreviousDay = () => {
+    if (!selectedDay) return
+    const d = new Date(selectedDay)
+    d.setDate(d.getDate() - 1)
+    setSelectedDay(d.toISOString().split('T')[0])
+}
+
+const goToNextDay = () => {
+    if (!selectedDay) return
+    const d = new Date(selectedDay)
+    d.setDate(d.getDate() + 1)
+    setSelectedDay(d.toISOString().split('T')[0])
+}
+
   const generateTimes = () => {
     const times: string[] = []
     for (let h = 0; h < 24; h++) {
@@ -155,6 +171,7 @@ export default function BookingCalendar() {
 
 
               const freeSlots = daySlots.filter(s => !s.is_booked)
+              const bookedSlots = daySlots.filter(s => s.is_booked)
 
               return (
 
@@ -177,13 +194,27 @@ export default function BookingCalendar() {
                     {new Date(day).getDate()}
                   </div>
 
+                 <div className="w-full flex flex-col gap-1 mt-1">
+
+                  {/* freie Slots */}
                   {freeSlots.length > 0 && (
-                    <div
-                      className={`w-full h-2 rounded-full mt-1
-                 ${isPastDay ? 'bg-gray-400/60' : 'bg-brand-mint'}
-                    `}
-                    ></div>
+                      <div
+                          className={`w-full h-2 rounded-full
+                              ${isPastDay ? 'bg-gray-400/60' : 'bg-brand-teal'}
+                          `}
+                      />
                   )}
+
+                  {/* gebuchte Slots */}
+                  {bookedSlots.length > 0 && (
+                      <div
+                          className={`w-full h-2 rounded-full
+                              ${isPastDay ? 'bg-gray-400/60' : 'bg-cyan-200/80'}
+                          `}
+                      />
+                  )}
+
+              </div>
 
                 </div>
 
@@ -197,16 +228,39 @@ export default function BookingCalendar() {
 
       {/* Day view */}
       {viewMode === 'day' && selectedDay && (
-        <div className="m-1 p-4">
+      <div className="m-1 p-4">
+
+              <div className="flex items-center justify-between mb-4 px-6">
+
+                  <button onClick={goToPreviousDay}>
+                      ←---
+                  </button>
+
+                        <h3>
+                            {new Date(selectedDay).toLocaleDateString('default', {
+                                weekday: 'short',
+                                day: 'numeric',
+                                month: 'short',
+                                year: 'numeric'
+                            })}
+                        </h3>
+
+                  <button onClick={goToNextDay}>
+                      ---→
+                  </button>
+
+              </div>
+
           <button
-            onClick={() => setViewMode('month')}
-            className="mb-2 px-4 py-2 text-sm rounded-xl hover:bg-white/15 transition"
+              onClick={() => setViewMode('month')}
+              className="mb-2 px-4 py-2 text-sm font-semibold rounded-xl hover:bg-white/15 transition"
           >
-            ← Back
+              ← Back
           </button>
 
-          <h3 className="mb-6 text-lg font-semibold text-cener text-lg font-semibold  text-center py-2 text-center shadow-sm p-4 rounded-full">{new Date(selectedDay).toDateString()}</h3>
-
+    <h3 className="mb-6 text-lg font-semibold text-gray-700 text-center py-2 shadow-sm p-4 rounded-xl">
+        {new Date(selectedDay).toDateString()}
+    </h3>
           <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2 ">
             {generateTimes().map(time => {
 
@@ -221,20 +275,27 @@ export default function BookingCalendar() {
               const slotString = `${selectedDay}T${time}:00`
               const slot = slots.find(s => s.start_time.startsWith(`${selectedDay}T${time}`))
               const isFree = !!slot
+              const isBooked = slot?.is_booked;
 
               return (
                 <div
                   key={time}
                   className={`text-center text-sm sm:text-base p-2 sm:p-3 min-h-[50px] rounded-2xl transition flex items-center justify-center
                    ${isPast
-                      ? 'bg-gray-500/50 text-gray-700 cursor-not-allowed'
-                      : isFree
-                        ? 'bg-brand-teal text-white hover:bg-brand-mint/70 cursor-pointer'
-                        : 'bg-white/20 text-gray-600 cursor-pointer'}
-                  `}
+                    ? 'bg-gray-500/50 text-gray-700 cursor-not-allowed'
+                    : isBooked
+                        ? 'bg-cyan-200/60 text-cyan-900'
+                        : isFree
+                            ? 'bg-brand-teal text-white hover:bg-brand-mint/70 cursor-pointer'
+                            : 'bg-white/20 text-gray-600 cursor-pointer'}
+                                  `}
                   onClick={() => { if (!isPast) toggleSlot(time) }}
                 >
                   {time}
+
+                  {isBooked && (
+                      <span className="text-xs opacity-70 mt-1">✓</span>
+                  )}
                 </div>
               )
             })}

@@ -14,6 +14,8 @@ import {
 
 const supabase = createClient()
 
+
+
 export default function SessionsPage() {
   const [incoming, setIncoming] = useState<any[]>([])
   const [outgoing, setOutgoing] = useState<any[]>([])
@@ -247,6 +249,7 @@ async function handleRating(session: any, stars: number) {
         {accepted.map((s) => {
 
           console.log("ACCEPTED SESSION:", s)
+
 
 
           const now = new Date()

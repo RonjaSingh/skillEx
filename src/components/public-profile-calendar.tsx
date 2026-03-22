@@ -72,6 +72,22 @@ export default function PublicProfileCalendar({
         setCurrentDate(newDate)
     }
 
+    //zwischen tagen switchen
+
+    const goToPreviousDay = () => {
+    if (!selectedDay) return
+    const d = new Date(selectedDay)
+    d.setDate(d.getDate() - 1)
+    setSelectedDay(d.toISOString().split('T')[0])
+}
+
+    const goToNextDay = () => {
+    if (!selectedDay) return
+    const d = new Date(selectedDay)
+    d.setDate(d.getDate() + 1)
+    setSelectedDay(d.toISOString().split('T')[0])
+}
+
 
     /* Request senden */
 
@@ -198,6 +214,7 @@ export default function PublicProfileCalendar({
                             )
 
                             const freeSlots = daySlots.filter(s => !s.is_booked)
+                            const bookedSlots = daySlots.filter(s => s.is_booked)
 
                             return (
 
@@ -220,11 +237,27 @@ export default function PublicProfileCalendar({
                                         {new Date(day).getDate()}
                                     </div>
 
+                                   <div className="w-full flex flex-col gap-1 mt-1">
+
+                                    {/* freie Slots */}
                                     {freeSlots.length > 0 && (
-                                        <div className={`w-full h-2 rounded-full mt-1
-                                      ${isPastDay ? 'bg-gray-400/60' : 'bg-brand-mint'}
-                                       `}></div>
+                                        <div
+                                            className={`w-full h-2 rounded-full
+                                                ${isPastDay ? 'bg-gray-400/60' : 'bg-brand-teal'}
+                                            `}
+                                        />
                                     )}
+
+                                    {/* gebuchte Slots */}
+                                    {bookedSlots.length > 0 && (
+                                        <div
+                                            className={`w-full h-2 rounded-full
+                                                ${isPastDay ? 'bg-gray-400/60' : 'bg-cyan-200/80'}
+                                            `}
+                                        />
+                                    )}
+
+                                </div>
 
                                 </div>
 
@@ -245,39 +278,68 @@ export default function PublicProfileCalendar({
 
                 <div className="m-1 p-4">
 
-                    <button
-                        onClick={() => setViewMode('month')}
-                        className="mb-2 px-4 py-2 text-sm font-semibold rounded-xl hover:bg-white/15 transition"
-                    >
-                        ← Back
-                    </button>
+            <div className="flex items-center justify-between mb-4 px-6">
 
-                    <h3 className="mb-6 text-lg font-semibold text-gray-700 text-center text-lg py-2 shadow-sm p-4 rounded-xl">
+                <button onClick={goToPreviousDay}>
+                    ←---
+                </button>
+
+                    <h3>
+                        {new Date(selectedDay).toLocaleDateString('default', {
+                            weekday: 'short',
+                            day: 'numeric',
+                            month: 'short',
+                            year: 'numeric'
+                        })}
+                    </h3>
+
+                <button onClick={goToNextDay}>
+                    ---→
+                </button>
+
+            </div>
+
+            <button
+                onClick={() => setViewMode('month')}
+                className="mb-2 px-4 py-2 text-sm font-semibold rounded-xl hover:bg-white/15 transition"
+            >
+                ← Back
+            </button>
+
+                    <h3 className="mb-6 text-lg font-semibold text-gray-700 text-center py-2 shadow-sm p-4 rounded-xl">
                         {new Date(selectedDay).toDateString()}
                     </h3>
-                    <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-9 gap-2">
+                                    <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-9 gap-2">
                         {generateTimes().map(time => {
                             const slot = slots.find(s => s.start_time.startsWith(`${selectedDay}T${time}`));
                             const slotDate = new Date(`${selectedDay}T${time}`);
                             const now = new Date();
                             const isPast = slotDate < now;
+                            const isBooked = slot && slot.is_booked;
                             const isFree = slot && !slot.is_booked;
 
                             return (
                                 <div
                                     key={time}
                                     className={`backdrop-blur rounded-2xl min-h-[60px] p-4 shadow-md flex flex-col items-center justify-center transition
-                                      ${isPast
-                                            ? 'bg-gray-400/40 text-gray-700 cursor-not-allowed'
+                                     ${isPast
+                                        ? 'bg-gray-400/40 text-gray-700 cursor-not-allowed'
+                                        : isBooked
+                                            ? 'bg-cyan-200/60 text-cyan-900 cursor-not-allowed backdrop-blur'
                                             : isFree
                                                 ? 'bg-brand-teal text-white hover:bg-brand-mint/70 cursor-pointer'
                                                 : 'bg-white/20 text-gray-800'
-                                        }`}
+                                    }`}
                                     onClick={() => {
                                         if (!isPast && isFree && slot) setRequestingSlot(slot);
                                     }}
                                 >
                                     {time}
+
+                                {isBooked && (
+                                <span className="text-xs opacity-70 mt-1">✓</span>
+                                )}
+                                    
                                 </div>
                             );
                         })}
