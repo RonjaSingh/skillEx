@@ -24,7 +24,7 @@ export default function HomePage() {
         .header{
           width:100%;
           max-width:1200px;
-          margin:0 auto;
+          margin:10 auto;
           display:flex;
           justify-content:space-between;
           align-items:center;
@@ -63,15 +63,16 @@ export default function HomePage() {
           text-align:center;
           max-width:800px;
           margin-bottom:80px;
+          margin-top: 40px;
         }
 
         .hero h1{
-          font-size:48px;
+          font-size:40px;
           margin-bottom:20px;
         }
 
         .hero p{
-          font-size:20px;
+          font-size:25px;
           color: #e2e8f0;
         }
 
@@ -92,11 +93,12 @@ export default function HomePage() {
           transition:0.3s;
           text-align:center;
           box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+       
         }
 
         .card:hover{
           transform:translateY(-6px);
-          background: #3cd9ee9d;
+          background: #1CA6C3;
         }
 
         .card h3{
@@ -110,7 +112,7 @@ export default function HomePage() {
         /* CTA */
         .cta{
           text-align:center;
-          margin-bottom:60px;
+          margin-bottom:40px;
         }
 
         .cta h2{
@@ -187,7 +189,7 @@ export default function HomePage() {
             width={240}
             height={40}
            
-             className="h-20 w-[248px] sm:w-[248px] lg:w-[248px] object-cover rounded-full"
+             className="h-20 w-[248px] sm:w-[248px] lg:w-[288px] object-cover rounded-full"
           />
          
         </div>
@@ -207,7 +209,7 @@ export default function HomePage() {
       <section className="hero">
         <h1>Share Your Knowledge. Learn New Skills.</h1>
         <p>
-          SkillExchange connects people who want to learn from each other.
+          SkillExchange connects people who want to learn from each other. <br />
           Discover new skills, share your expertise, and become part of a
           community that grows together.
         </p>
