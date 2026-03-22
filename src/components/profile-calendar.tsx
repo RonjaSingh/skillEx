@@ -171,6 +171,7 @@ const goToNextDay = () => {
 
 
               const freeSlots = daySlots.filter(s => !s.is_booked)
+              const bookedSlots = daySlots.filter(s => s.is_booked)
 
               return (
 
@@ -193,13 +194,27 @@ const goToNextDay = () => {
                     {new Date(day).getDate()}
                   </div>
 
+                 <div className="w-full flex flex-col gap-1 mt-1">
+
+                  {/* freie Slots */}
                   {freeSlots.length > 0 && (
-                    <div
-                      className={`w-full h-2 rounded-full mt-1
-                 ${isPastDay ? 'bg-gray-400/60' : 'bg-brand-mint'}
-                    `}
-                    ></div>
+                      <div
+                          className={`w-full h-2 rounded-full
+                              ${isPastDay ? 'bg-gray-400/60' : 'bg-brand-teal'}
+                          `}
+                      />
                   )}
+
+                  {/* gebuchte Slots */}
+                  {bookedSlots.length > 0 && (
+                      <div
+                          className={`w-full h-2 rounded-full
+                              ${isPastDay ? 'bg-gray-400/60' : 'bg-cyan-200/80'}
+                          `}
+                      />
+                  )}
+
+              </div>
 
                 </div>
 
