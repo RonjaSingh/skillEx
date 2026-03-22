@@ -298,23 +298,31 @@ export default function PublicProfileCalendar({
                             const slotDate = new Date(`${selectedDay}T${time}`);
                             const now = new Date();
                             const isPast = slotDate < now;
+                            const isBooked = slot && slot.is_booked;
                             const isFree = slot && !slot.is_booked;
 
                             return (
                                 <div
                                     key={time}
                                     className={`backdrop-blur rounded-2xl min-h-[60px] p-4 shadow-md flex flex-col items-center justify-center transition
-                                      ${isPast
-                                            ? 'bg-gray-400/40 text-gray-700 cursor-not-allowed'
+                                     ${isPast
+                                        ? 'bg-gray-400/40 text-gray-700 cursor-not-allowed'
+                                        : isBooked
+                                            ? 'bg-cyan-200/60 text-cyan-900 cursor-not-allowed backdrop-blur'
                                             : isFree
                                                 ? 'bg-brand-teal text-white hover:bg-brand-mint/70 cursor-pointer'
                                                 : 'bg-white/20 text-gray-800'
-                                        }`}
+                                    }`}
                                     onClick={() => {
                                         if (!isPast && isFree && slot) setRequestingSlot(slot);
                                     }}
                                 >
                                     {time}
+
+                                {isBooked && (
+                                <span className="text-xs opacity-70 mt-1">✓</span>
+                                )}
+                                    
                                 </div>
                             );
                         })}

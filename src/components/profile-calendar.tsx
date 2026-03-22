@@ -260,20 +260,27 @@ const goToNextDay = () => {
               const slotString = `${selectedDay}T${time}:00`
               const slot = slots.find(s => s.start_time.startsWith(`${selectedDay}T${time}`))
               const isFree = !!slot
+              const isBooked = slot?.is_booked;
 
               return (
                 <div
                   key={time}
                   className={`text-center text-sm sm:text-base p-2 sm:p-3 min-h-[50px] rounded-2xl transition flex items-center justify-center
                    ${isPast
-                      ? 'bg-gray-500/50 text-gray-700 cursor-not-allowed'
-                      : isFree
-                        ? 'bg-brand-teal text-white hover:bg-brand-mint/70 cursor-pointer'
-                        : 'bg-white/20 text-gray-600 cursor-pointer'}
-                  `}
+                    ? 'bg-gray-500/50 text-gray-700 cursor-not-allowed'
+                    : isBooked
+                        ? 'bg-cyan-200/60 text-cyan-900'
+                        : isFree
+                            ? 'bg-brand-teal text-white hover:bg-brand-mint/70 cursor-pointer'
+                            : 'bg-white/20 text-gray-600 cursor-pointer'}
+                                  `}
                   onClick={() => { if (!isPast) toggleSlot(time) }}
                 >
                   {time}
+
+                  {isBooked && (
+                      <span className="text-xs opacity-70 mt-1">✓</span>
+                  )}
                 </div>
               )
             })}
