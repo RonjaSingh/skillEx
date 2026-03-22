@@ -101,7 +101,7 @@ export default function ProfilePage() {
       opacity-0 group-hover:opacity-100 transition-all duration-200
       z-50 bg-white/20 backdrop-blur-md text-magenta text-sm 
       px-4 py-1 rounded-xl shadow-lg w-max max-w-xs text-center">
-                  Explore the board, discover sessions and connect with others.
+                  Browse requests and offers or create your own posts.
                 </div>
               </div>
 
