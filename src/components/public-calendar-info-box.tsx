@@ -53,13 +53,23 @@ export default function PublicCalendarInfo() {
 
 
               <div className="flex items-center gap-2">
-                <div className="w-8 h-2 bg-brand-mint rounded"></div>
+                <div className="w-8 h-2 bg-brand-teal rounded"></div>
                 <span>Day has free slots</span>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-2 bg-brand-mint rounded"></div>
+                <span>Day has booked slots</span>
               </div>
 
               <div className="flex items-center gap-2">
                 <div className="w-4 h-4 bg-brand-teal rounded"></div>
                 <span>Available slot</span>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 bg-brand-mint rounded"></div>
+                <span>Booked slot</span>
               </div>
 
               <div className="flex items-center gap-2">
