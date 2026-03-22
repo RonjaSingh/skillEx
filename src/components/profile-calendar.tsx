@@ -84,6 +84,22 @@ export default function BookingCalendar() {
     setCurrentDate(newDate)
   }
 
+  // day switch
+
+  const goToPreviousDay = () => {
+    if (!selectedDay) return
+    const d = new Date(selectedDay)
+    d.setDate(d.getDate() - 1)
+    setSelectedDay(d.toISOString().split('T')[0])
+}
+
+const goToNextDay = () => {
+    if (!selectedDay) return
+    const d = new Date(selectedDay)
+    d.setDate(d.getDate() + 1)
+    setSelectedDay(d.toISOString().split('T')[0])
+}
+
   const generateTimes = () => {
     const times: string[] = []
     for (let h = 0; h < 24; h++) {
@@ -197,16 +213,39 @@ export default function BookingCalendar() {
 
       {/* Day view */}
       {viewMode === 'day' && selectedDay && (
-        <div className="m-1 p-4">
+      <div className="m-1 p-4">
+
+              <div className="flex items-center justify-between mb-4 px-6">
+
+                  <button onClick={goToPreviousDay}>
+                      ←---
+                  </button>
+
+                        <h3>
+                            {new Date(selectedDay).toLocaleDateString('default', {
+                                weekday: 'short',
+                                day: 'numeric',
+                                month: 'short',
+                                year: 'numeric'
+                            })}
+                        </h3>
+
+                  <button onClick={goToNextDay}>
+                      ---→
+                  </button>
+
+              </div>
+
           <button
-            onClick={() => setViewMode('month')}
-            className="mb-2 px-4 py-2 text-sm rounded-xl hover:bg-white/15 transition"
+              onClick={() => setViewMode('month')}
+              className="mb-2 px-4 py-2 text-sm font-semibold rounded-xl hover:bg-white/15 transition"
           >
-            ← Back
+              ← Back
           </button>
 
-          <h3 className="mb-6 text-lg font-semibold text-cener text-lg font-semibold  text-center py-2 text-center shadow-sm p-4 rounded-full">{new Date(selectedDay).toDateString()}</h3>
-
+    <h3 className="mb-6 text-lg font-semibold text-gray-700 text-center py-2 shadow-sm p-4 rounded-xl">
+        {new Date(selectedDay).toDateString()}
+    </h3>
           <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2 ">
             {generateTimes().map(time => {
 
