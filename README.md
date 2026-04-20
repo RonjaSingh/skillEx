@@ -1,34 +1,59 @@
 # SkillExchange
 
-SkillExchange ist eine App zum Austausch von Wissen und Fähigkeiten.  
-Nutzer können Skills anbieten oder suchen, Beiträge auf einem schwarzen Brett erstellen
-und 30 minütige Mentoring Sessions buchen.
+SkillExchange ist eine WebApp zum Austausch von Wissen und Fähigkeiten.
+Nutzer können Skills anbieten oder suchen, Beiträge auf einem schwarzen Brett erstellen und 30-minütige Mentoringsessions buchen.
 
 
 --------------------------------------------------------------------------------------------------------------------
 ## Projektziel
 
-Ziel dieses Projekts ist die Entwicklung einer einfachen, benutzerfreundlichen Plattform, bei der 
+Ziel dieses Projekts ist die Entwicklung einer einfachen, benutzerfreundlichen, Plattform, bei der 
 Lernende und Mentoren unkompliziert miteinander
 in Kontakt treten können.
 
 --------------------------------------------------------------------------------------------------------------------
 ## Features
 
-- Regiestrierung & Login
-- Nutzerprofile
-- Schwarzes Brett
-- Mentor Suche nach Skills
-- Buchung von 30 Minuten Sessions ueber Kalender
-- Verwaltung der Session Anfragen (annehmen/ablehnen)
+- Registrierung & Login
+- Nutzerprofile (inkl. Skills, Sprachen und Kalender)
+- Eigener Kalender mit buchbaren Timeslots
+   - Visuelle Unterscheidung zwischen freien und gebuchten Slots
+- Schwarzes Brett (Suche und Biete Anzeigen)
+- Suchleiste mit Autocomplete (nach Skills und Nutzernamen)
+- Buchung von Sessions über den Kalender
+- Verwaltung von Sessionanfragen (Annehmen/Ablehnen)
+- Übersicht eigener Anzeigen mit Bearbeitungs- und Löschfunktion
+- Erinnerung per Timer vor Beginn der Session
+- Durchführung von Sessions per Videocall
+- Bewertungssystem (Sterne + Durchschnittsrating im Profil)
 
 
--------------------------------------------------------------------------------------------------
+## Zunkunftsfeatures
+- Kommentarfunktion für Bewertungen (Reviews)
+- Chatfunktion
+- Verbesserung der Responsiveness (Mobile Optimierung)
+  
+--------------------------------------------------------------------------------------------------------------------
 ## Technologien
 
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+- Supabase 
+
+---------------------------------------------------------------------------------------------------------------------
 
 
---------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------
 ## pnpm installieren:
 - npm i -g pnpm
 - pnpm i
@@ -36,10 +61,6 @@ in Kontakt treten können.
 - supabase status
 - pnpm supabase start 
 
-## SQL-migration:
-- pnpm supabase db diff -f nameofmigration
 --------------------------------------------------------------------------------------------------
-## Troubleshooting
 
--> In case of : "failed to start docker container: Error response from daemon: failed to set up container networking: driver failed programming external connectivity on endpoint supabase_db_SkillExchange" proceed with: pnpm supabase stop --project-id supabase-next.js
 
